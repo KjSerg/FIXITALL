@@ -122,3 +122,23 @@ strong {
 em, i {
   font-style: italic;
 }
+
+.title{
+  margin-bottom: 4rem;
+  text-align: center;
+  color: #020A1B;
+  font-family: "Exo 2", serif;
+  font-size: 5.2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 128%;
+  letter-spacing: 0.026rem;
+  text-transform: uppercase;
+}
+
+.section{
+  position: relative;
+  &:not(.head-section){
+    padding: 9rem 0;
+  }
+}
