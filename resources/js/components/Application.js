@@ -5,6 +5,7 @@ import {numberInput} from "./forms/_number-input";
 import {showPassword} from "./forms/_show-password";
 import {fancyboxInit} from "../plugins/_fancybox-init";
 import {selectrickInit} from "../plugins/_selectric-init";
+import addAndRemoveRows from "./book/_get-row";
 
 export default class Application {
     constructor() {
@@ -43,6 +44,7 @@ export default class Application {
             selectrickInit();
             fancyboxInit();
             this.showLoaderOnClick();
+            addAndRemoveRows();
         });
     }
 }

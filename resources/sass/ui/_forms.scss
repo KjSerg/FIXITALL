@@ -1,0 +1,105 @@
+.form{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  align-items: flex-end;
+  &-label{
+    display: block;
+    width: 100%;
+    color: #020A1B;
+    font-family: "Inter", serif;
+    font-size: 1.7rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 165%;
+    &-head{
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+  }
+  &-quantity{
+    width: 15rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+    input{
+      width: 100%;
+      padding-right: 60%;
+    }
+    &-controls{
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      a{
+        width: 50%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover{
+          img{
+            transform: scale(1.1);
+          }
+        }
+      }
+    }
+    &-wrapper{
+      position: relative;
+      display: flex;
+    }
+  }
+}
+.selectric {
+  background-color: #fff;
+  border: 1px solid  #D0D4DD;
+  &-items {
+    background-color: #fff;
+    li{
+      color: rgba(#020A1B, 0.6);
+      font-family: "Inter", serif;
+      font-size: 1.7rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 165%;
+    }
+  }
+  .button{
+    padding: 0;
+    height: 100%;
+    background: transparent;
+    &:hover{
+      background: transparent;
+    }
+  }
+  .label{
+    padding: 1rem 0;
+    height: auto;
+    color: rgba(#020A1B, 0.3);
+    font-family: "Inter", serif;
+    font-size: 1.7rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 165%;
+  }
+}
+input{
+  padding: 1rem 2.4rem ;
+  border: 1px solid #D0D4DD;
+  color: rgba(#020A1B, 0.3);
+  font-family: "Inter", serif;
+  font-size: 1.7rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 165%;
+  &::placeholder{
+    color: rgba(#020A1B, 0.3);
+    font-family: "Inter", serif;
+    font-size: 1.7rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 165%;
+  }
+}

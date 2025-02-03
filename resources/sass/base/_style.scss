@@ -134,11 +134,30 @@ em, i {
   line-height: 128%;
   letter-spacing: 0.026rem;
   text-transform: uppercase;
+  @media (max-width: 1200px){
+    font-size: 5rem;
+  }
+  @media (max-width: 1024px){
+    font-size: 4rem;
+  }
+}
+
+.text{
+  color: #A3A8B3;
+
+  font-family: "Inter", serif;
+  font-size: 1.7rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 165%;
 }
 
 .section{
   position: relative;
   &:not(.head-section){
     padding: 9rem 0;
+    @media (max-width: 1024px){
+      padding: 4rem 0;
+    }
   }
 }
