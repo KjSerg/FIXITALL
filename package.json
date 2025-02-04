@@ -23,5 +23,8 @@
     "sass-loader": "^16.0.4",
     "selectric": "^1.13.0",
     "simplebar": "^6.3.0"
+  },
+  "dependencies": {
+    "slick-carousel": "^1.8.1"
   }
 }

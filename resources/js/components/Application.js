@@ -8,6 +8,7 @@ import {selectrickInit} from "../plugins/_selectric-init";
 import {GoogleMap} from "./Map";
 import BookForm from "./book/BookForm";
 import FormHandler from "./forms/FormHandler";
+import Slick from "../plugins/Slick";
 
 export default class Application {
     constructor() {
@@ -49,6 +50,7 @@ export default class Application {
             this.googleMapInit();
             const bool = new BookForm();
             const form = new FormHandler('.form-js');
+            const slick = new Slick();
         });
     }
 

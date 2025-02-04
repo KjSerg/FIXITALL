@@ -1,0 +1,52 @@
+.clients{
+  &__title{
+    margin-right: 2rem;
+    text-align: left;
+    margin-bottom: 0;
+  }
+  &-section{
+    &-head{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 5rem;
+    }
+  }
+  &-list{
+    display: flex;
+    &-item{
+      margin: auto;
+      margin-top: 1rem;
+      position: relative;
+      width: 100%;
+      max-width: 50.4rem;
+      padding: 4rem;
+      border: 1px solid #D0D4DD;
+      &__text{
+        color: #A3A8B3;
+      }
+      &__image{
+        position: absolute;
+        top: -1rem;
+        right: 1.6rem;
+        width: 5.8rem;
+        height: 5.6rem;
+        flex-shrink: 0;
+      }
+      &__name{
+        margin-bottom: 1rem;
+        color:  #020A1B;
+        font-family: "Exo 2", serif;
+        font-size: 2.8rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 140%; /* 3.92rem */
+        letter-spacing: 0.014rem;
+        text-transform: uppercase;
+      }
+      &-head{
+        margin-bottom: 2.4rem;
+      }
+    }
+  }
+}
