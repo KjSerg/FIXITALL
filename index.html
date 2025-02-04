@@ -212,6 +212,13 @@
                     Service Request Details
                 </div>
                 <form method="post" class="book-form form">
+                    <input type="hidden" name="user_city" id="user_city">
+                    <input type="hidden" name="user_region" id="user_region">
+                    <input type="hidden" name="user_country" id="user_country">
+                    <input type="hidden" name="user_country_code" id="user_country_code">
+                    <input type="hidden" name="user_post_code" id="user_post_code">
+                    <input type="hidden" name="lat" id="lat">
+                    <input type="hidden" name="lng" id="lng">
                     <label  class="form-label">
                         <span class="form-label-head">Service*</span>
                         <select class="select" required>
@@ -222,21 +229,22 @@
                     <div class="book-form-row">
                         <label  class="form-label">
                             <span class="form-label-head">Category*</span>
-                            <select class="select" required>
+                            <select class="select category-select" required>
                                 <option selected disabled>Select the category</option>
                                 <option>category 1</option>
                                 <option>category 2</option>
+                                <option value="other">Other</option>
                             </select>
                         </label>
-                        <label  class="form-label">
+                        <label  class="form-label not-active">
                             <span class="form-label-head">Type*</span>
-                            <select class="select" required>
+                            <select class="select type-select" required>
                                 <option selected disabled>Select the Type</option>
                                 <option>Type 1</option>
                                 <option>Type 2</option>
                             </select>
                         </label>
-                        <div class="form-quantity form-label">
+                        <div class="form-quantity not-active form-label">
                             <span class="form-label-head">Quantity*</span>
                             <label class="form-quantity-wrapper">
                                 <input type="text" class="number-input" value="1" >
@@ -246,47 +254,35 @@
                                 </span>
                             </label>
                         </div>
-                    </div>
-                    <div class="book-form-row">
-                        <label  class="form-label">
-                            <span class="form-label-head">Category*</span>
-                            <select class="select" required>
-                                <option selected disabled>Select the category</option>
-                                <option>category 1</option>
-                                <option>category 2</option>
-                            </select>
-                        </label>
-                        <label  class="form-label">
-                            <span class="form-label-head">Type*</span>
-                            <select class="select" required>
-                                <option selected disabled>Select the Type</option>
-                                <option>Type 1</option>
-                                <option>Type 2</option>
-                            </select>
-                        </label>
-                        <div class="form-quantity form-label">
-                            <span class="form-label-head">Quantity*</span>
-                            <label class="form-quantity-wrapper">
-                                <input type="text" class="number-input" value="1" >
-                                <span class="form-quantity-controls">
-                                    <a href="#" class="minus"><img src="img/arrow-l.svg" alt=""></a>
-                                    <a href="#" class="plus"><img src="img/arrow-r.svg" alt=""></a>
-                                </span>
-                            </label>
-                        </div>
-                        <a href="#" class="book-form-row__delete">
-                            <img src="img/delete.svg" alt="">
-                        </a>
                     </div>
                     <a href="./components/row.html" class="book-form__button">
                         Add category +
                     </a>
+                   <div class="book-form-address accordion">
+                       <label  class="form-label">
+                           <span class="form-label-head">Address*</span>
+                           <input type="text" name="address" class="address-js book-form-address__input" data-related="#map" placeholder="Address of work execution">
+                       </label>
+                       <a href="#" class="book-form-address__button button button--red button--border accordion-head not-active">show on map</a>
+                       <div class="book-form-address-map accordion-content map" id="map" ></div>
+                   </div>
+                    <label class="book-form-photos">
+                        <span class="book-form-photos-placeholder">
+                            <span class="book-form-photos-placeholder__icon"><img src="img/add_circle.svg" alt=""></span>
+                            <span class="book-form-photos-placeholder__text">Click on the plus or drag the photos into the frame. Photos should be from different angles, large and clear. JPG or PNG (max 5MB, 1200x800 px recommended).</span>
+                        </span>
+                    </label>
                 </form>
             </div>
 
         </div>
     </section>
 </main>
+<script>
+    var googleMapApiKey = 'AIzaSyAt8S8uRnvbEkGevo-cdzjBRCRPGfsfbYI';
+    var getTypeURL = './components/type.html';
+</script>
+
 <script src="js/app.js"></script>
 </body>
 </html>

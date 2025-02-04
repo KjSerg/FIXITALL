@@ -5675,6 +5675,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _forms_show_password__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./forms/_show-password */ "./resources/js/components/forms/_show-password.js");
 /* harmony import */ var _plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../plugins/_fancybox-init */ "./resources/js/plugins/_fancybox-init.js");
 /* harmony import */ var _plugins_selectric_init__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../plugins/_selectric-init */ "./resources/js/plugins/_selectric-init.js");
+/* harmony import */ var _Map__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Map */ "./resources/js/components/Map.js");
+/* harmony import */ var _book_BookForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./book/BookForm */ "./resources/js/components/book/BookForm.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -5682,6 +5684,8 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
 
 
 
@@ -5731,6 +5735,450 @@ var Application = /*#__PURE__*/function () {
         (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_6__.selectrickInit)();
         (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_5__.fancyboxInit)();
         _this.showLoaderOnClick();
+        _this.googleMapInit();
+        var bool = new _book_BookForm__WEBPACK_IMPORTED_MODULE_8__["default"]();
+      });
+    }
+  }, {
+    key: "googleMapInit",
+    value: function googleMapInit() {
+      var map = new _Map__WEBPACK_IMPORTED_MODULE_7__.GoogleMap();
+      map.initAutocomplete();
+      this.$doc.on('click', '.book-form-address__button', function (e) {
+        setTimeout(function () {
+          map.initMaps();
+        }, 300);
+      });
+    }
+  }]);
+}();
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Map.js":
+/*!****************************************!*\
+  !*** ./resources/js/components/Map.js ***!
+  \****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   GoogleMap: () => (/* binding */ GoogleMap)
+/* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var GoogleMap = /*#__PURE__*/function () {
+  function GoogleMap() {
+    _classCallCheck(this, GoogleMap);
+    this.$doc = $(document);
+  }
+  return _createClass(GoogleMap, [{
+    key: "loadGoogleMapsScript",
+    value: function loadGoogleMapsScript() {
+      return new Promise(function (resolve, reject) {
+        if (document.getElementById('google-maps-script')) {
+          resolve();
+          return;
+        }
+        var script = document.createElement('script');
+        script.id = 'google-maps-script';
+        script.src = "https://maps.googleapis.com/maps/api/js?key=".concat(googleMapApiKey, "&libraries=places");
+        script.async = true;
+        script.defer = true;
+        script.onload = resolve;
+        script.onerror = function () {
+          return reject(new Error('Помилка завантаження скрипта Google Maps'));
+        };
+        document.head.appendChild(script);
+      });
+    }
+  }, {
+    key: "initAutocomplete",
+    value: function initAutocomplete() {
+      var t = this;
+      if ($('#google-maps-script').length === 0) {
+        this.init(this.initAutocomplete.bind(this));
+        return;
+      }
+      $('.address-js').each(function (index) {
+        var $t = $(this);
+        var id = $t.attr('id');
+        if (id === null || id === undefined) {
+          $t.attr('id', 'address-input-' + index);
+          id = $t.attr('id');
+        }
+        var addressField = document.querySelector('#' + id);
+        var options = {
+          fields: ["formatted_address", "address_components", "geometry", "name"],
+          strictBounds: false,
+          types: []
+        };
+        if ($t.hasClass('is-cities')) {
+          options = {
+            fields: ["formatted_address", "address_components", "geometry", "name"],
+            strictBounds: false,
+            types: ['(cities)'],
+            componentRestrictions: {
+              country: 'ua'
+            }
+          };
+        }
+        var autocomplete = new google.maps.places.Autocomplete(addressField, options);
+        autocomplete.addListener("place_changed", function () {
+          addressField.removeAttribute('data-selected');
+          t.fillInAddress(autocomplete, addressField);
+        });
+        $t.on('input', function () {
+          if ($(this).val().trim() === '') {
+            $(this).removeAttr('data-selected');
+          }
+        });
+      });
+    }
+  }, {
+    key: "init",
+    value: function init(fn) {
+      if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
+        this.loadGoogleMapsScript().then(function () {
+          return fn();
+        })["catch"](function (error) {
+          return console.error('Google Maps API не вдалося завантажити:', error);
+        });
+      } else {
+        fn();
+      }
+    }
+  }, {
+    key: "initMaps",
+    value: function initMaps() {
+      var t = this;
+      if ($('#google-maps-script').length === 0) {
+        this.init(this.initMaps.bind(this));
+        return;
+      }
+      $('.map:not(.init-map)').each(function () {
+        var $t = $(this);
+        var lat = $t.attr('data-lat');
+        var lng = $t.attr('data-lng');
+        var zoom = $t.attr('data-zoom');
+        if (lat && lng) {
+          lat = Number(lat);
+          lng = Number(lng);
+          zoom = zoom === undefined ? 10 : Number(zoom);
+          t.initMap($t, {
+            lat: lat,
+            lng: lng,
+            zoom: zoom
+          });
+        }
+      });
+    }
+  }, {
+    key: "fillInAddress",
+    value: function fillInAddress(autocomplete, addressField) {
+      var $addressField = $(addressField);
+      var place = autocomplete.getPlace();
+      var lat = place.geometry.location.lat();
+      var lng = place.geometry.location.lng();
+      var name = place.name;
+      var formatted_address = place.formatted_address;
+      var address1 = "";
+      var postcode = "";
+      var _iterator = _createForOfIteratorHelper(place.address_components),
+        _step;
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var component = _step.value;
+          var componentType = component.types[0];
+          switch (componentType) {
+            case "street_number":
+              {
+                address1 = component.long_name + ' ' + address1;
+                break;
+              }
+            case "route":
+              {
+                address1 += component.short_name;
+                break;
+              }
+            case "postal_code":
+              {
+                address1 += ', ' + component.long_name;
+                postcode = component.long_name;
+                break;
+              }
+            case "postal_code_suffix":
+              {
+                postcode = postcode + '-' + component.long_name;
+                break;
+              }
+            case "locality":
+              address1 += ' ' + component.long_name;
+              $('#user_city').val(component.long_name);
+              break;
+            case "administrative_area_level_1":
+              {
+                address1 += ' ' + component.short_name;
+                $('#user_region').val(component.long_name);
+                break;
+              }
+            case "country":
+              address1 += ' ' + component.long_name;
+              $('#user_country').val(component.long_name);
+              $('#user_country_code').val(component.short_name);
+              break;
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+      addressField.value = formatted_address;
+      addressField.setAttribute('data-selected', formatted_address);
+      $('#user_post_code').val(postcode);
+      $('#lat').val(lat);
+      $('#lng').val(lng);
+      if ($addressField.hasClass('book-form-address__input')) {
+        var related = $addressField.attr('data-related');
+        var $related = $(related);
+        if ($related.length === 0) return;
+        $addressField.closest('.book-form-address').find('.book-form-address__button').removeClass('not-active');
+        $related.attr('data-lat', lat).attr('data-lng', lng);
+        if (!$related.hasClass('init-map')) return;
+        this.initMap($related, {
+          lat: lat,
+          lng: lng
+        });
+      }
+    }
+  }, {
+    key: "initMap",
+    value: function initMap($selector) {
+      var _this = this;
+      var args = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+      if ($('#google-maps-script').length === 0) return;
+      var lat = args.lat || $selector.attr('data-lat');
+      var lng = args.lng || $selector.attr('data-lng');
+      var zoom = args.zoom || $selector.attr('data-zoom');
+      if (lat && lng) {
+        lat = Number(lat);
+        lng = Number(lng);
+        zoom = zoom === undefined ? 10 : Number(zoom);
+        var location = {
+          lat: lat,
+          lng: lng
+        };
+        var mapInstance = $selector.data("google-map");
+        var markerInstance = $selector.data("google-marker");
+        if (mapInstance) {
+          mapInstance.setCenter(location);
+          if (markerInstance) {
+            markerInstance.setPosition(location);
+          } else {
+            markerInstance = new google.maps.Marker({
+              position: location,
+              map: mapInstance
+            });
+            $selector.data("google-marker", markerInstance);
+          }
+        } else {
+          var map = new google.maps.Map($selector[0], {
+            zoom: zoom,
+            center: location
+          });
+          var marker = new google.maps.Marker({
+            position: location,
+            map: map
+          });
+          $selector.data("google-map", map);
+          $selector.data("google-marker", marker);
+          google.maps.event.addListener(map, 'dragend', function () {
+            var newCenter = map.getCenter();
+            var lat = newCenter.lat();
+            var lng = newCenter.lng();
+            var id = $selector.attr('id');
+            var $field = _this.$doc.find('input[data-related="#' + id + '"]');
+            marker.setPosition(newCenter);
+            $('#lat').val(lat);
+            $('#lng').val(lng);
+            if ($field.length === 0) return;
+            $field.attr('data-lat', lat);
+            $field.attr('data-lng', lng);
+            $field.attr('data-selected', "".concat(lat, ";").concat(lng));
+            $field.val("".concat(lat, ";").concat(lng));
+            // this.updateCenterInfo(newCenter, $selector);
+          });
+        }
+        $selector.addClass('init-map');
+      }
+    }
+  }, {
+    key: "updateCenterInfo",
+    value: function updateCenterInfo(location, $selector) {
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+        location: location
+      }, function (results, status) {
+        if (status === 'OK' && results[0]) {
+          var address = results[0].formatted_address;
+          console.log('Центр карти:', location.lat(), location.lng());
+          console.log('Адреса центру:', address);
+
+          // Збереження даних у змінну або data-атрибут
+          window.mapCenterData = {
+            lat: location.lat(),
+            lng: location.lng(),
+            address: address
+          };
+          $selector.attr('data-lat', location.lat());
+          $selector.attr('data-lng', location.lng());
+          $selector.attr('data-address', address);
+        } else {
+          console.error('Не вдалося отримати адресу:', status);
+        }
+      });
+    }
+  }]);
+}();
+
+/***/ }),
+
+/***/ "./resources/js/components/book/BookForm.js":
+/*!**************************************************!*\
+  !*** ./resources/js/components/book/BookForm.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ BookForm)
+/* harmony export */ });
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/_helpers */ "./resources/js/components/utils/_helpers.js");
+/* harmony import */ var _plugins_selectric_init__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../plugins/_selectric-init */ "./resources/js/plugins/_selectric-init.js");
+/* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! selectric */ "./node_modules/selectric/public/jquery.selectric.js");
+/* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(selectric__WEBPACK_IMPORTED_MODULE_2__);
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+
+var BookForm = /*#__PURE__*/function () {
+  function BookForm() {
+    _classCallCheck(this, BookForm);
+    this.$doc = $(document);
+    this.$body = $("body");
+    this.rowCount = 1;
+    this.parser = new DOMParser();
+    this.init();
+  }
+  return _createClass(BookForm, [{
+    key: "init",
+    value: function init() {
+      this.addAndRemoveRows();
+      this.categorySelectInit();
+    }
+  }, {
+    key: "addAndRemoveRows",
+    value: function addAndRemoveRows() {
+      var t = this;
+      this.$doc.on('click', '.book-form-row__delete', function (e) {
+        e.preventDefault();
+        var $row = $(this).closest('.book-form-row');
+        $row.find('.select').each(function () {
+          $('select').selectric('destroy');
+        });
+        $row.remove();
+        t.rowCount = t.rowCount - 1;
+        t.changeOtherStatus();
+      });
+      this.$doc.on('click', '.book-form__button', function (e) {
+        e.preventDefault();
+        var $t = $(this);
+        var url = $t.attr('href');
+        if (url === undefined) return;
+        if (url === '#') return;
+        (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+        $.ajax({
+          type: 'get',
+          url: url
+        }).done(function (response) {
+          if (response) {
+            $t.before(response);
+            (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_1__.selectrickInit)();
+            t.rowCount = t.rowCount + 1;
+            t.changeOtherStatus();
+          }
+          (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
+        });
+      });
+    }
+  }, {
+    key: "changeOtherStatus",
+    value: function changeOtherStatus() {
+      var count = this.rowCount;
+      var $option = this.$doc.find('option[value="other"]');
+      var $select = $option.closest('select');
+      $select.selectric('destroy');
+      $select.removeClass('selectric-init');
+      if (count > 1) {
+        $option.attr('disabled', 'disabled');
+      } else {
+        $option.removeAttr('disabled');
+      }
+      (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_1__.selectrickInit)();
+    }
+  }, {
+    key: "categorySelectInit",
+    value: function categorySelectInit() {
+      var $d = this.$doc;
+      $d.on('change', '.category-select', function (e) {
+        var $select = $(this);
+        var $row = $select.closest('.book-form-row');
+        var $form = $select.closest('.book-form');
+        var $type = $row.find('.type-select');
+        var val = $select.val();
+        var $button = $d.find('.book-form__button');
+        if (val === 'other') {
+          $button.hide();
+          $form.find('.book-form-address').hide();
+          $row.find('.form-quantity').addClass('not-active');
+          $type.closest('.form-label').addClass('not-active');
+          return;
+        }
+        $button.show();
+        $form.find('.book-form-address').show();
+        (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+        $.ajax({
+          type: 'get',
+          url: getTypeURL
+        }).done(function (response) {
+          if (response) {
+            $type.selectric('destroy');
+            $type.removeClass('selectric-init');
+            $type.html(response);
+            (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_1__.selectrickInit)();
+            $type.closest('.form-label').removeClass('not-active');
+            $row.find('.form-quantity').removeClass('not-active');
+          }
+          (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
+        });
       });
     }
   }]);
@@ -5750,18 +6198,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   numberInput: () => (/* binding */ numberInput)
 /* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 var numberInput = function numberInput() {
-  var inputs = document.querySelectorAll('.number-input');
-  inputs.forEach(function (input) {
-    input.addEventListener('input', function (event) {
-      input.value = input.value.replace(/[^0-9.-]/g, '');
-      if ((input.value.match(/\./g) || []).length > 1) {
-        input.value = input.value.replace(/\.(?=[^.]*$)/, '');
+  var $doc = $(document);
+  $doc.on('input', '.number-input', function () {
+    var $i = $(this);
+    var value = $i.val().replace(/[^0-9.-]/g, '');
+    if ((value.match(/\./g) || []).length > 1) {
+      value = value.replace(/\.(?=[^.]*$)/, '');
+    }
+    if (value.indexOf('-') > 0) {
+      value = value.replace('-', '');
+    }
+    $i.val(value);
+  });
+  $doc.on('click', '.plus', function (event) {
+    event.preventDefault();
+    var $t = $(this);
+    var $wrapper = $t.closest('.form-quantity');
+    var $i = $wrapper.find('.number-input');
+    if ($i.length === 0) return;
+    var val = Number($i.val());
+    var max = $i.data('max');
+    val = isNaN(val) ? 1 : val;
+    if (max) {
+      max = Number(max);
+      if (!isNaN(max)) {
+        $i.val(val < max ? val + 1 : max);
+        return;
       }
-      if (input.value.indexOf('-') > 0) {
-        input.value = input.value.replace('-', '');
-      }
-    });
+    }
+    $i.val(val + 1);
+  });
+  $doc.on('click', '.minus', function (event) {
+    event.preventDefault();
+    var $t = $(this);
+    var $wrapper = $t.closest('.form-quantity');
+    var $i = $wrapper.find('.number-input');
+    if ($i.length === 0) return;
+    var val = Number($i.val());
+    val = isNaN(val) ? 1 : val;
+    $i.val(val > 2 ? val - 1 : 1);
   });
 };
 

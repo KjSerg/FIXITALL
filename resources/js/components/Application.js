@@ -5,7 +5,8 @@ import {numberInput} from "./forms/_number-input";
 import {showPassword} from "./forms/_show-password";
 import {fancyboxInit} from "../plugins/_fancybox-init";
 import {selectrickInit} from "../plugins/_selectric-init";
-import addAndRemoveRows from "./book/_get-row";
+import {GoogleMap} from "./Map";
+import BookForm from "./book/BookForm";
 
 export default class Application {
     constructor() {
@@ -44,7 +45,18 @@ export default class Application {
             selectrickInit();
             fancyboxInit();
             this.showLoaderOnClick();
-            addAndRemoveRows();
+            this.googleMapInit();
+            const bool = new BookForm();
+        });
+    }
+
+    googleMapInit() {
+        const map = new GoogleMap();
+        map.initAutocomplete();
+        this.$doc.on('click', '.book-form-address__button', function (e) {
+            setTimeout(function () {
+                map.initMaps();
+            }, 300);
         });
     }
 }
