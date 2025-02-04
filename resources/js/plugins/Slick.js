@@ -11,37 +11,22 @@ export default class Slick {
             const $slider = $(this);
             const $prev = $(this).closest('section').find('.slick__prev');
             const $next = $(this).closest('section').find('.slick__next');
-            const $progress = $(this).closest('section').find('.slider-progress');
             $slider.slick({
                 slidesToShow: 3,
                 arrows: true,
                 prevArrow: $prev,
                 nextArrow: $next,
                 dots: false,
-                appendDots: $progress,
                 responsive: [
                     {
-                        breakpoint: 2000,
-                        settings: {
-                            slidesToShow: 3
-                        }
-                    },
-                    {
-                        breakpoint: 1600,
+                        breakpoint: 1100,
                         settings: {
                             slidesToShow: 2
                         }
                     },
                     {
-                        breakpoint: 1025,
+                        breakpoint: 767,
                         settings: {
-                            slidesToShow: 1
-                        }
-                    },
-                    {
-                        breakpoint: 450,
-                        settings: {
-                            centerMode: false,
                             slidesToShow: 1
                         }
                     },

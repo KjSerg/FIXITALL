@@ -4,6 +4,12 @@
   flex-wrap: wrap;
   gap: 1.6rem;
   align-items: flex-end;
+  button{
+    outline: none;
+    width: 100%;
+    border: none;
+    cursor: pointer;
+  }
   &-label{
     position: relative;
     display: block;

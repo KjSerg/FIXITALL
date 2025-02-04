@@ -3,6 +3,11 @@
     margin-right: 2rem;
     text-align: left;
     margin-bottom: 0;
+    @media (max-width: 800px){
+      margin-right: 0;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
   }
   &-section{
     &-head{
@@ -10,10 +15,15 @@
       align-items: flex-start;
       justify-content: space-between;
       margin-bottom: 5rem;
+      @media (max-width: 800px){
+        flex-direction: column;
+        align-items: center;
+      }
     }
   }
   &-list{
     display: flex;
+    margin-bottom: 3.2rem;
     &-item{
       margin: auto;
       margin-top: 1rem;
@@ -22,6 +32,11 @@
       max-width: 50.4rem;
       padding: 4rem;
       border: 1px solid #D0D4DD;
+      @media (max-width: 1600px){
+        width: 96%;
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
       &__text{
         color: #A3A8B3;
       }
