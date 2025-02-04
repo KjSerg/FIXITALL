@@ -31,31 +31,6 @@ export default class FormHandler {
 
     initialize() {
         this.forms.on('submit', (e) => this.handleSubmit(e));
-        this.$document.on('change', '.form-avatar input[type="file"]', function (event) {
-            const file = event.target.files[0];
-            const input = $(this)[0];
-            const dataLimit = parseInt(input.dataset.limit, 10) * 1024 * 1024;
-            const preview = input.closest(".form-avatar-label").querySelector(".preview img");
-            if (file) {
-                if (file.size > dataLimit) {
-                    input.value = "";
-                    setDefaultImage(preview);
-                    $.fancybox.open($('#file-error-modal'));
-                    return;
-                }
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    if (preview) {
-                        preview.src = e.target.result;
-                    }
-                };
-                reader.readAsDataURL(file);
-            } else {
-                setDefaultImage(preview);
-            }
-            $(this).closest('form').trigger('submit');
-        });
-
     }
 
     handleSubmit(event) {

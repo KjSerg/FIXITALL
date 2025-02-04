@@ -7,6 +7,7 @@ import {fancyboxInit} from "../plugins/_fancybox-init";
 import {selectrickInit} from "../plugins/_selectric-init";
 import {GoogleMap} from "./Map";
 import BookForm from "./book/BookForm";
+import FormHandler from "./forms/FormHandler";
 
 export default class Application {
     constructor() {
@@ -47,6 +48,7 @@ export default class Application {
             this.showLoaderOnClick();
             this.googleMapInit();
             const bool = new BookForm();
+            const form = new FormHandler('.form-js');
         });
     }
 

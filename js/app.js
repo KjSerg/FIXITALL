@@ -5677,6 +5677,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugins_selectric_init__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../plugins/_selectric-init */ "./resources/js/plugins/_selectric-init.js");
 /* harmony import */ var _Map__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Map */ "./resources/js/components/Map.js");
 /* harmony import */ var _book_BookForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./book/BookForm */ "./resources/js/components/book/BookForm.js");
+/* harmony import */ var _forms_FormHandler__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./forms/FormHandler */ "./resources/js/components/forms/FormHandler.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -5684,6 +5685,7 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -5737,6 +5739,7 @@ var Application = /*#__PURE__*/function () {
         _this.showLoaderOnClick();
         _this.googleMapInit();
         var bool = new _book_BookForm__WEBPACK_IMPORTED_MODULE_8__["default"]();
+        var form = new _forms_FormHandler__WEBPACK_IMPORTED_MODULE_9__["default"]('.form-js');
       });
     }
   }, {
@@ -6085,6 +6088,8 @@ var BookForm = /*#__PURE__*/function () {
     this.$doc = $(document);
     this.$body = $("body");
     this.rowCount = 1;
+    this.service = '';
+    this.category = '';
     this.parser = new DOMParser();
     this.init();
   }
@@ -6093,6 +6098,136 @@ var BookForm = /*#__PURE__*/function () {
     value: function init() {
       this.addAndRemoveRows();
       this.categorySelectInit();
+      this.serviceSelectInit();
+      this.fileReader();
+    }
+  }, {
+    key: "fileReader",
+    value: function fileReader() {
+      this.$doc.on('change', '.book-form-file1', function (event) {
+        var files = event.target.files;
+        var input = $(this)[0];
+        var $i = $(this);
+        var $l = $i.closest('.form-label');
+        var $p = $l.find('.book-form-photos-placeholder');
+        var $r = $l.find('.book-form-photos-results');
+        var dataLimit = parseInt(input.dataset.limit || 1, 10) * 1024 * 1024;
+        $r.html('');
+        $p.show();
+        $r.hide();
+        if (files.length > 0) {
+          for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+            console.log(file.size);
+            console.log(dataLimit);
+            if (file.size > dataLimit) {
+              input.value = "";
+              alert('Max file size: ' + (input.dataset.limit || 1) + 'MB');
+              $p.show();
+              $r.hide();
+              return;
+            }
+            reader.onload = function (e) {
+              $r.append("<span><img src=\"".concat(e.target.result, "\" alt=\"\"></span>"));
+            };
+            reader.readAsDataURL(file);
+          }
+          $p.hide();
+          $r.show();
+        }
+      });
+      $(document).ready(function () {
+        var $dropZone = $('.drop-zone');
+        var $fileInput = $('.book-form-file');
+        var $results = $('.book-form-photos-results');
+        var maxFiles = parseInt($fileInput.data('limit')) || 5;
+        var filesArray = [];
+        var $l = $fileInput.closest('.form-label');
+        var $p = $l.find('.book-form-photos-placeholder');
+        var $r = $l.find('.book-form-photos-results');
+        $dropZone.on('dragover', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).addClass('dragover');
+        });
+        $dropZone.on('dragleave', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).removeClass('dragover');
+        });
+        $dropZone.on('drop', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          $(this).removeClass('dragover');
+          var files = e.originalEvent.dataTransfer.files;
+          handleFiles(files);
+        });
+        $fileInput.on('change', function (e) {
+          var files = e.target.files;
+          handleFiles(files);
+        });
+        function handleFiles(files) {
+          var validExtensions = $fileInput.attr('accept').split(',');
+          var maxSizeAttr = $fileInput.attr('data-max-size') || '5';
+          var maxSize = Number(maxSizeAttr) * 1024 * 1024;
+          for (var i = 0; i < files.length; i++) {
+            if (filesArray.length >= maxFiles) {
+              alert("You can upload a maximum of ".concat(maxFiles, " files."));
+              break;
+            }
+            var file = files[i];
+            if (!validExtensions.includes(file.type)) {
+              alert('Unsupported file type. Only ' + $fileInput.attr('accept') + ' are allowed.');
+              continue;
+            }
+            if (file.size > maxSize) {
+              alert('File size exceeds ' + maxSizeAttr + 'MB.');
+              continue;
+            }
+            filesArray.push(file);
+            previewFile(file);
+          }
+          updateFileInput();
+        }
+        function previewFile(file) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var $img = $('<img>', {
+              src: e.target.result,
+              alt: ''
+            });
+            var $span = $('<span>').append($img);
+            var $removeBtn = $('<button>', {
+              text: '×',
+              "class": 'remove-btn'
+            });
+            $span.append($removeBtn);
+            $results.append($span);
+            $removeBtn.on('click', function () {
+              var index = $results.find('span').index($span);
+              filesArray.splice(index, 1);
+              $span.remove();
+              updateFileInput();
+            });
+          };
+          reader.readAsDataURL(file);
+        }
+        function updateFileInput() {
+          var dataTransfer = new DataTransfer();
+          filesArray.forEach(function (file) {
+            dataTransfer.items.add(file);
+          });
+          $fileInput[0].files = dataTransfer.files;
+          if (dataTransfer.files.length === 0) {
+            $p.show();
+            $r.hide();
+          } else {
+            $p.hide();
+            $r.show();
+          }
+        }
+      });
     }
   }, {
     key: "addAndRemoveRows",
@@ -6117,7 +6252,7 @@ var BookForm = /*#__PURE__*/function () {
         (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
         $.ajax({
           type: 'get',
-          url: url
+          url: t.makeUrl(url)
         }).done(function (response) {
           if (response) {
             $t.before(response);
@@ -6148,6 +6283,7 @@ var BookForm = /*#__PURE__*/function () {
     key: "categorySelectInit",
     value: function categorySelectInit() {
       var $d = this.$doc;
+      var t = this;
       $d.on('change', '.category-select', function (e) {
         var $select = $(this);
         var $row = $select.closest('.book-form-row');
@@ -6155,6 +6291,7 @@ var BookForm = /*#__PURE__*/function () {
         var $type = $row.find('.type-select');
         var val = $select.val();
         var $button = $d.find('.book-form__button');
+        t.category = $select.val();
         if (val === 'other') {
           $button.hide();
           $form.find('.book-form-address').hide();
@@ -6167,7 +6304,7 @@ var BookForm = /*#__PURE__*/function () {
         (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
         $.ajax({
           type: 'get',
-          url: getTypeURL
+          url: t.makeUrl(getTypeURL)
         }).done(function (response) {
           if (response) {
             $type.selectric('destroy');
@@ -6181,9 +6318,399 @@ var BookForm = /*#__PURE__*/function () {
         });
       });
     }
+  }, {
+    key: "serviceSelectInit",
+    value: function serviceSelectInit() {
+      var $d = this.$doc;
+      var t = this;
+      $d.on('change', '.service-select', function (e) {
+        var $select = $(this);
+        t.service = $select.val();
+        console.log($select.val());
+        console.log(this.service);
+        var $form = $select.closest('.book-form');
+        var $delete = $d.find('.book-form-row__delete');
+        var $categories = $form.find('.category-select');
+        var $types = $form.find('.type-select');
+        var $quantity = $form.find('.form-quantity');
+        $delete.each(function () {
+          $(this).trigger('click');
+        });
+        $types.each(function () {
+          $(this).closest('.form-label').addClass('not-active');
+        });
+        $quantity.each(function () {
+          $(this).addClass('not-active');
+        });
+        (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+        $.ajax({
+          type: 'get',
+          url: t.makeUrl(getCategoriesURL)
+        }).done(function (response) {
+          if (response) {
+            $categories.selectric('destroy');
+            $categories.removeClass('selectric-init');
+            $categories.html(response);
+            (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_1__.selectrickInit)();
+            $categories.closest('.form-label').removeClass('not-active');
+          }
+          (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
+        });
+      });
+    }
+  }, {
+    key: "makeUrl",
+    value: function makeUrl(url) {
+      if (!url) return url;
+      url = url.includes('?') ? url + '&' : url + '?';
+      url = url + 'service=' + this.service + '&' + 'category=' + this.category;
+      return url;
+    }
   }]);
 }();
 
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/FormHandler.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/forms/FormHandler.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ FormHandler)
+/* harmony export */ });
+/* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/_helpers */ "./resources/js/components/utils/_helpers.js");
+/* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! selectric */ "./node_modules/selectric/public/jquery.selectric.js");
+/* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(selectric__WEBPACK_IMPORTED_MODULE_1__);
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
+function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
+function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
+var FormHandler = /*#__PURE__*/function () {
+  function FormHandler(selector) {
+    _classCallCheck(this, FormHandler);
+    this.$document = $(document);
+    this.forms = $(document).find(selector);
+    this.initialize();
+    this.selectInit();
+  }
+  return _createClass(FormHandler, [{
+    key: "selectInit",
+    value: function selectInit() {
+      var t = this;
+      this.$document.find('.set-cities-js').on('change', function (e) {
+        var $select = $(this);
+        console.log($select);
+        var selector = $select.attr('data-cities-selector');
+        console.log(selector);
+        if (selector === undefined) return;
+        var $selector = $(document).find(selector);
+        if ($selector.length === 0) return;
+        var val = $select.val();
+        if (val.length === 0 || !val) return;
+        t.setCitiesSelectValues(val, $selector);
+      });
+      $(document).on('change', '.trigger-form-js', function (e) {
+        var $select = $(this);
+        $select.closest('form').submit();
+      });
+    }
+  }, {
+    key: "initialize",
+    value: function initialize() {
+      var _this = this;
+      this.forms.on('submit', function (e) {
+        return _this.handleSubmit(e);
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var $form = $(event.target);
+      var formId = $form.attr('id');
+      if (!this.validateForm($form)) return;
+      var formData = new FormData(document.getElementById(formId));
+      this.showPreloader();
+      this.sendRequest({
+        type: $form.attr('method') || "POST",
+        url: $form.attr('action') || adminAjax,
+        processData: false,
+        contentType: false,
+        data: formData
+      });
+      if (!$form.hasClass('no-reset')) $form.trigger('reset');
+    }
+  }, {
+    key: "validateForm",
+    value: function validateForm($form) {
+      var _this2 = this;
+      var isValid = true;
+      var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+
+      // Validate inputs and textareas
+      $form.find('input, textarea').each(function (_, input) {
+        var $input = $(input);
+        var $label = $input.closest('.form-label');
+        var value = $input.val().trim();
+        var regExp = $input.data('reg') ? new RegExp($input.data('reg')) : null;
+        if ($input.attr('required') && (!value || regExp && !regExp.test(value))) {
+          isValid = false;
+          $input.addClass('error');
+          $label.addClass('error');
+        } else {
+          $input.removeClass('error');
+          $label.removeClass('error');
+        }
+      });
+
+      // Validate select elements
+      $form.find('select[required]').each(function (_, select) {
+        var $select = $(select);
+        var $label = $select.closest('.form-label');
+        var value = $select.val();
+        var test = !value || value === null || Array.isArray(value) && value.length === 0;
+        if (test) {
+          isValid = false;
+          $label.addClass('error');
+        } else {
+          $label.removeClass('error');
+        }
+        console.log(test);
+        console.log(value);
+        console.log($label);
+      });
+
+      // Validate custom required inputs
+      if (!this.validateRequiredInputs($form)) isValid = false;
+
+      // Validate consent checkbox
+      var $consent = $form.find('input[name="consent"]');
+      if ($consent.length && !$consent.prop('checked')) {
+        $consent.closest('.form-consent').addClass('error');
+        isValid = false;
+      } else {
+        $consent.closest('.form-consent').removeClass('error');
+      }
+
+      // Helper function for validating passwords
+      var validatePasswordFields = function validatePasswordFields(passwordField1, passwordField2, regex, errorMessage) {
+        var $field1 = $form.find("[name=\"".concat(passwordField1, "\"]"));
+        var $field2 = $form.find("[name=\"".concat(passwordField2, "\"]"));
+        var value1 = $field1.val();
+        var value2 = $field2.val();
+        var toggleErrorClass = function toggleErrorClass(hasError) {
+          [$field1, $field2].forEach(function ($field) {
+            $field.toggleClass('error', hasError);
+            $field.closest('.form-label').toggleClass('error', hasError);
+          });
+        };
+        if ($field1.length > 0 && $field2.length > 0) {
+          if (value1 !== value2) {
+            isValid = false;
+            toggleErrorClass(true);
+          } else if (!regex.test(value1)) {
+            isValid = false;
+            toggleErrorClass(true);
+            _this2.showMessage(errorMessage, 'error');
+          } else {
+            toggleErrorClass(false);
+          }
+        }
+      };
+
+      // Validate new and repeated passwords
+      validatePasswordFields('new_password', 'new_password_repeat', passwordRegex, passwordErrorString);
+
+      // Validate old and new passwords
+      var $field1 = $form.find("[name=\"old_password\"]");
+      var $field2 = $form.find("[name=\"password\"]");
+      if ($field1.length > 0 && $field2.length > 0) {
+        var value1 = $field1.val();
+        var value2 = $field2.val();
+        if (value1.length > 0 && value2.length > 0) {
+          if (!passwordRegex.test(value2)) {
+            isValid = false;
+            $field2.addClass('error');
+            $field2.closest('.form-label').addClass('error');
+            this.showMessage(passwordErrorString, 'error');
+          } else {
+            $field2.removeClass('error');
+            $field2.closest('.form-label').removeClass('error');
+          }
+        }
+      }
+      return isValid;
+    }
+  }, {
+    key: "validateRequiredInputs",
+    value: function validateRequiredInputs($form) {
+      var inputsGroup = {};
+      var isValid = true;
+      $form.find('[data-required]').each(function (_, input) {
+        var $input = $(input);
+        var name = $input.attr('name');
+        if (name) {
+          if (!inputsGroup[name]) inputsGroup[name] = [];
+          if ($input.prop('checked')) {
+            inputsGroup[name].push($input.val());
+          }
+        }
+      });
+      Object.keys(inputsGroup).forEach(function (key) {
+        var isChecked = inputsGroup[key].length > 0;
+        $form.find("[name=\"".concat(key, "\"]")).closest('.form-label').toggleClass('error', !isChecked);
+        if (!isChecked) isValid = false;
+      });
+      return isValid;
+    }
+  }, {
+    key: "sendRequest",
+    value: function sendRequest(options) {
+      var _this3 = this;
+      $.ajax(options).done(function (response) {
+        if (response) {
+          var isJson = _this3.isJsonString(response);
+          if (isJson) {
+            var data = JSON.parse(response);
+            var message = data.msg || '';
+            var text = data.msg_text || '';
+            var type = data.type || '';
+            var userName = data.name || '';
+            var url = data.url;
+            var reload = data.reload || '';
+            var avatarURL = data.avatar_url || '';
+            var avatarID = data.avatar_id || '';
+            if (userName) {
+              _this3.$document.find('.sidebar-name, user-name-js').text(userName);
+            }
+            if (avatarURL) {
+              _this3.$document.find('.avatar-js').attr('src', avatarURL);
+            }
+            if (avatarID) {
+              _this3.$document.find('.avatar-id').val(avatarID);
+            }
+            if (message) _this3.showMessage(message, type, text);
+            if (url) {
+              window.location.href = url;
+              return;
+            }
+            if (reload === 'true') {
+              if (message) {
+                setTimeout(function () {
+                  window.location.reload();
+                }, 2000);
+                return;
+              }
+              window.location.reload();
+              return;
+            }
+          } else {
+            _this3.showMessage(response);
+          }
+        }
+        _this3.hidePreloader();
+      });
+    }
+  }, {
+    key: "isJsonString",
+    value: function isJsonString(str) {
+      try {
+        JSON.parse(str);
+        return true;
+      } catch (_unused) {
+        return false;
+      }
+    }
+  }, {
+    key: "showMessage",
+    value: function showMessage(message) {
+      var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+      var text = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+      var selector = '#dialog' + (type ? '-' + type : '');
+      var $modal = $(document).find(selector);
+      if ($modal.length === 0) {
+        alert(message);
+        return;
+      }
+      $modal.find('.modal__title').html(message);
+      $modal.find('.modal__text').html(text);
+      $.fancybox.open($modal);
+      setTimeout(function () {
+        return $.fancybox.close();
+      }, 3000);
+    }
+  }, {
+    key: "showPreloader",
+    value: function showPreloader() {
+      $('.preloader').addClass('active');
+    }
+  }, {
+    key: "hidePreloader",
+    value: function hidePreloader() {
+      $('.preloader').removeClass('active');
+    }
+  }, {
+    key: "setCitiesSelectValues",
+    value: function setCitiesSelectValues(countryID, $selector) {
+      var _this4 = this;
+      var $s = $selector.find('select');
+      var hint = $s.find('option').eq(0).text().trim();
+      var options = "<option selected disabled value=\"\">".concat(hint, "</option>");
+      $selector.addClass('not-active');
+      $s.removeAttr('required');
+      this.showPreloader();
+      var opt = {
+        type: 'POST',
+        url: adminAjax,
+        data: {
+          action: 'get_cities_object',
+          countryID: countryID
+        }
+      };
+      $.ajax(opt).done(function (response) {
+        if (response) {
+          var isJson = _this4.isJsonString(response);
+          if (isJson) {
+            var data = JSON.parse(response);
+            var message = data.msg || '';
+            var cities = data.cities || {};
+            var type = data.type || '';
+            if (message) _this4.showMessage(message, type);
+            if (!(0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.isObjectEmpty)(cities)) {
+              $selector.removeClass('not-active');
+              $s.attr('required', 'required');
+              for (var cityID in cities) {
+                var name = cities[cityID];
+                options += "<option value=\"".concat(cityID, "\">").concat(name, "</option>");
+              }
+              $s.html(options);
+              if ($s.hasClass('select')) $s.prop('selectedIndex', 0).selectric('refresh');
+            }
+          } else {
+            _this4.showMessage(response);
+          }
+        }
+        _this4.hidePreloader();
+      });
+    }
+  }]);
+}();
+
+function setDefaultImage(preview) {
+  if (preview) {
+    preview.src = preview.getAttribute('data-default');
+  }
+}
 
 /***/ }),
 
