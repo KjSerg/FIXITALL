@@ -6736,6 +6736,7 @@ var numberInput = function numberInput() {
     if (value.indexOf('-') > 0) {
       value = value.replace('-', '');
     }
+    if ($i.attr('type') === 'tel') value = '+' + value;
     $i.val(value);
   });
   $doc.on('click', '.plus', function (event) {

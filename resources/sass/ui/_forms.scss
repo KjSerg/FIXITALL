@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   gap: 1.6rem;
   align-items: flex-end;
+  justify-content: space-between;
 
   button {
     outline: none;
@@ -22,7 +23,18 @@
     font-style: normal;
     font-weight: 500;
     line-height: 165%;
-
+    &.half{
+      width: calc(50% - 1.6rem);
+      @media (max-width: 450px){
+        width: 100%;
+      }
+    }
+    &.third{
+      width: calc(33.3% - 1.6rem);
+      @media (max-width: 768px){
+        width: 100%;
+      }
+    }
     &-head {
       display: block;
       margin-bottom: 0.8rem;

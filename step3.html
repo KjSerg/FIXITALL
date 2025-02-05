@@ -34,7 +34,7 @@
 
                     <div class="book-section-head__step-text">Personal information</div>
                 </div>
-                <div class="book-section-head__step ">
+                <div class="book-section-head__step  active">
                     <span>4</span>
 
                     <div class="book-section-head__step-text">Cost calculation</div>
@@ -44,6 +44,7 @@
 
                     <div class="book-section-head__step-text">Time and date</div>
                 </div>
+
                 <div class="book-section-head__step ">
                     <span>6</span>
 
@@ -52,41 +53,74 @@
             </div>
             <div class="book-container">
                 <div class="book-form-container">
-                    <div class="book__title">
-                        Personal information
+                    <div class="book-result">
+                        <div class="book__title">
+                            Service Request Details
+                        </div>
+                        <ul>
+                            <li><strong>Company name:</strong>FIXITALL handyman services</li>
+                            <li><strong>Address:</strong>123 Main Street, Your City, Your Country</li>
+                            <li><strong>Phone:</strong>+1 (000) 123-4567</li>
+                            <li><strong>Email:</strong>contact@fixitall.com</li>
+                        </ul>
                     </div>
-
-                    <form method="post" class="book-form form form-js" id="book-form">
-                        <label class="form-label half">
-                            <span class="form-label-head">First name*</span>
-                            <input type="text" required name="first_name" placeholder="First name">
-                        </label>
-                        <label class="form-label half">
-                            <span class="form-label-head">Last name*</span>
-                            <input type="text" required name="last_name" placeholder="Last name">
-                        </label>
-                        <label class="form-label third">
-                            <span class="form-label-head">Email*</span>
-                            <input type="email" required name="email" placeholder="Enter your email address">
-                        </label>
-                        <label class="form-label third">
-                            <span class="form-label-head">Phone number*</span>
-                            <input type="tel" required name="tel" class="number-input" placeholder="Enter your Phone">
-                        </label>
-                        <label class="form-label third">
-                            <span class="form-label-head">Method of communication*</span>
-                            <select class="select" required name="method">
-                                <option value="" selected disabled>Select your preferred method of communication
-                                </option>
-                                <option>Method 1</option>
-                                <option>Method 2</option>
-                            </select>
-                        </label>
-                    </form>
+                    <div class="book-result">
+                        <div class="book__title">
+                            Company providing services
+                        </div>
+                        <ul>
+                            <li><strong>Invoice date:</strong>23 January 2025</li>
+                            <li><strong>Order number:</strong>22334</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="book-form-container">
+                    <div class="book-order">
+                        <div class="book__title">
+                            Price
+                        </div>
+                        <ul class="book-order-list">
+                            <li class="book-order-list-item">
+                                <div class="book-order-list-item__data">
+                                    <strong>Installation and replacement of household electrical equipment</strong>
+                                    <p> Installation of electrical points (sockets and switches)</p>
+                                </div>
+                                <div class="book-order-list-item__price">$150</div>
+                            </li>
+                            <li class="book-order-list-item">
+                                <div class="book-order-list-item__data">
+                                    <strong>Assembly and installation of lighting devices</strong>
+                                    <p>
+                                        Installation and connection of lighting devices on the wall</p>
+                                </div>
+                                <div class="book-order-list-item__price">$150</div>
+                            </li>
+                            <li class="book-order-list-item">
+                                <div class="book-order-list-item__data">
+                                    <strong>VAT:</strong>
+                                </div>
+                                <div class="book-order-list-item__price">$1</div>
+                            </li>
+                            <li class="book-order-list-item">
+                                <div class="book-order-list-item__data">
+                                    <strong>Total:</strong>
+                                </div>
+                                <div class="book-order-list-item__price">$301</div>
+                            </li>
+                        </ul>
+                        <div class="book-order-deposit">
+                            <div class="book-order-deposit__title">Deposit amount:</div>
+                            <div class="book-order-deposit__price">$50</div>
+                            <div class="book-order-deposit__text text">The price may change depending on the progress of
+                                the work.
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="book-form-button-wrap">
-                <a href="#book-form" class="book-form__trigger-back button button--red button--border ">
+                <a href="#" class="book-form__trigger-back button button--red button--border ">
                     <span class="icon"><img src="img/arrow-left.svg" alt=""></span>
                     Back
                 </a>
@@ -94,6 +128,11 @@
                     continue
                     <span class="icon"><img src="img/arrow_left_alt.svg" alt=""></span>
                 </a>
+                <div class="book-button-cancel-wrap">
+                    <a href="#" class="book-button-cancel ">
+                        Cancel
+                    </a>
+                </div>
             </div>
 
         </div>

@@ -11,6 +11,7 @@ export const numberInput = () => {
         if (value.indexOf('-') > 0) {
             value = value.replace('-', '');
         }
+        if($i.attr('type') === 'tel') value = '+' + value;
         $i.val(value);
     });
 
