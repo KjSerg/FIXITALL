@@ -6,6 +6,7 @@ export default class BookForm {
     constructor() {
         this.$doc = $(document);
         this.$body = $("body");
+        this.$form = this.$doc.find('.book-form');
         this.rowCount = 1;
         this.service = '';
         this.category = '';
@@ -18,9 +19,10 @@ export default class BookForm {
         this.categorySelectInit();
         this.serviceSelectInit();
         this.fileReader();
+        this.questionsListener();
     }
 
-    fileReader(){
+    fileReader() {
 
         this.$doc.on('change', '.book-form-file1', function (event) {
             const files = event.target.files;
@@ -34,7 +36,7 @@ export default class BookForm {
             $p.show();
             $r.hide();
             if (files.length > 0) {
-                for (let i = 0; i < files.length; i++){
+                for (let i = 0; i < files.length; i++) {
                     const file = files[i];
                     const reader = new FileReader();
                     console.log(file.size)
@@ -55,7 +57,7 @@ export default class BookForm {
                 $r.show();
             }
         });
-        $(document).ready(function() {
+        $(document).ready(function () {
             const $dropZone = $('.drop-zone');
             const $fileInput = $('.book-form-file');
             const $results = $('.book-form-photos-results');
@@ -64,19 +66,19 @@ export default class BookForm {
             const $l = $fileInput.closest('.form-label');
             const $p = $l.find('.book-form-photos-placeholder');
             const $r = $l.find('.book-form-photos-results');
-            $dropZone.on('dragover', function(e) {
+            $dropZone.on('dragover', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $(this).addClass('dragover');
             });
 
-            $dropZone.on('dragleave', function(e) {
+            $dropZone.on('dragleave', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $(this).removeClass('dragover');
             });
 
-            $dropZone.on('drop', function(e) {
+            $dropZone.on('drop', function (e) {
                 e.preventDefault();
                 e.stopPropagation();
                 $(this).removeClass('dragover');
@@ -85,7 +87,7 @@ export default class BookForm {
                 handleFiles(files);
             });
 
-            $fileInput.on('change', function(e) {
+            $fileInput.on('change', function (e) {
                 const files = e.target.files;
                 handleFiles(files);
             });
@@ -104,12 +106,12 @@ export default class BookForm {
                     let file = files[i];
 
                     if (!validExtensions.includes(file.type)) {
-                        alert('Unsupported file type. Only '+$fileInput.attr('accept')+' are allowed.');
+                        alert('Unsupported file type. Only ' + $fileInput.attr('accept') + ' are allowed.');
                         continue;
                     }
 
                     if (file.size > maxSize) {
-                        alert('File size exceeds '+maxSizeAttr+'MB.');
+                        alert('File size exceeds ' + maxSizeAttr + 'MB.');
                         continue;
                     }
 
@@ -121,13 +123,13 @@ export default class BookForm {
 
             function previewFile(file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    const $img = $('<img>', { src: e.target.result, alt: '' });
+                reader.onload = function (e) {
+                    const $img = $('<img>', {src: e.target.result, alt: ''});
                     const $span = $('<span>').append($img);
-                    const $removeBtn = $('<button>', { text: '×', class: 'remove-btn' });
+                    const $removeBtn = $('<button>', {text: '×', class: 'remove-btn'});
                     $span.append($removeBtn);
                     $results.append($span);
-                    $removeBtn.on('click', function() {
+                    $removeBtn.on('click', function () {
                         const index = $results.find('span').index($span);
                         filesArray.splice(index, 1);
                         $span.remove();
@@ -143,16 +145,55 @@ export default class BookForm {
                     dataTransfer.items.add(file);
                 });
                 $fileInput[0].files = dataTransfer.files;
-                if(dataTransfer.files.length === 0){
+                if (dataTransfer.files.length === 0) {
                     $p.show();
                     $r.hide();
-                }else {
+                } else {
                     $p.hide();
                     $r.show();
                 }
             }
         });
 
+    }
+
+    questionsListener() {
+        this.$doc.on('click', '.book-form-question-controls__back', function (e) {
+            e.preventDefault();
+            const $i = $(this);
+            const $wrap = $i.closest('.book-form-question');
+            const $form = $i.closest('.book-form');
+            const index = $wrap.index();
+            const transformX = index > 0 ? (index - 1) * 100 : 0;
+            $form.find('.book-form-question').css('transform', 'translateX(-' + transformX + '%)');
+            updateHeaderStatus((index - 1));
+        });
+        this.$doc.on('change', '.book-form-questions input[type="radio"]', function (e) {
+            const $i = $(this);
+            const $wrap = $i.closest('.book-form-question');
+            const $form = $i.closest('.book-form');
+            const $head = $form.find('.book-form-head');
+            const index = $wrap.index();
+            const questionCount = $form.find('.book-form-question').length;
+            if ((index + 1) >= questionCount) {
+                $form.closest('section').find('.book-form__trigger').trigger('click');
+                return;
+            }
+            const transformX = (index + 1) * 100;
+            $form.find('.book-form-question').css('transform', 'translateX(-' + transformX + '%)');
+            updateHeaderStatus((index + 1));
+        });
+
+        const updateHeaderStatus = (step) => {
+            this.$form.find('.book-form-head__item').removeClass('finished').removeClass('active');
+            this.$form.find('.book-form-head__item').each(function (index) {
+                //finished
+                //active
+                const $t = $(this);
+                if (index < step) $t.addClass('finished');
+                if (index === step) $t.addClass('active');
+            });
+        }
     }
 
     addAndRemoveRows() {

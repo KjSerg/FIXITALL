@@ -15,7 +15,7 @@
 <header class="header">
     <div class="container">
         <div class="header-container">
-            <a href="#" class="logo header--logo">
+            <a href="#" class="logo header__logo">
                 <img src="img/logo.png" alt="">
             </a>
             <nav class="header-nav header-menu">
@@ -291,7 +291,7 @@
                 </form>
             </div>
             <div class="book-form-button-wrap">
-                <a href="#book-form" class="book-form__trigger button button--red-bg">
+                <a href="#book-form" class="book-form__trigger button button--red-bg ">
                     continue
                     <span class="icon"><img src="img/arrow_left_alt.svg" alt=""></span>
                 </a>
@@ -329,7 +329,7 @@
                 <div class="title clients__title">
                     <h5>Feedback from our clients</h5>
                 </div>
-                <a href="#leave-feedback" class="clients-section-head__button button button--red button--border">leave
+                <a href="#leave-feedback" class="clients-section-head__button button button--red button--border fancybox">leave
                     feedback</a>
             </div>
             <div class="clients-list-wrapper">
@@ -842,13 +842,41 @@
         </div>
     </section>
 </main>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-container">
+            <a href="#" class="logo footer__logo">
+                <img src="img/logo.png" alt="">
+            </a>
+            <nav class=" footer-nav ">
+                <ul>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Order services</a></li>
+                    <li><a href="#">Contacts</a></li>
+                    <li><a href="#">Reviews</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                © 2025 FIXITALL handyman services. All Rights Reserved
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 <div id="leave-feedback" class="modal-window">
     <div class="modal-window__title">Leave your feedback</div>
     <form novalidate class="form form-js leave-feedback-form" id="leave-feedback-form" method="post">
         <div class="form-label">
             <span class="form-label-head">Rate the work*</span>
             <div class="rating-inputs">
-                <label class="rating-input">
+                <label class="rating-input current">
                     <input type="radio" name="rating" value="1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
   <mask id="mask0_155_5799" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
@@ -860,8 +888,7 @@
   </g>
 </svg>
                 </label>
-
-                <label class="rating-input">
+                <label class="rating-input current">
                     <input type="radio" name="rating" value="2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
   <mask id="mask0_155_5799" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
@@ -873,8 +900,7 @@
   </g>
 </svg>
                 </label>
-
-                <label class="rating-input">
+                <label class="rating-input current">
                     <input type="radio" name="rating" value="3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
   <mask id="mask0_155_5799" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
@@ -886,7 +912,7 @@
   </g>
 </svg>
                 </label>
-                <label class="rating-input">
+                <label class="rating-input current">
                     <input type="radio" name="rating" value="4">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
   <mask id="mask0_155_5799" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
@@ -898,8 +924,8 @@
   </g>
 </svg>
                 </label>
-                <label class="rating-input">
-                    <input type="radio" name="rating" value="5">
+                <label class="rating-input current">
+                    <input type="radio" name="rating" value="5" checked>
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
   <mask id="mask0_155_5799" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="48" height="48">
     <rect width="48" height="48" fill="#D9D9D9"/>
@@ -931,6 +957,7 @@
     var googleMapApiKey = 'AIzaSyAt8S8uRnvbEkGevo-cdzjBRCRPGfsfbYI';
     var getTypeURL = './components/type.html';
     var getCategoriesURL = './components/categories.html';
+    var adminAjax = '';
 </script>
 <script src="js/app.js"></script>
 </body>

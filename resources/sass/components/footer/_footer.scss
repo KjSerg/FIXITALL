@@ -1,0 +1,134 @@
+.footer {
+  background: #062058;
+  
+  &-nav{
+    ul {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @media (max-width: 767px){
+        flex-direction: column;
+        align-items: flex-end;
+      }
+    }
+
+    li {
+      position: relative;
+      padding: 0 3.2rem;
+      @media (max-width: 1600px) {
+        padding: 0 2rem;
+      }
+      @media (max-width: 768px){
+        padding: 0 1rem;
+      }
+      @media (max-width: 767px){
+        padding: 0;
+      }
+      &:after{
+        display: block;
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateX(50%) translateY(-50%);
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: #fff;
+        opacity: 0.2;
+        @media (max-width: 768px) {
+          display: none;
+        }
+      }
+      &:last-child{
+        padding-right: 0;
+        &:after{
+          display: none;
+        }
+      }
+    }
+
+    a {
+      display: block;
+      padding: 0.5rem;
+      border-bottom: 1px solid rgba(#fff, 0);
+      color: #FFF;
+      font-family: "Exo 2", serif;
+      font-size: 1.7rem;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 146%;
+      letter-spacing: 0.0085rem;
+      text-transform: uppercase;
+      transition: 1s ease-in-out;
+      @media (max-width: 768px){
+        font-size: 1.5rem;
+      }
+      &:hover {
+        border-color: rgba(#fff, 0.8);
+      }
+    }
+
+  }
+
+  &__logo {
+    margin-right: 2rem;
+  }
+
+  &-container {
+    padding: 1.2rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &-bottom {
+    padding: 2.4rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #132B61;
+    @media (max-width: 768px){
+      flex-direction: column;
+    }
+  }
+
+  &-links {
+    li{
+      &:not(:last-child){
+        margin-right: 4rem;
+        @media (max-width: 992px){
+          margin-right:2rem;
+        }
+      }
+    }
+    a{
+      color: rgba(#FFF, 0.3);
+      font-size: 1.7rem;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 165%;
+      &:hover{
+        text-decoration: underline;
+      }
+    }
+
+    ul{
+      display: flex;
+    }
+  }
+}
+
+.copyright {
+  margin-right: 2rem;
+  color: rgba(#FFF, 0.3);
+  font-size: 1.7rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 165%;
+  @media (max-width: 768px){
+    margin-right: 0;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+}

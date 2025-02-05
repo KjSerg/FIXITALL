@@ -106,57 +106,6 @@ export default class FormHandler {
             $consent.closest('.form-consent').removeClass('error');
         }
 
-        // Helper function for validating passwords
-        const validatePasswordFields = (passwordField1, passwordField2, regex, errorMessage) => {
-            const $field1 = $form.find(`[name="${passwordField1}"]`);
-            const $field2 = $form.find(`[name="${passwordField2}"]`);
-            const value1 = $field1.val();
-            const value2 = $field2.val();
-
-            const toggleErrorClass = (hasError) => {
-                [$field1, $field2].forEach(($field) => {
-                    $field.toggleClass('error', hasError);
-                    $field.closest('.form-label').toggleClass('error', hasError);
-                });
-            };
-
-            if ($field1.length > 0 && $field2.length > 0) {
-                if (value1 !== value2) {
-                    isValid = false;
-                    toggleErrorClass(true);
-                } else if (!regex.test(value1)) {
-                    isValid = false;
-                    toggleErrorClass(true);
-                    this.showMessage(errorMessage, 'error');
-                } else {
-                    toggleErrorClass(false);
-                }
-            }
-        };
-
-        // Validate new and repeated passwords
-        validatePasswordFields('new_password', 'new_password_repeat', passwordRegex, passwordErrorString);
-
-        // Validate old and new passwords
-        const $field1 = $form.find(`[name="old_password"]`);
-        const $field2 = $form.find(`[name="password"]`);
-        if ($field1.length > 0 && $field2.length > 0) {
-            const value1 = $field1.val();
-            const value2 = $field2.val();
-            if (value1.length > 0 && value2.length > 0) {
-                if (!passwordRegex.test(value2)) {
-                    isValid = false;
-                    $field2.addClass('error');
-                    $field2.closest('.form-label').addClass('error');
-                    this.showMessage(passwordErrorString, 'error');
-                } else {
-                    $field2.removeClass('error');
-                    $field2.closest('.form-label').removeClass('error');
-                }
-            }
-        }
-
-
         return isValid;
     }
 

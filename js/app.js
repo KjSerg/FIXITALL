@@ -5679,6 +5679,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _book_BookForm__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./book/BookForm */ "./resources/js/components/book/BookForm.js");
 /* harmony import */ var _forms_FormHandler__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./forms/FormHandler */ "./resources/js/components/forms/FormHandler.js");
 /* harmony import */ var _plugins_Slick__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../plugins/Slick */ "./resources/js/plugins/Slick.js");
+/* harmony import */ var _forms_rating_inputs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./forms/_rating-inputs */ "./resources/js/components/forms/_rating-inputs.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -5686,6 +5687,7 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -5738,6 +5740,7 @@ var Application = /*#__PURE__*/function () {
         (0,_forms_show_password__WEBPACK_IMPORTED_MODULE_4__.showPassword)();
         (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_6__.selectrickInit)();
         (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_5__.fancyboxInit)();
+        (0,_forms_rating_inputs__WEBPACK_IMPORTED_MODULE_11__.makeActiveStars)();
         _this.showLoaderOnClick();
         _this.googleMapInit();
         var bool = new _book_BookForm__WEBPACK_IMPORTED_MODULE_8__["default"]();
@@ -6090,6 +6093,7 @@ var BookForm = /*#__PURE__*/function () {
     _classCallCheck(this, BookForm);
     this.$doc = $(document);
     this.$body = $("body");
+    this.$form = this.$doc.find('.book-form');
     this.rowCount = 1;
     this.service = '';
     this.category = '';
@@ -6103,6 +6107,7 @@ var BookForm = /*#__PURE__*/function () {
       this.categorySelectInit();
       this.serviceSelectInit();
       this.fileReader();
+      this.questionsListener();
     }
   }, {
     key: "fileReader",
@@ -6231,6 +6236,46 @@ var BookForm = /*#__PURE__*/function () {
           }
         }
       });
+    }
+  }, {
+    key: "questionsListener",
+    value: function questionsListener() {
+      var _this = this;
+      this.$doc.on('click', '.book-form-question-controls__back', function (e) {
+        e.preventDefault();
+        var $i = $(this);
+        var $wrap = $i.closest('.book-form-question');
+        var $form = $i.closest('.book-form');
+        var index = $wrap.index();
+        var transformX = index > 0 ? (index - 1) * 100 : 0;
+        $form.find('.book-form-question').css('transform', 'translateX(-' + transformX + '%)');
+        updateHeaderStatus(index - 1);
+      });
+      this.$doc.on('change', '.book-form-questions input[type="radio"]', function (e) {
+        var $i = $(this);
+        var $wrap = $i.closest('.book-form-question');
+        var $form = $i.closest('.book-form');
+        var $head = $form.find('.book-form-head');
+        var index = $wrap.index();
+        var questionCount = $form.find('.book-form-question').length;
+        if (index + 1 >= questionCount) {
+          $form.closest('section').find('.book-form__trigger').trigger('click');
+          return;
+        }
+        var transformX = (index + 1) * 100;
+        $form.find('.book-form-question').css('transform', 'translateX(-' + transformX + '%)');
+        updateHeaderStatus(index + 1);
+      });
+      var updateHeaderStatus = function updateHeaderStatus(step) {
+        _this.$form.find('.book-form-head__item').removeClass('finished').removeClass('active');
+        _this.$form.find('.book-form-head__item').each(function (index) {
+          //finished
+          //active
+          var $t = $(this);
+          if (index < step) $t.addClass('finished');
+          if (index === step) $t.addClass('active');
+        });
+      };
     }
   }, {
     key: "addAndRemoveRows",
@@ -6456,7 +6501,6 @@ var FormHandler = /*#__PURE__*/function () {
   }, {
     key: "validateForm",
     value: function validateForm($form) {
-      var _this2 = this;
       var isValid = true;
       var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
 
@@ -6504,54 +6548,6 @@ var FormHandler = /*#__PURE__*/function () {
       } else {
         $consent.closest('.form-consent').removeClass('error');
       }
-
-      // Helper function for validating passwords
-      var validatePasswordFields = function validatePasswordFields(passwordField1, passwordField2, regex, errorMessage) {
-        var $field1 = $form.find("[name=\"".concat(passwordField1, "\"]"));
-        var $field2 = $form.find("[name=\"".concat(passwordField2, "\"]"));
-        var value1 = $field1.val();
-        var value2 = $field2.val();
-        var toggleErrorClass = function toggleErrorClass(hasError) {
-          [$field1, $field2].forEach(function ($field) {
-            $field.toggleClass('error', hasError);
-            $field.closest('.form-label').toggleClass('error', hasError);
-          });
-        };
-        if ($field1.length > 0 && $field2.length > 0) {
-          if (value1 !== value2) {
-            isValid = false;
-            toggleErrorClass(true);
-          } else if (!regex.test(value1)) {
-            isValid = false;
-            toggleErrorClass(true);
-            _this2.showMessage(errorMessage, 'error');
-          } else {
-            toggleErrorClass(false);
-          }
-        }
-      };
-
-      // Validate new and repeated passwords
-      validatePasswordFields('new_password', 'new_password_repeat', passwordRegex, passwordErrorString);
-
-      // Validate old and new passwords
-      var $field1 = $form.find("[name=\"old_password\"]");
-      var $field2 = $form.find("[name=\"password\"]");
-      if ($field1.length > 0 && $field2.length > 0) {
-        var value1 = $field1.val();
-        var value2 = $field2.val();
-        if (value1.length > 0 && value2.length > 0) {
-          if (!passwordRegex.test(value2)) {
-            isValid = false;
-            $field2.addClass('error');
-            $field2.closest('.form-label').addClass('error');
-            this.showMessage(passwordErrorString, 'error');
-          } else {
-            $field2.removeClass('error');
-            $field2.closest('.form-label').removeClass('error');
-          }
-        }
-      }
       return isValid;
     }
   }, {
@@ -6579,10 +6575,10 @@ var FormHandler = /*#__PURE__*/function () {
   }, {
     key: "sendRequest",
     value: function sendRequest(options) {
-      var _this3 = this;
+      var _this2 = this;
       $.ajax(options).done(function (response) {
         if (response) {
-          var isJson = _this3.isJsonString(response);
+          var isJson = _this2.isJsonString(response);
           if (isJson) {
             var data = JSON.parse(response);
             var message = data.msg || '';
@@ -6594,15 +6590,15 @@ var FormHandler = /*#__PURE__*/function () {
             var avatarURL = data.avatar_url || '';
             var avatarID = data.avatar_id || '';
             if (userName) {
-              _this3.$document.find('.sidebar-name, user-name-js').text(userName);
+              _this2.$document.find('.sidebar-name, user-name-js').text(userName);
             }
             if (avatarURL) {
-              _this3.$document.find('.avatar-js').attr('src', avatarURL);
+              _this2.$document.find('.avatar-js').attr('src', avatarURL);
             }
             if (avatarID) {
-              _this3.$document.find('.avatar-id').val(avatarID);
+              _this2.$document.find('.avatar-id').val(avatarID);
             }
-            if (message) _this3.showMessage(message, type, text);
+            if (message) _this2.showMessage(message, type, text);
             if (url) {
               window.location.href = url;
               return;
@@ -6618,10 +6614,10 @@ var FormHandler = /*#__PURE__*/function () {
               return;
             }
           } else {
-            _this3.showMessage(response);
+            _this2.showMessage(response);
           }
         }
-        _this3.hidePreloader();
+        _this2.hidePreloader();
       });
     }
   }, {
@@ -6665,7 +6661,7 @@ var FormHandler = /*#__PURE__*/function () {
   }, {
     key: "setCitiesSelectValues",
     value: function setCitiesSelectValues(countryID, $selector) {
-      var _this4 = this;
+      var _this3 = this;
       var $s = $selector.find('select');
       var hint = $s.find('option').eq(0).text().trim();
       var options = "<option selected disabled value=\"\">".concat(hint, "</option>");
@@ -6682,13 +6678,13 @@ var FormHandler = /*#__PURE__*/function () {
       };
       $.ajax(opt).done(function (response) {
         if (response) {
-          var isJson = _this4.isJsonString(response);
+          var isJson = _this3.isJsonString(response);
           if (isJson) {
             var data = JSON.parse(response);
             var message = data.msg || '';
             var cities = data.cities || {};
             var type = data.type || '';
-            if (message) _this4.showMessage(message, type);
+            if (message) _this3.showMessage(message, type);
             if (!(0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.isObjectEmpty)(cities)) {
               $selector.removeClass('not-active');
               $s.attr('required', 'required');
@@ -6700,10 +6696,10 @@ var FormHandler = /*#__PURE__*/function () {
               if ($s.hasClass('select')) $s.prop('selectedIndex', 0).selectric('refresh');
             }
           } else {
-            _this4.showMessage(response);
+            _this3.showMessage(response);
           }
         }
-        _this4.hidePreloader();
+        _this3.hidePreloader();
       });
     }
   }]);
@@ -6771,6 +6767,54 @@ var numberInput = function numberInput() {
     $i.val(val > 2 ? val - 1 : 1);
   });
 };
+
+/***/ }),
+
+/***/ "./resources/js/components/forms/_rating-inputs.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/forms/_rating-inputs.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   makeActiveStars: () => (/* binding */ makeActiveStars)
+/* harmony export */ });
+/* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+function makeActiveStars() {
+  $('.rating-input').on('mouseenter touchstart', function () {
+    var $t = $(this);
+    var $wrapper = $t.closest('.rating-inputs');
+    $wrapper.find('.rating-input').removeClass('active');
+    var index = $t.index();
+    $t.addClass('active');
+    for (var a = 0; a <= index; a++) {
+      $wrapper.find('.rating-input').eq(a).addClass('active');
+    }
+  }).on('mouseleave touchend', function () {
+    var $t = $(this);
+    var $wrapper = $t.closest('.rating-inputs');
+    $wrapper.find('.rating-input').removeClass('active');
+  });
+  $('.rating-input input').change(function () {
+    var $t = $(this);
+    var $label = $t.closest('.rating-input');
+    var $wrapper = $t.closest('.rating-inputs');
+    var index = $label.index();
+    $wrapper.find('.rating-input').removeClass('current');
+    for (var a = 0; a <= index; a++) {
+      $wrapper.find('.rating-input').eq(a).addClass('current');
+    }
+  }).trigger('change');
+  $('.rating-input').on('click touchend', function (e) {
+    e.preventDefault(); // Запобігає зайвому спрацьовуванню
+    var $t = $(this);
+    var $wrapper = $t.closest('.rating-inputs');
+    $wrapper.find('input[checked]').removeAttr('checked');
+    $t.find('input').prop('checked', true).change();
+  });
+}
 
 /***/ }),
 

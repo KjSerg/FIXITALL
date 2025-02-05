@@ -9,6 +9,7 @@ import {GoogleMap} from "./Map";
 import BookForm from "./book/BookForm";
 import FormHandler from "./forms/FormHandler";
 import Slick from "../plugins/Slick";
+import {makeActiveStars} from "./forms/_rating-inputs";
 
 export default class Application {
     constructor() {
@@ -46,6 +47,7 @@ export default class Application {
             showPassword();
             selectrickInit();
             fancyboxInit();
+            makeActiveStars();
             this.showLoaderOnClick();
             this.googleMapInit();
             const bool = new BookForm();

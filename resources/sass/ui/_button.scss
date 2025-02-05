@@ -5,6 +5,7 @@
   align-items: center;
   gap: 0.8rem;
   background: #FFF;
+  border: 1px solid #FFF;
   color: #020A1B;
   font-family: "Exo 2", serif;
   font-size: 1.7rem;
@@ -16,6 +17,7 @@
   &:hover{
     background: #020A1B;
     color: #fff;
+    border-color: rgba(255,255,225,0);
   }
   &--border{
     border: 1px solid #D0D4DD;
@@ -24,6 +26,7 @@
     color: #DA3134;
   }
   &--red-bg{
+    border: 1px solid #DA3134;
     background: #DA3134;
     color: #fff;
   }

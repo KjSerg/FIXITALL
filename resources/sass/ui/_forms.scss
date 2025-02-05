@@ -1,16 +1,18 @@
-.form{
+.form {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 1.6rem;
   align-items: flex-end;
-  button{
+
+  button {
     outline: none;
     width: 100%;
     border: none;
     cursor: pointer;
   }
-  &-label{
+
+  &-label {
     position: relative;
     display: block;
     width: 100%;
@@ -20,63 +22,133 @@
     font-style: normal;
     font-weight: 500;
     line-height: 165%;
-    &-head{
+
+    &-head {
       display: block;
       margin-bottom: 0.8rem;
     }
   }
-  &-quantity{
+
+  &-quantity {
     width: 15rem;
     flex-grow: 0;
     flex-shrink: 0;
-    @media (max-width: 767px){
+    @media (max-width: 767px) {
       width: calc(100% - 6rem);
     }
-    &:last-child{
-      @media (max-width: 767px){
+
+    &:last-child {
+      @media (max-width: 767px) {
         width: 100%;
       }
     }
 
-    input{
+    input {
       width: 100%;
       padding-right: 60%;
     }
-    &-controls{
+
+    &-controls {
       position: absolute;
       right: 0;
       top: 0;
       width: 50%;
       height: 100%;
       display: flex;
-      @media (max-width: 767px){
+      @media (max-width: 767px) {
         width: 15rem;
       }
-      a{
+
+      a {
         width: 50%;
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
-        &:hover{
-          img{
+
+        &:hover {
+          img {
             transform: scale(1.1);
           }
         }
       }
     }
-    &-wrapper{
+
+    &-wrapper {
       position: relative;
       display: flex;
     }
   }
+
+
+  .radio {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: #020A1B;
+    font-size: 1.7rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 165%;
+    cursor: pointer;
+
+
+    .icon {
+      position: relative;
+      display: block;
+      width: 3.2rem;
+      height: 3.2rem;
+      flex-grow: 0;
+      flex-shrink: 0;
+      border: 1px solid #D0D4DD;
+      border-radius: 50%;
+
+      &:after {
+        position: absolute;
+        display: block;
+        content: '';
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgba(#DA3134, 0);
+        transition: 0.2s ease-in-out;
+      }
+    }
+
+    input {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+
+      &:checked {
+        & + .icon {
+
+          &:after {
+            width: 50%;
+            height: 50%;
+            background-color: rgba(#DA3134, 1);
+          }
+        }
+      }
+    }
+  }
 }
+
 .selectric {
   background-color: #fff;
-  border: 1px solid  #D0D4DD;
+  border: 1px solid #D0D4DD;
+
   &-items {
     background-color: #fff;
-    li{
+
+    li {
       color: rgba(#020A1B, 0.6);
       font-family: "Inter", serif;
       font-size: 1.7rem;
@@ -85,15 +157,18 @@
       line-height: 165%;
     }
   }
-  .button{
+
+  .button {
     padding: 0;
     height: 100%;
     background: transparent;
-    &:hover{
+
+    &:hover {
       background: transparent;
     }
   }
-  .label{
+
+  .label {
     padding: 1rem 0;
     height: auto;
     color: rgba(#020A1B, 0.3);
@@ -104,9 +179,10 @@
     line-height: 165%;
   }
 }
-input, textarea{
+
+input, textarea {
   width: 100%;
-  padding: 1rem 2.4rem ;
+  padding: 1rem 2.4rem;
   border: 1px solid #D0D4DD;
   color: rgba(#020A1B, 0.3);
   font-family: "Inter", serif;
@@ -114,7 +190,8 @@ input, textarea{
   font-style: normal;
   font-weight: 400;
   line-height: 165%;
-  &::placeholder{
+
+  &::placeholder {
     color: rgba(#020A1B, 0.3);
     font-family: "Inter", serif;
     font-size: 1.7rem;
@@ -122,9 +199,14 @@ input, textarea{
     font-weight: 400;
     line-height: 165%;
   }
+
+  &.error {
+    border-color: red;
+  }
 }
 
-textarea{
+textarea {
   resize: none;
   outline: none;
 }
+
