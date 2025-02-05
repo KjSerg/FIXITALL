@@ -6108,6 +6108,7 @@ var BookForm = /*#__PURE__*/function () {
       this.serviceSelectInit();
       this.fileReader();
       this.questionsListener();
+      this.calendarInit();
     }
   }, {
     key: "fileReader",
@@ -6236,6 +6237,57 @@ var BookForm = /*#__PURE__*/function () {
           }
         }
       });
+    }
+  }, {
+    key: "calendarInit",
+    value: function calendarInit() {
+      var monthYear = document.getElementById("monthYear");
+      var calendarDays = document.getElementById("calendarDays");
+      var prevMonthBtn = document.getElementById("prevMonth");
+      var nextMonthBtn = document.getElementById("nextMonth");
+      var currentDate = new Date();
+      function updateCalendar() {
+        var year = currentDate.getFullYear();
+        var month = currentDate.getMonth();
+        var today = new Date();
+        monthYear.textContent = "".concat(months[month], " ").concat(year);
+        calendarDays.innerHTML = "";
+        var daysInMonth = new Date(year, month + 1, 0).getDate();
+        var firstDayOfMonth = new Date(year, month, 1).getDay();
+        var startDay = firstDayOfMonth === 0 ? 6 : firstDayOfMonth - 1;
+        for (var i = 0; i < startDay; i++) {
+          var emptyDiv = document.createElement("div");
+          emptyDiv.classList.add("empty");
+          calendarDays.appendChild(emptyDiv);
+        }
+        for (var day = 1; day <= daysInMonth; day++) {
+          var dayDiv = document.createElement("div");
+          dayDiv.classList.add("day");
+          dayDiv.textContent = day;
+          if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === day) {
+            dayDiv.classList.add("today");
+          }
+          // if(isPastDate()){
+          //
+          // }
+
+          calendarDays.appendChild(dayDiv);
+        }
+      }
+      prevMonthBtn.addEventListener("click", function () {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        updateCalendar();
+      });
+      nextMonthBtn.addEventListener("click", function () {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        updateCalendar();
+      });
+      updateCalendar();
+      function isPastDate(date) {
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return date < today;
+      }
     }
   }, {
     key: "questionsListener",

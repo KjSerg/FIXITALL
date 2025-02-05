@@ -20,6 +20,7 @@ export default class BookForm {
         this.serviceSelectInit();
         this.fileReader();
         this.questionsListener();
+        this.calendarInit();
     }
 
     fileReader() {
@@ -154,6 +155,67 @@ export default class BookForm {
                 }
             }
         });
+
+    }
+
+    calendarInit(){
+        const monthYear = document.getElementById("monthYear");
+        const calendarDays = document.getElementById("calendarDays");
+        const prevMonthBtn = document.getElementById("prevMonth");
+        const nextMonthBtn = document.getElementById("nextMonth");
+
+        let currentDate = new Date();
+        function updateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const today = new Date();
+
+            monthYear.textContent = `${months[month]} ${year}`;
+            calendarDays.innerHTML = "";
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDayOfMonth = new Date(year, month, 1).getDay();
+            const startDay = (firstDayOfMonth === 0) ? 6 : firstDayOfMonth - 1;
+            for (let i = 0; i < startDay; i++) {
+                const emptyDiv = document.createElement("div");
+                emptyDiv.classList.add("empty");
+                calendarDays.appendChild(emptyDiv);
+            }
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement("div");
+                dayDiv.classList.add("day");
+                dayDiv.textContent = day;
+                if (
+                    today.getFullYear() === year &&
+                    today.getMonth() === month &&
+                    today.getDate() === day
+                ) {
+                    dayDiv.classList.add("today");
+                }
+                // if(isPastDate()){
+                //
+                // }
+
+                calendarDays.appendChild(dayDiv);
+            }
+        }
+        prevMonthBtn.addEventListener("click", () => {
+            currentDate.setMonth(currentDate.getMonth() - 1);
+            updateCalendar();
+        });
+
+        nextMonthBtn.addEventListener("click", () => {
+            currentDate.setMonth(currentDate.getMonth() + 1);
+            updateCalendar();
+        });
+
+        updateCalendar();
+
+        function isPastDate(date) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            return date < today;
+        }
 
     }
 
