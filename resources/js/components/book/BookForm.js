@@ -7,9 +7,12 @@ export default class BookForm {
         this.$doc = $(document);
         this.$body = $("body");
         this.$form = this.$doc.find('.book-form');
+        this.$timeList = this.$doc.find('#book-time-list');
         this.rowCount = 1;
         this.service = '';
         this.category = '';
+        this.date = new Date();
+        this.time = '';
         this.parser = new DOMParser();
         this.init();
     }
@@ -21,6 +24,7 @@ export default class BookForm {
         this.fileReader();
         this.questionsListener();
         this.calendarInit();
+        this.bookTimeSelect();
     }
 
     fileReader() {
@@ -158,13 +162,15 @@ export default class BookForm {
 
     }
 
-    calendarInit(){
+    calendarInit() {
+        const t = this;
         const monthYear = document.getElementById("monthYear");
         const calendarDays = document.getElementById("calendarDays");
         const prevMonthBtn = document.getElementById("prevMonth");
         const nextMonthBtn = document.getElementById("nextMonth");
 
         let currentDate = new Date();
+
         function updateCalendar() {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
@@ -191,32 +197,68 @@ export default class BookForm {
                 ) {
                     dayDiv.classList.add("today");
                 }
-                // if(isPastDate()){
-                //
-                // }
-
+                if (
+                    (today.getFullYear() > year) ||
+                    (today.getFullYear() === year && today.getMonth() > month) ||
+                    (today.getFullYear() === year && today.getMonth() === month && today.getDate() > day)
+                ) {
+                    dayDiv.classList.add("not-active");
+                }
                 calendarDays.appendChild(dayDiv);
+                const dataDate = year + '-' + month + '-' + day;
+                const dataFormatedDate = year + '-' + (month + 1) + '-' + day;
+                dayDiv.setAttribute('data-date', dataFormatedDate);
+                dayDiv.setAttribute('data-not-formated-date', dataDate);
+                dayDiv.addEventListener("click", (e) => {
+                    document.querySelectorAll('.day').forEach(function (el) {
+                        el.classList.remove('active');
+                    })
+                    dayDiv.classList.add("active");
+                    t.date = new Date(dataFormatedDate);
+                    t.setCurrentDate();
+                });
             }
         }
+
         prevMonthBtn.addEventListener("click", () => {
             currentDate.setMonth(currentDate.getMonth() - 1);
+            t.date = currentDate;
             updateCalendar();
+            t.updateCalendarData();
         });
 
         nextMonthBtn.addEventListener("click", () => {
             currentDate.setMonth(currentDate.getMonth() + 1);
+            t.date = currentDate;
             updateCalendar();
+            t.updateCalendarData();
         });
 
         updateCalendar();
 
-        function isPastDate(date) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+    }
 
-            return date < today;
-        }
+    bookTimeSelect() {
+        const t = this;
+        this.$doc.on('click', '.book-time-list-item', function (event) {
+            event.preventDefault();
+            const $t = $(this);
+            t.$doc.find('.book-time-list-item').removeClass('active');
+            $t.addClass('active');
+            t.time = $t.text().trim();
+        });
+    }
 
+    getFormatedDate() {
+        const t = this;
+        const date = t.date;
+        return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    }
+
+    getDate() {
+        const t = this;
+        const date = t.date;
+        return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
     }
 
     questionsListener() {
@@ -391,5 +433,19 @@ export default class BookForm {
         return url;
     }
 
+    updateCalendarData() {
+        const t = this;
+        const date = t.date;
 
+        console.log(t.getFormatedDate());
+
+    }
+
+    setCurrentDate() {
+        console.log(this.getFormatedDate());
+        if(this.$timeList.length===0) return;
+        $('html, body').animate({
+            scrollTop: this.$timeList.offset().top
+        });
+    }
 }

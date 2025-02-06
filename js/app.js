@@ -5734,6 +5734,7 @@ var Application = /*#__PURE__*/function () {
     value: function initComponents() {
       var _this = this;
       this.$doc.ready(function () {
+        (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_5__.showNotices)();
         (0,_ui_burger__WEBPACK_IMPORTED_MODULE_1__.burger)();
         (0,_ui_accardion__WEBPACK_IMPORTED_MODULE_2__.accordion)();
         (0,_forms_number_input__WEBPACK_IMPORTED_MODULE_3__.numberInput)();
@@ -6094,9 +6095,12 @@ var BookForm = /*#__PURE__*/function () {
     this.$doc = $(document);
     this.$body = $("body");
     this.$form = this.$doc.find('.book-form');
+    this.$timeList = this.$doc.find('#book-time-list');
     this.rowCount = 1;
     this.service = '';
     this.category = '';
+    this.date = new Date();
+    this.time = '';
     this.parser = new DOMParser();
     this.init();
   }
@@ -6109,6 +6113,7 @@ var BookForm = /*#__PURE__*/function () {
       this.fileReader();
       this.questionsListener();
       this.calendarInit();
+      this.bookTimeSelect();
     }
   }, {
     key: "fileReader",
@@ -6241,6 +6246,7 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "calendarInit",
     value: function calendarInit() {
+      var t = this;
       var monthYear = document.getElementById("monthYear");
       var calendarDays = document.getElementById("calendarDays");
       var prevMonthBtn = document.getElementById("prevMonth");
@@ -6260,34 +6266,73 @@ var BookForm = /*#__PURE__*/function () {
           emptyDiv.classList.add("empty");
           calendarDays.appendChild(emptyDiv);
         }
-        for (var day = 1; day <= daysInMonth; day++) {
+        var _loop = function _loop() {
           var dayDiv = document.createElement("div");
           dayDiv.classList.add("day");
           dayDiv.textContent = day;
           if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === day) {
             dayDiv.classList.add("today");
           }
-          // if(isPastDate()){
-          //
-          // }
-
+          if (today.getFullYear() > year || today.getFullYear() === year && today.getMonth() > month || today.getFullYear() === year && today.getMonth() === month && today.getDate() > day) {
+            dayDiv.classList.add("not-active");
+          }
           calendarDays.appendChild(dayDiv);
+          var dataDate = year + '-' + month + '-' + day;
+          var dataFormatedDate = year + '-' + (month + 1) + '-' + day;
+          dayDiv.setAttribute('data-date', dataFormatedDate);
+          dayDiv.setAttribute('data-not-formated-date', dataDate);
+          dayDiv.addEventListener("click", function (e) {
+            document.querySelectorAll('.day').forEach(function (el) {
+              el.classList.remove('active');
+            });
+            dayDiv.classList.add("active");
+            t.date = new Date(dataFormatedDate);
+            t.setCurrentDate();
+          });
+        };
+        for (var day = 1; day <= daysInMonth; day++) {
+          _loop();
         }
       }
       prevMonthBtn.addEventListener("click", function () {
         currentDate.setMonth(currentDate.getMonth() - 1);
+        t.date = currentDate;
         updateCalendar();
+        t.updateCalendarData();
       });
       nextMonthBtn.addEventListener("click", function () {
         currentDate.setMonth(currentDate.getMonth() + 1);
+        t.date = currentDate;
         updateCalendar();
+        t.updateCalendarData();
       });
       updateCalendar();
-      function isPastDate(date) {
-        var today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return date < today;
-      }
+    }
+  }, {
+    key: "bookTimeSelect",
+    value: function bookTimeSelect() {
+      var t = this;
+      this.$doc.on('click', '.book-time-list-item', function (event) {
+        event.preventDefault();
+        var $t = $(this);
+        t.$doc.find('.book-time-list-item').removeClass('active');
+        $t.addClass('active');
+        t.time = $t.text().trim();
+      });
+    }
+  }, {
+    key: "getFormatedDate",
+    value: function getFormatedDate() {
+      var t = this;
+      var date = t.date;
+      return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+    }
+  }, {
+    key: "getDate",
+    value: function getDate() {
+      var t = this;
+      var date = t.date;
+      return date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
     }
   }, {
     key: "questionsListener",
@@ -6465,6 +6510,22 @@ var BookForm = /*#__PURE__*/function () {
       url = url.includes('?') ? url + '&' : url + '?';
       url = url + 'service=' + this.service + '&' + 'category=' + this.category;
       return url;
+    }
+  }, {
+    key: "updateCalendarData",
+    value: function updateCalendarData() {
+      var t = this;
+      var date = t.date;
+      console.log(t.getFormatedDate());
+    }
+  }, {
+    key: "setCurrentDate",
+    value: function setCurrentDate() {
+      console.log(this.getFormatedDate());
+      if (this.$timeList.length === 0) return;
+      $('html, body').animate({
+        scrollTop: this.$timeList.offset().top
+      });
     }
   }]);
 }();
@@ -7214,7 +7275,8 @@ var Slick = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   fancyboxInit: () => (/* binding */ fancyboxInit)
+/* harmony export */   fancyboxInit: () => (/* binding */ fancyboxInit),
+/* harmony export */   showNotices: () => (/* binding */ showNotices)
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
@@ -7241,6 +7303,22 @@ var fancyboxInit = function fancyboxInit() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.close();
   });
 };
+function showNotices() {
+  var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  console.log(index);
+  var $notices = jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).find('.notices > *');
+  if ($notices.length === 0) return;
+  var $item = $notices[index];
+  if ($item === undefined) return;
+  var nextIndex = index + 1;
+  var $itemNext = $notices[nextIndex];
+  var args = {};
+  if ($itemNext !== undefined) args.afterClose = function () {
+    showNotices(nextIndex);
+  };
+  console.log(args);
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.open($item, args);
+}
 
 /***/ }),
 

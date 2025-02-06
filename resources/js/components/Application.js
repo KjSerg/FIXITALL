@@ -3,7 +3,7 @@ import {burger} from "./ui/_burger";
 import {accordion} from "./ui/_accardion";
 import {numberInput} from "./forms/_number-input";
 import {showPassword} from "./forms/_show-password";
-import {fancyboxInit} from "../plugins/_fancybox-init";
+import {fancyboxInit, showNotices} from "../plugins/_fancybox-init";
 import {selectrickInit} from "../plugins/_selectric-init";
 import {GoogleMap} from "./Map";
 import BookForm from "./book/BookForm";
@@ -41,6 +41,7 @@ export default class Application {
 
     initComponents() {
         this.$doc.ready(() => {
+            showNotices();
             burger();
             accordion();
             numberInput();
@@ -65,4 +66,6 @@ export default class Application {
             }, 300);
         });
     }
+
+
 }

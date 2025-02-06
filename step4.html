@@ -66,9 +66,14 @@
                             <div class="book-time-calendar-wrapper">
                                 <div class="calendar">
                                     <div class="calendar-header">
-                                        <button id="prevMonth">&lt;</button>
+                                        <button id="prevMonth" class="calendar-header__prev">
+                                            <img src="img/keyboard_arrow_l.svg" alt="">
+                                        </button>
                                         <span id="monthYear"></span>
-                                        <button id="nextMonth">&gt;</button>
+                                        <button id="nextMonth" class="calendar-header__next">
+
+                                            <img src="img/keyboard_arrow_r.svg" alt="">
+                                        </button>
                                     </div>
                                     <div class="weekdays">
                                         <div>Mo</div>
@@ -82,7 +87,7 @@
                                     <div class="days" id="calendarDays"></div>
                                 </div>
                             </div>
-                            <ul class="book-time-list">
+                            <ul class="book-time-list" id="book-time-list">
                                 <li class="book-time-list-item">12:00</li>
                                 <li class="book-time-list-item not-active">13:00</li>
                                 <li class="book-time-list-item not-active">14:00</li>
@@ -106,8 +111,8 @@
                     <span class="icon"><img src="img/arrow-left.svg" alt=""></span>
                     Back
                 </a>
-                <a href="#book-form" class="book-form__trigger button button--red-bg ">
-                    continue
+                <a href="#conditions" class="book-form__trigger button button--red-bg fancybox">
+                    To pay
                     <span class="icon"><img src="img/arrow_left_alt.svg" alt=""></span>
                 </a>
 
@@ -200,6 +205,39 @@
         <button class="button button--red-bg" type="submit">Send</button>
     </form>
 </div>
+<div id="conditions" class="modal-window modal-window-conditions">
+    <div class="modal-window__title">Terms and conditions of payment</div>
+    <div class="modal-window__text text">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget sodales ex, sit amet facilisis erat. Suspendisse lacus purus, lobortis non sapien ornare, vehicula semper nulla. Nam blandit aliquet nibh. Sed efficitur, sapien nec iaculis auctor, lacus enim consectetur dui, nec tempus ipsum tellus ac purus. Curabitur posuere molestie elit nec auctor. Aenean leo enim, auctor at pharetra vel, aliquam id nulla. Donec bibendum, metus eget aliquam porta, est ex luctus tellus, non finibus mauris libero ac sem. Sed malesuada ligula et diam pulvinar, a laoreet nibh aliquam. Cras at venenatis nibh. Donec pharetra orci eu ultrices bibendum. Maecenas ut ante id nunc porttitor finibus a eu dolor. Donec ac egestas purus. Donec et urna sit amet est gravida dictum suscipit non urna. Vestibulum ac varius ipsum. Phasellus gravida diam mi, nec fermentum magna maximus in.
+        </p>
+        <p>
+            Vestibulum molestie luctus dapibus. Etiam dignissim urna auctor, lobortis leo id, euismod augue. Nam quis lacus ac turpis varius ultricies non ac felis. Phasellus efficitur, eros id tincidunt dignissim, orci tortor luctus sem, at maximus magna justo non magna. Curabitur vestibulum at lorem eu aliquam. Morbi in nibh auctor, fermentum neque sit amet, ultricies magna. Aliquam molestie, metus sit amet cursus dictum, elit felis pellentesque magna, id venenatis odio tellus vulputate sapien. Morbi viverra turpis vitae mi elementum finibus. Donec posuere tincidunt sagittis. Cras cursus tincidunt urna in suscipit. Nunc scelerisque volutpat quam, in pharetra nibh lobortis ac.
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eget sodales ex, sit amet facilisis erat. Suspendisse lacus purus, lobortis non sapien ornare, vehicula semper nulla. Nam blandit aliquet nibh. Sed efficitur, sapien nec iaculis auctor, lacus enim consectetur dui, nec tempus ipsum tellus ac purus. Curabitur posuere molestie elit nec auctor. Aenean leo enim, auctor at pharetra vel, aliquam id nulla. Donec bibendum, metus eget aliquam porta, est ex luctus tellus, non finibus mauris libero ac sem. Sed malesuada ligula et diam pulvinar, a laoreet nibh aliquam. Cras at venenatis nibh. Donec pharetra orci eu ultrices bibendum. Maecenas ut ante id nunc porttitor finibus a eu dolor. Donec ac egestas purus. Donec et urna sit amet est gravida dictum suscipit non urna. Vestibulum ac varius ipsum. Phasellus gravida diam mi, nec fermentum magna maximus in.
+        </p>
+        <p>
+            Vestibulum molestie luctus dapibus. Etiam dignissim urna auctor, lobortis leo id, euismod augue. Nam quis lacus ac turpis varius ultricies non ac felis. Phasellus efficitur, eros id tincidunt dignissim, orci tortor luctus sem, at maximus magna justo non magna. Curabitur vestibulum at lorem eu aliquam. Morbi in nibh auctor, fermentum neque sit amet, ultricies magna. Aliquam molestie, metus sit amet cursus dictum, elit felis pellentesque magna, id venenatis odio tellus vulputate sapien. Morbi viverra turpis vitae mi elementum finibus. Donec posuere tincidunt sagittis. Cras cursus tincidunt urna in suscipit. Nunc scelerisque volutpat quam, in pharetra nibh lobortis ac.
+        </p>
+    </div>
+    <div class="modal-window-buttons">
+        <a href="#" class="close-fancybox-modal button button--border">disagree</a>
+        <a href="#" class="button button--border button--red-bg">Agree</a>
+    </div>
+</div>
+<div class="notices" style="display:none;">
+    <div id="notice" class="modal-window modal-window-notice">
+        <div class="modal-window__title">important</div>
+        <div class="modal-window__text text">
+            <p style="text-align: center">
+                The selected time will be saved for you for 15 minutes to complete the payment. If payment is not made within this time, the reservation will be automatically canceled.
+            </p>
+        </div>
+        <a href="#" class="button button--red-bg close-fancybox-modal modal-window-notice__button button--border">Ок</a>
+    </div>
+</div>
+
 <script>
     var googleMapApiKey = 'AIzaSyAt8S8uRnvbEkGevo-cdzjBRCRPGfsfbYI';
     var getTypeURL = './components/type.html';
