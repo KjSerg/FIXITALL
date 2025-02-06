@@ -22,7 +22,6 @@ export const fancyboxInit = () => {
 };
 
 export function showNotices(index = 0) {
-    console.log(index)
     const $notices = $(document).find('.notices > *');
     if ($notices.length === 0) return;
     const $item = $notices[index];
@@ -33,6 +32,5 @@ export function showNotices(index = 0) {
     if ($itemNext !== undefined) args.afterClose = function () {
         showNotices(nextIndex);
     };
-    console.log(args)
     $.fancybox.open($item, args);
 }

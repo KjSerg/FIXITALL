@@ -164,8 +164,9 @@ export default class BookForm {
 
     calendarInit() {
         const t = this;
-        const monthYear = document.getElementById("monthYear");
         const calendarDays = document.getElementById("calendarDays");
+        if(calendarDays === null) return;
+        const monthYear = document.getElementById("monthYear");
         const prevMonthBtn = document.getElementById("prevMonth");
         const nextMonthBtn = document.getElementById("nextMonth");
 

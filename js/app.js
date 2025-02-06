@@ -6247,8 +6247,9 @@ var BookForm = /*#__PURE__*/function () {
     key: "calendarInit",
     value: function calendarInit() {
       var t = this;
-      var monthYear = document.getElementById("monthYear");
       var calendarDays = document.getElementById("calendarDays");
+      if (calendarDays === null) return;
+      var monthYear = document.getElementById("monthYear");
       var prevMonthBtn = document.getElementById("prevMonth");
       var nextMonthBtn = document.getElementById("nextMonth");
       var currentDate = new Date();
@@ -7305,7 +7306,6 @@ var fancyboxInit = function fancyboxInit() {
 };
 function showNotices() {
   var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-  console.log(index);
   var $notices = jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).find('.notices > *');
   if ($notices.length === 0) return;
   var $item = $notices[index];
@@ -7316,7 +7316,6 @@ function showNotices() {
   if ($itemNext !== undefined) args.afterClose = function () {
     showNotices(nextIndex);
   };
-  console.log(args);
   jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.open($item, args);
 }
 
