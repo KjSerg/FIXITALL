@@ -51,6 +51,7 @@ export default class Application {
             makeActiveStars();
             this.showLoaderOnClick();
             this.googleMapInit();
+            this.linkListener();
             const bool = new BookForm();
             const form = new FormHandler('.form-js');
             const slick = new Slick();
@@ -67,5 +68,23 @@ export default class Application {
         });
     }
 
-
+    linkListener() {
+        const t = this;
+        this.$doc.on('click', 'a[href*="#"]', function (e) {
+            e.preventDefault();
+            const $t = $(this);
+            const href = $t.attr('href');
+            const hashValue = href.split('#')[1];
+            if (hashValue !== undefined) {
+                const $el = t.$doc.find('#' + hashValue);
+                if ($el.length > 0) {
+                    $('html, body').animate({
+                        scrollTop: $el.offset().top
+                    });
+                    return;
+                }
+            }
+            window.location.href = href;
+        });
+    }
 }

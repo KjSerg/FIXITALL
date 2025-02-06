@@ -5744,6 +5744,7 @@ var Application = /*#__PURE__*/function () {
         (0,_forms_rating_inputs__WEBPACK_IMPORTED_MODULE_11__.makeActiveStars)();
         _this.showLoaderOnClick();
         _this.googleMapInit();
+        _this.linkListener();
         var bool = new _book_BookForm__WEBPACK_IMPORTED_MODULE_8__["default"]();
         var form = new _forms_FormHandler__WEBPACK_IMPORTED_MODULE_9__["default"]('.form-js');
         var slick = new _plugins_Slick__WEBPACK_IMPORTED_MODULE_10__["default"]();
@@ -5758,6 +5759,27 @@ var Application = /*#__PURE__*/function () {
         setTimeout(function () {
           map.initMaps();
         }, 300);
+      });
+    }
+  }, {
+    key: "linkListener",
+    value: function linkListener() {
+      var t = this;
+      this.$doc.on('click', 'a[href*="#"]', function (e) {
+        e.preventDefault();
+        var $t = $(this);
+        var href = $t.attr('href');
+        var hashValue = href.split('#')[1];
+        if (hashValue !== undefined) {
+          var $el = t.$doc.find('#' + hashValue);
+          if ($el.length > 0) {
+            $('html, body').animate({
+              scrollTop: $el.offset().top
+            });
+            return;
+          }
+        }
+        window.location.href = href;
       });
     }
   }]);
@@ -6026,8 +6048,8 @@ var GoogleMap = /*#__PURE__*/function () {
             $field.attr('data-lat', lat);
             $field.attr('data-lng', lng);
             $field.attr('data-selected', "".concat(lat, ";").concat(lng));
-            $field.val("".concat(lat, ";").concat(lng));
-            // this.updateCenterInfo(newCenter, $selector);
+            // $field.val(`${lat};${lng}`);
+            _this.updateCenterInfo(newCenter, $selector, $field);
           });
         }
         $selector.addClass('init-map');
@@ -6035,7 +6057,7 @@ var GoogleMap = /*#__PURE__*/function () {
     }
   }, {
     key: "updateCenterInfo",
-    value: function updateCenterInfo(location, $selector) {
+    value: function updateCenterInfo(location, $selector, $field) {
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode({
         location: location
@@ -6054,6 +6076,7 @@ var GoogleMap = /*#__PURE__*/function () {
           $selector.attr('data-lat', location.lat());
           $selector.attr('data-lng', location.lng());
           $selector.attr('data-address', address);
+          $field.val(address);
         } else {
           console.error('Не вдалося отримати адресу:', status);
         }

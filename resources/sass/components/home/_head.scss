@@ -36,6 +36,7 @@
   }
 
   &-content {
+    z-index: 1;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -131,8 +132,16 @@
     display: flex;
 
     &__image {
+      position: absolute;
+      z-index: 0;
+      right: 0;
+      top: 0;
       width: 97.2rem;
+      height: 100%;
       overflow: hidden;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: 0 0;
       @media (max-width: 1500px) {
         width: 50%;
       }

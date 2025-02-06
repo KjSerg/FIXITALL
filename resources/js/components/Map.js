@@ -208,8 +208,8 @@ export class GoogleMap {
                     $field.attr('data-lat', lat);
                     $field.attr('data-lng', lng);
                     $field.attr('data-selected', `${lat};${lng}`);
-                    $field.val(`${lat};${lng}`);
-                    // this.updateCenterInfo(newCenter, $selector);
+                    // $field.val(`${lat};${lng}`);
+                    this.updateCenterInfo(newCenter, $selector, $field);
                 });
             }
 
@@ -217,7 +217,7 @@ export class GoogleMap {
         }
     }
 
-    updateCenterInfo(location, $selector) {
+    updateCenterInfo(location, $selector, $field) {
         let geocoder = new google.maps.Geocoder();
         geocoder.geocode({location: location}, (results, status) => {
             if (status === 'OK' && results[0]) {
@@ -235,6 +235,7 @@ export class GoogleMap {
                 $selector.attr('data-lat', location.lat());
                 $selector.attr('data-lng', location.lng());
                 $selector.attr('data-address', address);
+                $field.val(address);
             } else {
                 console.error('Не вдалося отримати адресу:', status);
             }
