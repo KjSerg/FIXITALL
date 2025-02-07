@@ -5765,10 +5765,11 @@ var Application = /*#__PURE__*/function () {
     key: "linkListener",
     value: function linkListener() {
       var t = this;
-      this.$doc.on('click', 'a[href*="#"]', function (e) {
+      this.$doc.on('click', 'a[href*="#"]:not(.fancybox)', function (e) {
         e.preventDefault();
         var $t = $(this);
         var href = $t.attr('href');
+        if (href === '#') return;
         var hashValue = href.split('#')[1];
         if (hashValue !== undefined) {
           var $el = t.$doc.find('#' + hashValue);
@@ -6077,6 +6078,7 @@ var GoogleMap = /*#__PURE__*/function () {
           $selector.attr('data-lng', location.lng());
           $selector.attr('data-address', address);
           $field.val(address);
+          $field.attr('data-selected', address);
         } else {
           console.error('Не вдалося отримати адресу:', status);
         }
@@ -6466,8 +6468,14 @@ var BookForm = /*#__PURE__*/function () {
           $form.find('.book-form-address').hide();
           $row.find('.form-quantity').addClass('not-active');
           $type.closest('.form-label').addClass('not-active');
+          $type.closest('.form-label select').removeAttr('required');
+          $row.find('.form-quantity input').removeAttr('required');
+          $form.find('.book-form-address input').removeAttr('required');
           return;
         }
+        $type.closest('.form-label select').attr('required', 'required');
+        $row.find('.form-quantity input').attr('required', 'required');
+        $form.find('.book-form-address input').attr('required', 'required');
         $button.show();
         $form.find('.book-form-address').show();
         (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
@@ -6522,6 +6530,7 @@ var BookForm = /*#__PURE__*/function () {
             $categories.html(response);
             (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_1__.selectrickInit)();
             $categories.closest('.form-label').removeClass('not-active');
+            $form.find('.book-form__button').show();
           }
           (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
         });
@@ -6721,20 +6730,8 @@ var FormHandler = /*#__PURE__*/function () {
             var message = data.msg || '';
             var text = data.msg_text || '';
             var type = data.type || '';
-            var userName = data.name || '';
             var url = data.url;
             var reload = data.reload || '';
-            var avatarURL = data.avatar_url || '';
-            var avatarID = data.avatar_id || '';
-            if (userName) {
-              _this2.$document.find('.sidebar-name, user-name-js').text(userName);
-            }
-            if (avatarURL) {
-              _this2.$document.find('.avatar-js').attr('src', avatarURL);
-            }
-            if (avatarID) {
-              _this2.$document.find('.avatar-id').val(avatarID);
-            }
             if (message) _this2.showMessage(message, type, text);
             if (url) {
               window.location.href = url;
@@ -7253,8 +7250,24 @@ var Slick = /*#__PURE__*/function () {
     this.init();
   }
   return _createClass(Slick, [{
+    key: "setEqualHeight",
+    value: function setEqualHeight($slider) {
+      var selector = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '.clients-list-item';
+      var maxHeight = 0;
+      var $slides = $slider.find('.slick-slide ' + selector);
+      $slides.css('min-height', 'auto');
+      $slides.each(function () {
+        var slideHeight = $(this).outerHeight();
+        if (slideHeight > maxHeight) {
+          maxHeight = slideHeight;
+        }
+      });
+      $slides.css('min-height', maxHeight + 'px');
+    }
+  }, {
     key: "reviewsSliderInit",
     value: function reviewsSliderInit() {
+      var t = this;
       $(document).find('.clients-list').each(function () {
         var $slider = $(this);
         var $prev = $(this).closest('section').find('.slick__prev');
@@ -7264,6 +7277,7 @@ var Slick = /*#__PURE__*/function () {
           arrows: true,
           prevArrow: $prev,
           nextArrow: $next,
+          adaptiveHeight: false,
           dots: false,
           responsive: [{
             breakpoint: 1100,
@@ -7276,6 +7290,9 @@ var Slick = /*#__PURE__*/function () {
               slidesToShow: 1
             }
           }]
+        });
+        $slider.on('setPosition', function () {
+          t.setEqualHeight($slider);
         });
       });
     }

@@ -276,10 +276,6 @@ em, i {
   }
 }
 
-.slick-slide {
-  height: auto !important;
-}
-
 .modal-window {
   display: none;
   padding: 4rem;
@@ -325,4 +321,9 @@ em, i {
       width: 100%;
     }
   }
+}
+
+.slick-slide > div {
+  height: 100%;
+  display: flex;
 }

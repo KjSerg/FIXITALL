@@ -144,20 +144,8 @@ export default class FormHandler {
                     const message = data.msg || '';
                     const text = data.msg_text || '';
                     const type = data.type || '';
-                    const userName = data.name || '';
                     const url = data.url;
                     const reload = data.reload || '';
-                    const avatarURL = data.avatar_url || '';
-                    const avatarID = data.avatar_id || '';
-                    if (userName) {
-                        this.$document.find('.sidebar-name, user-name-js').text(userName);
-                    }
-                    if (avatarURL) {
-                        this.$document.find('.avatar-js').attr('src', avatarURL);
-                    }
-                    if (avatarID) {
-                        this.$document.find('.avatar-id').val(avatarID);
-                    }
                     if (message) this.showMessage(message, type, text);
                     if (url) {
                         window.location.href = url;

@@ -70,10 +70,11 @@ export default class Application {
 
     linkListener() {
         const t = this;
-        this.$doc.on('click', 'a[href*="#"]', function (e) {
+        this.$doc.on('click', 'a[href*="#"]:not(.fancybox)', function (e) {
             e.preventDefault();
             const $t = $(this);
             const href = $t.attr('href');
+            if(href === '#') return;
             const hashValue = href.split('#')[1];
             if (hashValue !== undefined) {
                 const $el = t.$doc.find('#' + hashValue);

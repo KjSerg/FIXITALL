@@ -165,7 +165,7 @@ export default class BookForm {
     calendarInit() {
         const t = this;
         const calendarDays = document.getElementById("calendarDays");
-        if(calendarDays === null) return;
+        if (calendarDays === null) return;
         const monthYear = document.getElementById("monthYear");
         const prevMonthBtn = document.getElementById("prevMonth");
         const nextMonthBtn = document.getElementById("nextMonth");
@@ -365,8 +365,14 @@ export default class BookForm {
                 $form.find('.book-form-address').hide();
                 $row.find('.form-quantity').addClass('not-active');
                 $type.closest('.form-label').addClass('not-active');
+                $type.closest('.form-label select').removeAttr('required');
+                $row.find('.form-quantity input').removeAttr('required');
+                $form.find('.book-form-address input').removeAttr('required');
                 return;
             }
+            $type.closest('.form-label select').attr('required', 'required');
+            $row.find('.form-quantity input').attr('required', 'required');
+            $form.find('.book-form-address input').attr('required', 'required');
             $button.show();
             $form.find('.book-form-address').show();
             showPreloader();
@@ -420,7 +426,7 @@ export default class BookForm {
                     $categories.html(response);
                     selectrickInit();
                     $categories.closest('.form-label').removeClass('not-active');
-
+                    $form.find('.book-form__button').show();
                 }
                 hidePreloader();
             });
@@ -444,7 +450,7 @@ export default class BookForm {
 
     setCurrentDate() {
         console.log(this.getFormatedDate());
-        if(this.$timeList.length===0) return;
+        if (this.$timeList.length === 0) return;
         $('html, body').animate({
             scrollTop: this.$timeList.offset().top
         });

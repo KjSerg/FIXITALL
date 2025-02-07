@@ -236,6 +236,7 @@ export class GoogleMap {
                 $selector.attr('data-lng', location.lng());
                 $selector.attr('data-address', address);
                 $field.val(address);
+                $field.attr('data-selected',address);
             } else {
                 console.error('Не вдалося отримати адресу:', status);
             }
