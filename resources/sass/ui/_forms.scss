@@ -39,6 +39,12 @@
       display: block;
       margin-bottom: 0.8rem;
     }
+
+    &.error{
+      .selectric, .book-form-photos {
+        border-color: red!important;
+      }
+    }
   }
 
   &-quantity {

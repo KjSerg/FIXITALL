@@ -12,6 +12,13 @@ export const numberInput = () => {
             value = value.replace('-', '');
         }
         if($i.attr('type') === 'tel') value = '+' + value;
+        if($i.attr('name') === 'quantity[]'){
+            let val = Number($i.val());
+            val = isNaN(val) ? 1 : val;
+            if(val < 1){
+                value = 1;
+            }
+        }
         $i.val(value);
     });
 

@@ -15,6 +15,15 @@
   letter-spacing: 0.0085rem;
   text-transform: uppercase;
   outline: none;
+  .icon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
   &:hover{
     background: #020A1B;
     color: #fff;

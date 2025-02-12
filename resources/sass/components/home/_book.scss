@@ -460,7 +460,13 @@
           background-color: #DA3134;
 
           .done {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            flex-grow: 0;
+            flex-shrink: 0;
           }
 
           .number {
@@ -516,6 +522,13 @@
           letter-spacing: 0.0085rem;
           text-transform: uppercase;
           .icon{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            flex-grow: 0;
+            flex-shrink: 0;
             transition: 0.2s ease-in-out;
           }
           &:hover{

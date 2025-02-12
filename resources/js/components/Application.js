@@ -52,7 +52,8 @@ export default class Application {
             this.showLoaderOnClick();
             this.googleMapInit();
             this.linkListener();
-            const bool = new BookForm();
+            const book = new BookForm();
+            book.init();
             const form = new FormHandler('.form-js');
             const slick = new Slick();
         });
@@ -70,11 +71,11 @@ export default class Application {
 
     linkListener() {
         const t = this;
-        this.$doc.on('click', 'a[href*="#"]:not(.fancybox)', function (e) {
+        this.$doc.on('click', 'a[href*="#"]:not(.fancybox, .book-form__trigger)', function (e) {
             e.preventDefault();
             const $t = $(this);
             const href = $t.attr('href');
-            if(href === '#') return;
+            if (href === '#') return;
             const hashValue = href.split('#')[1];
             if (hashValue !== undefined) {
                 const $el = t.$doc.find('#' + hashValue);

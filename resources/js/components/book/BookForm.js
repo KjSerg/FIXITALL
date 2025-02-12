@@ -1,6 +1,7 @@
-import {hidePreloader, showPreloader} from "../utils/_helpers";
+import {hidePreloader, isJsonString, setFilesFromUrls, showPreloader} from "../utils/_helpers";
 import {selectrickInit} from "../../plugins/_selectric-init";
 import 'selectric';
+import {showMsg, showNotices} from "../../plugins/_fancybox-init";
 
 export default class BookForm {
     constructor() {
@@ -14,7 +15,14 @@ export default class BookForm {
         this.date = new Date();
         this.time = '';
         this.parser = new DOMParser();
-        this.init();
+    }
+
+    setParams() {
+        const $select = this.$doc.find('.service-select');
+        if ($select.length > 0) {
+            this.service = this.$doc.find('.service-select').val();
+        }
+        this.rowCount = this.$doc.find('.book-form-row').length;
     }
 
     init() {
@@ -25,10 +33,11 @@ export default class BookForm {
         this.questionsListener();
         this.calendarInit();
         this.bookTimeSelect();
+        this.eventListener();
     }
 
     fileReader() {
-
+        const t = this;
         this.$doc.on('change', '.book-form-file1', function (event) {
             const files = event.target.files;
             const input = $(this)[0];
@@ -67,7 +76,6 @@ export default class BookForm {
             const $fileInput = $('.book-form-file');
             const $results = $('.book-form-photos-results');
             const maxFiles = parseInt($fileInput.data('limit')) || 5;
-            let filesArray = [];
             const $l = $fileInput.closest('.form-label');
             const $p = $l.find('.book-form-photos-placeholder');
             const $r = $l.find('.book-form-photos-results');
@@ -96,6 +104,13 @@ export default class BookForm {
                 const files = e.target.files;
                 handleFiles(files);
             });
+
+            if ($fileInput.attr('data-gallery') !== undefined) {
+                const imageUrls = $fileInput.attr('data-gallery').split(',');
+                setFilesFromUrls($fileInput[0], imageUrls).then(r => {
+                    $fileInput.trigger('change');
+                });
+            }
 
             function handleFiles(files) {
                 const validExtensions = $fileInput.attr('accept').split(',');
@@ -158,9 +173,29 @@ export default class BookForm {
                     $r.show();
                 }
             }
+
+            async function setFilesFromUrls(inputElement, imageUrls) {
+                const dataTransfer = new DataTransfer();
+
+                for (const url of imageUrls) {
+                    const file = await urlToFile(url);
+                    dataTransfer.items.add(file);
+                    filesArray.push(file);
+                }
+
+                inputElement.files = dataTransfer.files;
+            }
+
+            async function urlToFile(url) {
+                const response = await fetch(url);
+                const blob = await response.blob();
+                return new File([blob], `image-${Date.now()}.jpg`, { type: blob.type });
+            }
+
         });
 
     }
+
 
     calendarInit() {
         const t = this;
@@ -247,6 +282,25 @@ export default class BookForm {
             t.$doc.find('.book-time-list-item').removeClass('active');
             $t.addClass('active');
             t.time = $t.text().trim();
+            const status = $t.attr('data-status');
+            const date = $t.attr('data-date');
+            const work_time = $t.attr('data-work_time');
+            const start = $t.attr('data-start');
+            const end = $t.attr('data-end');
+            const master = $t.attr('data-master');
+            t.resetOrderData();
+            if (status !== 'free') return;
+            if (master === undefined) return;
+            if (start === undefined) return;
+            if (date === undefined) return;
+            if (end === undefined) return;
+            t.$doc.find('#order_date').val(date);
+            t.$doc.find('#work_time').val(work_time);
+            t.$doc.find('#order_start').val(start);
+            t.$doc.find('#order_end').val(end);
+            t.$doc.find('#order_master').val(master);
+            t.$doc.find('.show-conditions').show();
+
         });
     }
 
@@ -290,8 +344,8 @@ export default class BookForm {
         });
 
         const updateHeaderStatus = (step) => {
-            this.$form.find('.book-form-head__item').removeClass('finished').removeClass('active');
-            this.$form.find('.book-form-head__item').each(function (index) {
+            this.$doc.find('.book-form-head__item').removeClass('finished').removeClass('active');
+            this.$doc.find('.book-form-head__item').each(function (index) {
                 //finished
                 //active
                 const $t = $(this);
@@ -453,6 +507,179 @@ export default class BookForm {
         if (this.$timeList.length === 0) return;
         $('html, body').animate({
             scrollTop: this.$timeList.offset().top
+        });
+        this.getFreeTime();
+    }
+
+    eventListener() {
+        this.$doc.on('click', '.book-form__trigger', (e) => this.handleClick(e));
+        this.$doc.on('click', '.book-button-cancel', (e) => this.cancelBook(e));
+        this.$doc.on('click', '.book-form__trigger-back', (e) => this.getPrevStepHTML(e));
+        this.$doc.ready(() => {
+            this.setParams();
+            this.changeOtherStatus();
+        });
+    }
+
+    getPrevStepHTML(e) {
+        e.preventDefault();
+        const t = this;
+        const $button = $(e.target);
+        const order = $button.attr('data-order-id');
+        const session = $button.attr('data-session-id');
+        if (order === undefined || session === undefined) return;
+        showPreloader();
+        $.ajax({
+            type: "POST",
+            url: adminAjax,
+            data: {
+                action: 'get_prev_step_html',
+                order: order,
+                session: session,
+            }
+        }).done((response) => {
+            t.response(response);
+        });
+    }
+
+    cancelBook(e) {
+        const t = this;
+        e.preventDefault();
+        const $button = $(e.target);
+        const order = $button.attr('data-order-id');
+        const session = $button.attr('data-session-id');
+        if (order === undefined || session === undefined) return;
+        showPreloader();
+        $.ajax({
+            type: "POST",
+            url: adminAjax,
+            data: {
+                action: 'cancel_bool',
+                order: order,
+                session: session,
+            }
+        }).done((response) => {
+            t.response(response);
+        });
+    }
+
+    response(response) {
+        const t = this;
+        if (response) {
+            const isJson = isJsonString(response);
+            if (isJson) {
+                const data = JSON.parse(response);
+                const message = data.msg || '';
+                const text = data.msg_text || '';
+                const type = data.type || '';
+                const url = data.url;
+                const reload = data.reload || '';
+                const html = data.html || '';
+                const step_html = data.step_html || '';
+                if (message) showMsg(message);
+                if (html) {
+                    this.$doc.find('#book-time-list').html(html);
+                }
+                if (url) {
+                    window.location.href = url;
+                    return;
+                }
+                if (step_html) {
+                    this.$doc.find('.book-render').html(step_html);
+                    selectrickInit();
+                    $('html, body').animate({
+                        scrollTop: this.$doc.find('.book-render').offset().top
+                    });
+                    t.setParams();
+                    t.changeOtherStatus();
+                }
+                if (reload === 'true') {
+                    if (message) {
+                        setTimeout(function () {
+                            window.location.reload();
+                        }, 2000);
+                        return;
+                    }
+                    window.location.reload();
+                    return;
+                }
+            } else {
+                showMsg(response);
+            }
+
+        }
+        hidePreloader();
+    }
+
+    handleClick(e) {
+        e.preventDefault();
+        const $button = $(e.target);
+        const formId = $button.attr('href');
+        const $form = this.$doc.find(formId);
+        $form.trigger('submit');
+    }
+
+    resetOrderData() {
+        this.$doc.find('#order_date').val('');
+        this.$doc.find('#work_time').val('');
+        this.$doc.find('#order_start').val('');
+        this.$doc.find('#order_end').val('');
+        this.$doc.find('#order_master').val('');
+        this.$doc.find('.show-conditions').hide();
+    }
+
+    getFreeTime() {
+        const $calendar = this.$doc.find('#book-calendar-js');
+        if ($calendar.length === 0) return;
+        const order = $calendar.attr('data-order-id');
+        const session = $calendar.attr('data-session-id');
+        this.resetOrderData();
+        if (order === undefined || session === undefined) return;
+        showPreloader();
+        $.ajax({
+            type: "POST",
+            url: adminAjax,
+            data: {
+                action: 'get_free_time',
+                date: this.getFormatedDate(),
+                order: order,
+                session: session,
+            }
+        }).done((response) => {
+            if (response) {
+                const isJson = isJsonString(response);
+                if (isJson) {
+                    const data = JSON.parse(response);
+                    const message = data.msg || '';
+                    const text = data.msg_text || '';
+                    const type = data.type || '';
+                    const url = data.url;
+                    const reload = data.reload || '';
+                    const html = data.html || '';
+                    if (message) showMsg(message);
+                    if (html) {
+                        this.$doc.find('#book-time-list').html(html);
+                    }
+                    if (url) {
+                        window.location.href = url;
+                        return;
+                    }
+                    if (reload === 'true') {
+                        if (message) {
+                            setTimeout(function () {
+                                window.location.reload();
+                            }, 2000);
+                            return;
+                        }
+                        window.location.reload();
+                        return;
+                    }
+                } else {
+                    showMsg(response);
+                }
+
+            }
+            hidePreloader();
         });
     }
 }

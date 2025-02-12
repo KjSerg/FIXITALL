@@ -1,8 +1,12 @@
 import {isObjectEmpty} from "../utils/_helpers";
 import 'selectric';
+import {selectrickInit} from "../../plugins/_selectric-init";
+import BookForm from "../book/BookForm";
+import {showNotices} from "../../plugins/_fancybox-init";
 
 export default class FormHandler {
     constructor(selector) {
+        this.selector = selector;
         this.$document = $(document);
         this.forms = $(document).find(selector);
         this.initialize();
@@ -11,18 +15,6 @@ export default class FormHandler {
 
     selectInit() {
         const t = this;
-        this.$document.find('.set-cities-js').on('change', function (e) {
-            const $select = $(this);
-            console.log($select)
-            const selector = $select.attr('data-cities-selector');
-            console.log(selector)
-            if (selector === undefined) return;
-            const $selector = $(document).find(selector);
-            if ($selector.length === 0) return;
-            const val = $select.val();
-            if (val.length === 0 || !val) return;
-            t.setCitiesSelectValues(val, $selector);
-        });
         $(document).on('change', '.trigger-form-js', function (e) {
             const $select = $(this);
             $select.closest('form').submit();
@@ -30,7 +22,7 @@ export default class FormHandler {
     }
 
     initialize() {
-        this.forms.on('submit', (e) => this.handleSubmit(e));
+        this.$document.on('submit', this.selector, (e) => this.handleSubmit(e));
     }
 
     handleSubmit(event) {
@@ -109,7 +101,6 @@ export default class FormHandler {
         return isValid;
     }
 
-
     validateRequiredInputs($form) {
         const inputsGroup = {};
         let isValid = true;
@@ -146,7 +137,20 @@ export default class FormHandler {
                     const type = data.type || '';
                     const url = data.url;
                     const reload = data.reload || '';
+                    const html = data.step_html || '';
                     if (message) this.showMessage(message, type, text);
+                    if (html) {
+                        this.$document.find('.book-render').html(html);
+                        selectrickInit();
+                        if (this.$document.find('#calendarDays')) {
+                            const book = new BookForm();
+                            book.calendarInit();
+                        }
+                        $('html, body').animate({
+                            scrollTop: this.$document.find('.book-render').offset().top
+                        });
+                        showNotices();
+                    }
                     if (url) {
                         window.location.href = url;
                         return;
@@ -198,48 +202,6 @@ export default class FormHandler {
 
     hidePreloader() {
         $('.preloader').removeClass('active');
-    }
-
-    setCitiesSelectValues(countryID, $selector) {
-        const $s = $selector.find('select');
-        const hint = $s.find('option').eq(0).text().trim();
-        let options = `<option selected disabled value="">${hint}</option>`;
-        $selector.addClass('not-active');
-        $s.removeAttr('required');
-        this.showPreloader();
-        const opt = {
-            type: 'POST',
-            url: adminAjax,
-            data: {
-                action: 'get_cities_object',
-                countryID: countryID,
-            },
-        };
-        $.ajax(opt).done((response) => {
-            if (response) {
-                const isJson = this.isJsonString(response);
-                if (isJson) {
-                    const data = JSON.parse(response);
-                    const message = data.msg || '';
-                    const cities = data.cities || {};
-                    const type = data.type || '';
-                    if (message) this.showMessage(message, type);
-                    if (!isObjectEmpty(cities)) {
-                        $selector.removeClass('not-active');
-                        $s.attr('required', 'required');
-                        for (let cityID in cities) {
-                            const name = cities[cityID];
-                            options += `<option value="${cityID}">${name}</option>`;
-                        }
-                        $s.html(options);
-                        if ($s.hasClass('select')) $s.prop('selectedIndex', 0).selectric('refresh');
-                    }
-                } else {
-                    this.showMessage(response);
-                }
-            }
-            this.hidePreloader();
-        });
     }
 }
 

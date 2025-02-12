@@ -5745,7 +5745,8 @@ var Application = /*#__PURE__*/function () {
         _this.showLoaderOnClick();
         _this.googleMapInit();
         _this.linkListener();
-        var bool = new _book_BookForm__WEBPACK_IMPORTED_MODULE_8__["default"]();
+        var book = new _book_BookForm__WEBPACK_IMPORTED_MODULE_8__["default"]();
+        book.init();
         var form = new _forms_FormHandler__WEBPACK_IMPORTED_MODULE_9__["default"]('.form-js');
         var slick = new _plugins_Slick__WEBPACK_IMPORTED_MODULE_10__["default"]();
       });
@@ -5765,7 +5766,7 @@ var Application = /*#__PURE__*/function () {
     key: "linkListener",
     value: function linkListener() {
       var t = this;
-      this.$doc.on('click', 'a[href*="#"]:not(.fancybox)', function (e) {
+      this.$doc.on('click', 'a[href*="#"]:not(.fancybox, .book-form__trigger)', function (e) {
         e.preventDefault();
         var $t = $(this);
         var href = $t.attr('href');
@@ -6104,13 +6105,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugins_selectric_init__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../plugins/_selectric-init */ "./resources/js/plugins/_selectric-init.js");
 /* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! selectric */ "./node_modules/selectric/public/jquery.selectric.js");
 /* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(selectric__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../plugins/_fancybox-init */ "./resources/js/plugins/_fancybox-init.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
 function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -6127,9 +6136,17 @@ var BookForm = /*#__PURE__*/function () {
     this.date = new Date();
     this.time = '';
     this.parser = new DOMParser();
-    this.init();
   }
   return _createClass(BookForm, [{
+    key: "setParams",
+    value: function setParams() {
+      var $select = this.$doc.find('.service-select');
+      if ($select.length > 0) {
+        this.service = this.$doc.find('.service-select').val();
+      }
+      this.rowCount = this.$doc.find('.book-form-row').length;
+    }
+  }, {
     key: "init",
     value: function init() {
       this.addAndRemoveRows();
@@ -6139,10 +6156,12 @@ var BookForm = /*#__PURE__*/function () {
       this.questionsListener();
       this.calendarInit();
       this.bookTimeSelect();
+      this.eventListener();
     }
   }, {
     key: "fileReader",
     value: function fileReader() {
+      var t = this;
       this.$doc.on('change', '.book-form-file1', function (event) {
         var files = event.target.files;
         var input = $(this)[0];
@@ -6181,7 +6200,6 @@ var BookForm = /*#__PURE__*/function () {
         var $fileInput = $('.book-form-file');
         var $results = $('.book-form-photos-results');
         var maxFiles = parseInt($fileInput.data('limit')) || 5;
-        var filesArray = [];
         var $l = $fileInput.closest('.form-label');
         var $p = $l.find('.book-form-photos-placeholder');
         var $r = $l.find('.book-form-photos-results');
@@ -6206,6 +6224,12 @@ var BookForm = /*#__PURE__*/function () {
           var files = e.target.files;
           handleFiles(files);
         });
+        if ($fileInput.attr('data-gallery') !== undefined) {
+          var imageUrls = $fileInput.attr('data-gallery').split(',');
+          setFilesFromUrls($fileInput[0], imageUrls).then(function (r) {
+            $fileInput.trigger('change');
+          });
+        }
         function handleFiles(files) {
           var validExtensions = $fileInput.attr('accept').split(',');
           var maxSizeAttr = $fileInput.attr('data-max-size') || '5';
@@ -6265,6 +6289,83 @@ var BookForm = /*#__PURE__*/function () {
             $p.hide();
             $r.show();
           }
+        }
+        function setFilesFromUrls(_x, _x2) {
+          return _setFilesFromUrls.apply(this, arguments);
+        }
+        function _setFilesFromUrls() {
+          _setFilesFromUrls = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(inputElement, imageUrls) {
+            var dataTransfer, _iterator, _step, url, file;
+            return _regeneratorRuntime().wrap(function _callee$(_context) {
+              while (1) switch (_context.prev = _context.next) {
+                case 0:
+                  dataTransfer = new DataTransfer();
+                  _iterator = _createForOfIteratorHelper(imageUrls);
+                  _context.prev = 2;
+                  _iterator.s();
+                case 4:
+                  if ((_step = _iterator.n()).done) {
+                    _context.next = 13;
+                    break;
+                  }
+                  url = _step.value;
+                  _context.next = 8;
+                  return urlToFile(url);
+                case 8:
+                  file = _context.sent;
+                  dataTransfer.items.add(file);
+                  filesArray.push(file);
+                case 11:
+                  _context.next = 4;
+                  break;
+                case 13:
+                  _context.next = 18;
+                  break;
+                case 15:
+                  _context.prev = 15;
+                  _context.t0 = _context["catch"](2);
+                  _iterator.e(_context.t0);
+                case 18:
+                  _context.prev = 18;
+                  _iterator.f();
+                  return _context.finish(18);
+                case 21:
+                  inputElement.files = dataTransfer.files;
+                case 22:
+                case "end":
+                  return _context.stop();
+              }
+            }, _callee, null, [[2, 15, 18, 21]]);
+          }));
+          return _setFilesFromUrls.apply(this, arguments);
+        }
+        function urlToFile(_x3) {
+          return _urlToFile.apply(this, arguments);
+        }
+        function _urlToFile() {
+          _urlToFile = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(url) {
+            var response, blob;
+            return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+              while (1) switch (_context2.prev = _context2.next) {
+                case 0:
+                  _context2.next = 2;
+                  return fetch(url);
+                case 2:
+                  response = _context2.sent;
+                  _context2.next = 5;
+                  return response.blob();
+                case 5:
+                  blob = _context2.sent;
+                  return _context2.abrupt("return", new File([blob], "image-".concat(Date.now(), ".jpg"), {
+                    type: blob.type
+                  }));
+                case 7:
+                case "end":
+                  return _context2.stop();
+              }
+            }, _callee2);
+          }));
+          return _urlToFile.apply(this, arguments);
         }
       });
     }
@@ -6344,6 +6445,24 @@ var BookForm = /*#__PURE__*/function () {
         t.$doc.find('.book-time-list-item').removeClass('active');
         $t.addClass('active');
         t.time = $t.text().trim();
+        var status = $t.attr('data-status');
+        var date = $t.attr('data-date');
+        var work_time = $t.attr('data-work_time');
+        var start = $t.attr('data-start');
+        var end = $t.attr('data-end');
+        var master = $t.attr('data-master');
+        t.resetOrderData();
+        if (status !== 'free') return;
+        if (master === undefined) return;
+        if (start === undefined) return;
+        if (date === undefined) return;
+        if (end === undefined) return;
+        t.$doc.find('#order_date').val(date);
+        t.$doc.find('#work_time').val(work_time);
+        t.$doc.find('#order_start').val(start);
+        t.$doc.find('#order_end').val(end);
+        t.$doc.find('#order_master').val(master);
+        t.$doc.find('.show-conditions').show();
       });
     }
   }, {
@@ -6390,8 +6509,8 @@ var BookForm = /*#__PURE__*/function () {
         updateHeaderStatus(index + 1);
       });
       var updateHeaderStatus = function updateHeaderStatus(step) {
-        _this.$form.find('.book-form-head__item').removeClass('finished').removeClass('active');
-        _this.$form.find('.book-form-head__item').each(function (index) {
+        _this.$doc.find('.book-form-head__item').removeClass('finished').removeClass('active');
+        _this.$doc.find('.book-form-head__item').each(function (index) {
           //finished
           //active
           var $t = $(this);
@@ -6559,6 +6678,192 @@ var BookForm = /*#__PURE__*/function () {
       $('html, body').animate({
         scrollTop: this.$timeList.offset().top
       });
+      this.getFreeTime();
+    }
+  }, {
+    key: "eventListener",
+    value: function eventListener() {
+      var _this2 = this;
+      this.$doc.on('click', '.book-form__trigger', function (e) {
+        return _this2.handleClick(e);
+      });
+      this.$doc.on('click', '.book-button-cancel', function (e) {
+        return _this2.cancelBook(e);
+      });
+      this.$doc.on('click', '.book-form__trigger-back', function (e) {
+        return _this2.getPrevStepHTML(e);
+      });
+      this.$doc.ready(function () {
+        _this2.setParams();
+        _this2.changeOtherStatus();
+      });
+    }
+  }, {
+    key: "getPrevStepHTML",
+    value: function getPrevStepHTML(e) {
+      e.preventDefault();
+      var t = this;
+      var $button = $(e.target);
+      var order = $button.attr('data-order-id');
+      var session = $button.attr('data-session-id');
+      if (order === undefined || session === undefined) return;
+      (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+      $.ajax({
+        type: "POST",
+        url: adminAjax,
+        data: {
+          action: 'get_prev_step_html',
+          order: order,
+          session: session
+        }
+      }).done(function (response) {
+        t.response(response);
+      });
+    }
+  }, {
+    key: "cancelBook",
+    value: function cancelBook(e) {
+      var t = this;
+      e.preventDefault();
+      var $button = $(e.target);
+      var order = $button.attr('data-order-id');
+      var session = $button.attr('data-session-id');
+      if (order === undefined || session === undefined) return;
+      (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+      $.ajax({
+        type: "POST",
+        url: adminAjax,
+        data: {
+          action: 'cancel_bool',
+          order: order,
+          session: session
+        }
+      }).done(function (response) {
+        t.response(response);
+      });
+    }
+  }, {
+    key: "response",
+    value: function response(_response) {
+      var t = this;
+      if (_response) {
+        var isJson = (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.isJsonString)(_response);
+        if (isJson) {
+          var data = JSON.parse(_response);
+          var message = data.msg || '';
+          var text = data.msg_text || '';
+          var type = data.type || '';
+          var url = data.url;
+          var reload = data.reload || '';
+          var html = data.html || '';
+          var step_html = data.step_html || '';
+          if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
+          if (html) {
+            this.$doc.find('#book-time-list').html(html);
+          }
+          if (url) {
+            window.location.href = url;
+            return;
+          }
+          if (step_html) {
+            this.$doc.find('.book-render').html(step_html);
+            (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_1__.selectrickInit)();
+            $('html, body').animate({
+              scrollTop: this.$doc.find('.book-render').offset().top
+            });
+            t.setParams();
+            t.changeOtherStatus();
+          }
+          if (reload === 'true') {
+            if (message) {
+              setTimeout(function () {
+                window.location.reload();
+              }, 2000);
+              return;
+            }
+            window.location.reload();
+            return;
+          }
+        } else {
+          (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(_response);
+        }
+      }
+      (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
+    }
+  }, {
+    key: "handleClick",
+    value: function handleClick(e) {
+      e.preventDefault();
+      var $button = $(e.target);
+      var formId = $button.attr('href');
+      var $form = this.$doc.find(formId);
+      $form.trigger('submit');
+    }
+  }, {
+    key: "resetOrderData",
+    value: function resetOrderData() {
+      this.$doc.find('#order_date').val('');
+      this.$doc.find('#work_time').val('');
+      this.$doc.find('#order_start').val('');
+      this.$doc.find('#order_end').val('');
+      this.$doc.find('#order_master').val('');
+      this.$doc.find('.show-conditions').hide();
+    }
+  }, {
+    key: "getFreeTime",
+    value: function getFreeTime() {
+      var _this3 = this;
+      var $calendar = this.$doc.find('#book-calendar-js');
+      if ($calendar.length === 0) return;
+      var order = $calendar.attr('data-order-id');
+      var session = $calendar.attr('data-session-id');
+      this.resetOrderData();
+      if (order === undefined || session === undefined) return;
+      (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+      $.ajax({
+        type: "POST",
+        url: adminAjax,
+        data: {
+          action: 'get_free_time',
+          date: this.getFormatedDate(),
+          order: order,
+          session: session
+        }
+      }).done(function (response) {
+        if (response) {
+          var isJson = (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.isJsonString)(response);
+          if (isJson) {
+            var data = JSON.parse(response);
+            var message = data.msg || '';
+            var text = data.msg_text || '';
+            var type = data.type || '';
+            var url = data.url;
+            var reload = data.reload || '';
+            var html = data.html || '';
+            if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
+            if (html) {
+              _this3.$doc.find('#book-time-list').html(html);
+            }
+            if (url) {
+              window.location.href = url;
+              return;
+            }
+            if (reload === 'true') {
+              if (message) {
+                setTimeout(function () {
+                  window.location.reload();
+                }, 2000);
+                return;
+              }
+              window.location.reload();
+              return;
+            }
+          } else {
+            (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(response);
+          }
+        }
+        (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
+      });
     }
   }]);
 }();
@@ -6580,6 +6885,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utils/_helpers */ "./resources/js/components/utils/_helpers.js");
 /* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! selectric */ "./node_modules/selectric/public/jquery.selectric.js");
 /* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(selectric__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _plugins_selectric_init__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../plugins/_selectric-init */ "./resources/js/plugins/_selectric-init.js");
+/* harmony import */ var _book_BookForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../book/BookForm */ "./resources/js/components/book/BookForm.js");
+/* harmony import */ var _plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../plugins/_fancybox-init */ "./resources/js/plugins/_fancybox-init.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -6589,9 +6897,13 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
+
+
+
 var FormHandler = /*#__PURE__*/function () {
   function FormHandler(selector) {
     _classCallCheck(this, FormHandler);
+    this.selector = selector;
     this.$document = $(document);
     this.forms = $(document).find(selector);
     this.initialize();
@@ -6601,18 +6913,6 @@ var FormHandler = /*#__PURE__*/function () {
     key: "selectInit",
     value: function selectInit() {
       var t = this;
-      this.$document.find('.set-cities-js').on('change', function (e) {
-        var $select = $(this);
-        console.log($select);
-        var selector = $select.attr('data-cities-selector');
-        console.log(selector);
-        if (selector === undefined) return;
-        var $selector = $(document).find(selector);
-        if ($selector.length === 0) return;
-        var val = $select.val();
-        if (val.length === 0 || !val) return;
-        t.setCitiesSelectValues(val, $selector);
-      });
       $(document).on('change', '.trigger-form-js', function (e) {
         var $select = $(this);
         $select.closest('form').submit();
@@ -6622,7 +6922,7 @@ var FormHandler = /*#__PURE__*/function () {
     key: "initialize",
     value: function initialize() {
       var _this = this;
-      this.forms.on('submit', function (e) {
+      this.$document.on('submit', this.selector, function (e) {
         return _this.handleSubmit(e);
       });
     }
@@ -6732,7 +7032,20 @@ var FormHandler = /*#__PURE__*/function () {
             var type = data.type || '';
             var url = data.url;
             var reload = data.reload || '';
+            var html = data.step_html || '';
             if (message) _this2.showMessage(message, type, text);
+            if (html) {
+              _this2.$document.find('.book-render').html(html);
+              (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_2__.selectrickInit)();
+              if (_this2.$document.find('#calendarDays')) {
+                var book = new _book_BookForm__WEBPACK_IMPORTED_MODULE_3__["default"]();
+                book.calendarInit();
+              }
+              $('html, body').animate({
+                scrollTop: _this2.$document.find('.book-render').offset().top
+              });
+              (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showNotices)();
+            }
             if (url) {
               window.location.href = url;
               return;
@@ -6792,50 +7105,6 @@ var FormHandler = /*#__PURE__*/function () {
     value: function hidePreloader() {
       $('.preloader').removeClass('active');
     }
-  }, {
-    key: "setCitiesSelectValues",
-    value: function setCitiesSelectValues(countryID, $selector) {
-      var _this3 = this;
-      var $s = $selector.find('select');
-      var hint = $s.find('option').eq(0).text().trim();
-      var options = "<option selected disabled value=\"\">".concat(hint, "</option>");
-      $selector.addClass('not-active');
-      $s.removeAttr('required');
-      this.showPreloader();
-      var opt = {
-        type: 'POST',
-        url: adminAjax,
-        data: {
-          action: 'get_cities_object',
-          countryID: countryID
-        }
-      };
-      $.ajax(opt).done(function (response) {
-        if (response) {
-          var isJson = _this3.isJsonString(response);
-          if (isJson) {
-            var data = JSON.parse(response);
-            var message = data.msg || '';
-            var cities = data.cities || {};
-            var type = data.type || '';
-            if (message) _this3.showMessage(message, type);
-            if (!(0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.isObjectEmpty)(cities)) {
-              $selector.removeClass('not-active');
-              $s.attr('required', 'required');
-              for (var cityID in cities) {
-                var name = cities[cityID];
-                options += "<option value=\"".concat(cityID, "\">").concat(name, "</option>");
-              }
-              $s.html(options);
-              if ($s.hasClass('select')) $s.prop('selectedIndex', 0).selectric('refresh');
-            }
-          } else {
-            _this3.showMessage(response);
-          }
-        }
-        _this3.hidePreloader();
-      });
-    }
   }]);
 }();
 
@@ -6871,6 +7140,13 @@ var numberInput = function numberInput() {
       value = value.replace('-', '');
     }
     if ($i.attr('type') === 'tel') value = '+' + value;
+    if ($i.attr('name') === 'quantity[]') {
+      var val = Number($i.val());
+      val = isNaN(val) ? 1 : val;
+      if (val < 1) {
+        value = 1;
+      }
+    }
     $i.val(value);
   });
   $doc.on('click', '.plus', function (event) {
@@ -7317,6 +7593,7 @@ var Slick = /*#__PURE__*/function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   fancyboxInit: () => (/* binding */ fancyboxInit),
+/* harmony export */   showMsg: () => (/* binding */ showMsg),
 /* harmony export */   showNotices: () => (/* binding */ showNotices)
 /* harmony export */ });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
@@ -7344,6 +7621,12 @@ var fancyboxInit = function fancyboxInit() {
     jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.close();
   });
 };
+function showMsg(msg) {
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.open(msg);
+  setTimeout(function () {
+    jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.close();
+  }, 1500);
+}
 function showNotices() {
   var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
   var $notices = jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).find('.notices > *');

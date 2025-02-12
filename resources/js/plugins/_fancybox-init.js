@@ -21,6 +21,13 @@ export const fancyboxInit = () => {
     });
 };
 
+export function showMsg(msg) {
+    $.fancybox.open(msg);
+    setTimeout(function () {
+        $.fancybox.close();
+    }, 1500);
+}
+
 export function showNotices(index = 0) {
     const $notices = $(document).find('.notices > *');
     if ($notices.length === 0) return;
