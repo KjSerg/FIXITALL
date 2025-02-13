@@ -1,14 +1,15 @@
-import {isObjectEmpty} from "../utils/_helpers";
+import {isObjectEmpty, moveToElement} from "../utils/_helpers";
 import 'selectric';
 import {selectrickInit} from "../../plugins/_selectric-init";
 import BookForm from "../book/BookForm";
-import {showNotices} from "../../plugins/_fancybox-init";
+import {showMsg, showNotices} from "../../plugins/_fancybox-init";
 
 export default class FormHandler {
     constructor(selector) {
         this.selector = selector;
         this.$document = $(document);
         this.forms = $(document).find(selector);
+        this.$sendengForm = $(document).find(selector);
         this.initialize();
         this.selectInit();
     }
@@ -31,11 +32,16 @@ export default class FormHandler {
         const $form = $(event.target);
         const formId = $form.attr('id');
 
+        if($form.hasClass('sending')){
+            showMsg('Error! Processing is underway!');
+            return;
+        }
+
         if (!this.validateForm($form)) return;
 
         const formData = new FormData(document.getElementById(formId));
-        this.showPreloader();
-
+        $form.addClass('sending');
+        this.$sendengForm = $form;
         this.sendRequest({
             type: $form.attr('method') || "POST",
             url: $form.attr('action') || adminAjax,
@@ -62,6 +68,7 @@ export default class FormHandler {
                 isValid = false;
                 $input.addClass('error');
                 $label.addClass('error');
+                moveToElement($label);
             } else {
                 $input.removeClass('error');
                 $label.removeClass('error');
@@ -78,12 +85,10 @@ export default class FormHandler {
             if (test) {
                 isValid = false;
                 $label.addClass('error');
+                moveToElement($label);
             } else {
                 $label.removeClass('error');
             }
-            console.log(test)
-            console.log(value)
-            console.log($label)
         });
 
         // Validate custom required inputs
@@ -94,6 +99,7 @@ export default class FormHandler {
         if ($consent.length && !$consent.prop('checked')) {
             $consent.closest('.form-consent').addClass('error');
             isValid = false;
+            moveToElement($consent.closest('.form-consent'));
         } else {
             $consent.closest('.form-consent').removeClass('error');
         }
@@ -127,9 +133,18 @@ export default class FormHandler {
     }
 
     sendRequest(options) {
+        if(this.$document.find('body').hasClass('loading')){
+            showMsg('Error! Reload the page!');
+            return;
+        }
+        this.showPreloader();
+        this.$document.find('body').addClass('loading').addClass('sending-form');
         $.ajax(options).done((response) => {
             if (response) {
                 const isJson = this.isJsonString(response);
+                this.$document.find('body').removeClass('loading').removeClass('sending-form');
+                this.$document.find('.loading-button').removeClass('loading-button').removeClass('not-active');
+                this.$sendengForm.removeClass('sending');
                 if (isJson) {
                     const data = JSON.parse(response);
                     const message = data.msg || '';

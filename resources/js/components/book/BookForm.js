@@ -1,7 +1,8 @@
-import {hidePreloader, isJsonString, setFilesFromUrls, showPreloader} from "../utils/_helpers";
+import {hidePreloader, isJsonString, showPreloader} from "../utils/_helpers";
 import {selectrickInit} from "../../plugins/_selectric-init";
 import 'selectric';
 import {showMsg, showNotices} from "../../plugins/_fancybox-init";
+import {logConnections} from "browser-sync/dist/default-config";
 
 export default class BookForm {
     constructor() {
@@ -38,164 +39,143 @@ export default class BookForm {
 
     fileReader() {
         const t = this;
-        this.$doc.on('change', '.book-form-file1', function (event) {
-            const files = event.target.files;
-            const input = $(this)[0];
-            const $i = $(this);
-            const $l = $i.closest('.form-label');
-            const $p = $l.find('.book-form-photos-placeholder');
-            const $r = $l.find('.book-form-photos-results');
-            const dataLimit = parseInt((input.dataset.limit || 1), 10) * 1024 * 1024;
-            $r.html('');
-            $p.show();
-            $r.hide();
-            if (files.length > 0) {
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const reader = new FileReader();
-                    console.log(file.size)
-                    console.log(dataLimit)
-                    if (file.size > dataLimit) {
-                        input.value = "";
-                        alert('Max file size: ' + (input.dataset.limit || 1) + 'MB');
-                        $p.show();
-                        $r.hide();
-                        return;
-                    }
-                    reader.onload = function (e) {
-                        $r.append(`<span><img src="${e.target.result}" alt=""></span>`);
-                    };
-                    reader.readAsDataURL(file);
-                }
-                $p.hide();
-                $r.show();
-            }
+        const $fileInput = $(document).find('.book-form-file');
+        if ($fileInput.length === 0) return;
+        const $dropZone = $(document).find('.drop-zone');
+        if ($dropZone.length === 0) return;
+        let names = [];
+        filesArray = [];
+        const $results = $(document).find('.book-form-photos-results');
+        const maxFiles = parseInt($fileInput.data('limit')) || 5;
+        const $l = $fileInput.closest('.form-label');
+        const $p = $l.find('.book-form-photos-placeholder');
+        const $r = $l.find('.book-form-photos-results');
+
+        $dropZone.on('dragover', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).addClass('dragover');
         });
-        $(document).ready(function () {
-            const $dropZone = $('.drop-zone');
-            const $fileInput = $('.book-form-file');
-            const $results = $('.book-form-photos-results');
-            const maxFiles = parseInt($fileInput.data('limit')) || 5;
-            const $l = $fileInput.closest('.form-label');
-            const $p = $l.find('.book-form-photos-placeholder');
-            const $r = $l.find('.book-form-photos-results');
-            $dropZone.on('dragover', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                $(this).addClass('dragover');
-            });
 
-            $dropZone.on('dragleave', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                $(this).removeClass('dragover');
-            });
+        $dropZone.on('dragleave', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragover');
+        });
 
-            $dropZone.on('drop', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                $(this).removeClass('dragover');
+        $dropZone.on('drop', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $(this).removeClass('dragover');
 
-                const files = e.originalEvent.dataTransfer.files;
-                handleFiles(files);
-            });
+            const files = e.originalEvent.dataTransfer.files;
+            handleFiles(files);
+        });
 
-            $fileInput.on('change', function (e) {
-                const files = e.target.files;
-                handleFiles(files);
-            });
+        $fileInput.on('change', function (e) {
+            const files = e.target.files;
+            handleFiles(files);
+        });
 
-            if ($fileInput.attr('data-gallery') !== undefined) {
-                const imageUrls = $fileInput.attr('data-gallery').split(',');
-                setFilesFromUrls($fileInput[0], imageUrls).then(r => {
-                    $fileInput.trigger('change');
-                });
-            }
-
-            function handleFiles(files) {
-                const validExtensions = $fileInput.attr('accept').split(',');
-                const maxSizeAttr = $fileInput.attr('data-max-size') || '5';
-                const maxSize = Number(maxSizeAttr) * 1024 * 1024;
-
-                for (let i = 0; i < files.length; i++) {
-                    if (filesArray.length >= maxFiles) {
-                        alert(`You can upload a maximum of ${maxFiles} files.`);
-                        break;
-                    }
-
-                    let file = files[i];
-
-                    if (!validExtensions.includes(file.type)) {
-                        alert('Unsupported file type. Only ' + $fileInput.attr('accept') + ' are allowed.');
-                        continue;
-                    }
-
-                    if (file.size > maxSize) {
-                        alert('File size exceeds ' + maxSizeAttr + 'MB.');
-                        continue;
-                    }
-
-                    filesArray.push(file);
-                    previewFile(file);
-                }
+        if ($fileInput.attr('data-gallery') !== undefined) {
+            const imageUrls = $fileInput.attr('data-gallery').split(',');
+            setFilesFromUrls($fileInput[0], imageUrls).then(r => {
                 updateFileInput();
-            }
+                toggleElements();
+                this.$doc.find('.loading-button').removeClass('loading-button').removeClass('not-active');
+            });
+        }
 
-            function previewFile(file) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const $img = $('<img>', {src: e.target.result, alt: ''});
-                    const $span = $('<span>').append($img);
-                    const $removeBtn = $('<button>', {text: '×', class: 'remove-btn'});
-                    $span.append($removeBtn);
-                    $results.append($span);
-                    $removeBtn.on('click', function () {
-                        const index = $results.find('span').index($span);
-                        filesArray.splice(index, 1);
-                        $span.remove();
-                        updateFileInput();
-                    });
-                };
-                reader.readAsDataURL(file);
-            }
+        function handleFiles(files) {
+            const validExtensions = $fileInput.attr('accept').split(',');
+            const maxSizeAttr = $fileInput.attr('data-max-size') || '5';
+            const maxSize = Number(maxSizeAttr) * 1024 * 1024;
 
-            function updateFileInput() {
-                const dataTransfer = new DataTransfer();
+            for (let i = 0; i < files.length; i++) {
+                if (filesArray.length >= maxFiles) {
+                    alert(`You can upload a maximum of ${maxFiles} files.`);
+                    break;
+                }
+
+                let file = files[i];
+                let name = file.name || '';
+                if (names.includes(name)) {
+                    alert('It seems that a file with this name: "' + name + '" has already been added by you!');
+                    continue;
+                }
+
+                if (!validExtensions.includes(file.type)) {
+                    alert('Unsupported file type. Only ' + $fileInput.attr('accept') + ' are allowed.');
+                    continue;
+                }
+
+                if (file.size > maxSize) {
+                    alert('File size exceeds ' + maxSizeAttr + 'MB.');
+                    continue;
+                }
+                names.push(name);
+                filesArray.push(file);
+                previewFile(file);
+            }
+            updateFileInput();
+        }
+
+        function previewFile(file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const $img = $('<img>', {src: e.target.result, alt: ''});
+                const $span = $('<span>').append($img);
+                const $removeBtn = $('<button>', {text: '×', class: 'remove-btn'});
+                $span.append($removeBtn);
+                $results.append($span);
+                $removeBtn.on('click', function () {
+                    const index = $results.find('span').index($span);
+                    filesArray.splice(index, 1);
+                    $span.remove();
+                    updateFileInput();
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateFileInput() {
+            let dataTransfer = new DataTransfer();
+            if (filesArray.length > 0) {
                 filesArray.forEach(file => {
                     dataTransfer.items.add(file);
                 });
-                $fileInput[0].files = dataTransfer.files;
-                if (dataTransfer.files.length === 0) {
-                    $p.show();
-                    $r.hide();
-                } else {
-                    $p.hide();
-                    $r.show();
-                }
+            } else {
+                names = [];
             }
+            $fileInput[0].files = dataTransfer.files;
+            toggleElements()
+        }
 
-            async function setFilesFromUrls(inputElement, imageUrls) {
-                const dataTransfer = new DataTransfer();
-
-                for (const url of imageUrls) {
-                    const file = await urlToFile(url);
-                    dataTransfer.items.add(file);
-                    filesArray.push(file);
-                }
-
-                inputElement.files = dataTransfer.files;
+        function toggleElements() {
+            if (filesArray.length === 0) {
+                $p.show();
+                $r.hide();
+            } else {
+                $p.hide();
+                $r.show();
             }
+        }
 
-            async function urlToFile(url) {
-                const response = await fetch(url);
-                const blob = await response.blob();
-                return new File([blob], `image-${Date.now()}.jpg`, { type: blob.type });
+        async function setFilesFromUrls(inputElement, imageUrls) {
+            for (const url of imageUrls) {
+                const file = await urlToFile(url);
+                filesArray.push(file);
+                previewFile(file);
             }
+        }
 
-        });
+        async function urlToFile(url) {
+            const response = await fetch(url);
+            const blob = await response.blob();
+            return new File([blob], `image-${Date.now()}.jpg`, {type: blob.type});
+        }
 
     }
-
 
     calendarInit() {
         const t = this;
@@ -453,8 +433,6 @@ export default class BookForm {
         $d.on('change', '.service-select', function (e) {
             const $select = $(this);
             t.service = $select.val();
-            console.log($select.val())
-            console.log(this.service)
             const $form = $select.closest('.book-form');
             const $delete = $d.find('.book-form-row__delete');
             const $categories = $form.find('.category-select');
@@ -498,12 +476,9 @@ export default class BookForm {
         const t = this;
         const date = t.date;
 
-        console.log(t.getFormatedDate());
-
     }
 
     setCurrentDate() {
-        console.log(this.getFormatedDate());
         if (this.$timeList.length === 0) return;
         $('html, body').animate({
             scrollTop: this.$timeList.offset().top
@@ -528,6 +503,9 @@ export default class BookForm {
         const order = $button.attr('data-order-id');
         const session = $button.attr('data-session-id');
         if (order === undefined || session === undefined) return;
+        $button.addClass('not-active');
+        $button.addClass('loading-button');
+        $button.attr('tab-index', '-1');
         showPreloader();
         $.ajax({
             type: "POST",
@@ -549,6 +527,9 @@ export default class BookForm {
         const order = $button.attr('data-order-id');
         const session = $button.attr('data-session-id');
         if (order === undefined || session === undefined) return;
+        $button.addClass('not-active');
+        $button.addClass('loading-button');
+        $button.attr('tab-index', '-1');
         showPreloader();
         $.ajax({
             type: "POST",
@@ -592,6 +573,7 @@ export default class BookForm {
                     });
                     t.setParams();
                     t.changeOtherStatus();
+                    t.fileReader();
                 }
                 if (reload === 'true') {
                     if (message) {

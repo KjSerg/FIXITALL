@@ -6106,6 +6106,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! selectric */ "./node_modules/selectric/public/jquery.selectric.js");
 /* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(selectric__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../plugins/_fancybox-init */ "./resources/js/plugins/_fancybox-init.js");
+/* harmony import */ var browser_sync_dist_default_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! browser-sync/dist/default-config */ "./node_modules/browser-sync/dist/default-config.js");
+/* harmony import */ var browser_sync_dist_default_config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(browser_sync_dist_default_config__WEBPACK_IMPORTED_MODULE_4__);
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
@@ -6119,6 +6121,7 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -6161,213 +6164,195 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "fileReader",
     value: function fileReader() {
+      var _this = this;
       var t = this;
-      this.$doc.on('change', '.book-form-file1', function (event) {
-        var files = event.target.files;
-        var input = $(this)[0];
-        var $i = $(this);
-        var $l = $i.closest('.form-label');
-        var $p = $l.find('.book-form-photos-placeholder');
-        var $r = $l.find('.book-form-photos-results');
-        var dataLimit = parseInt(input.dataset.limit || 1, 10) * 1024 * 1024;
-        $r.html('');
-        $p.show();
-        $r.hide();
-        if (files.length > 0) {
-          for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            var reader = new FileReader();
-            console.log(file.size);
-            console.log(dataLimit);
-            if (file.size > dataLimit) {
-              input.value = "";
-              alert('Max file size: ' + (input.dataset.limit || 1) + 'MB');
-              $p.show();
-              $r.hide();
-              return;
-            }
-            reader.onload = function (e) {
-              $r.append("<span><img src=\"".concat(e.target.result, "\" alt=\"\"></span>"));
-            };
-            reader.readAsDataURL(file);
-          }
-          $p.hide();
-          $r.show();
-        }
+      var $fileInput = $(document).find('.book-form-file');
+      if ($fileInput.length === 0) return;
+      var $dropZone = $(document).find('.drop-zone');
+      if ($dropZone.length === 0) return;
+      var names = [];
+      filesArray = [];
+      var $results = $(document).find('.book-form-photos-results');
+      var maxFiles = parseInt($fileInput.data('limit')) || 5;
+      var $l = $fileInput.closest('.form-label');
+      var $p = $l.find('.book-form-photos-placeholder');
+      var $r = $l.find('.book-form-photos-results');
+      $dropZone.on('dragover', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).addClass('dragover');
       });
-      $(document).ready(function () {
-        var $dropZone = $('.drop-zone');
-        var $fileInput = $('.book-form-file');
-        var $results = $('.book-form-photos-results');
-        var maxFiles = parseInt($fileInput.data('limit')) || 5;
-        var $l = $fileInput.closest('.form-label');
-        var $p = $l.find('.book-form-photos-placeholder');
-        var $r = $l.find('.book-form-photos-results');
-        $dropZone.on('dragover', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          $(this).addClass('dragover');
-        });
-        $dropZone.on('dragleave', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          $(this).removeClass('dragover');
-        });
-        $dropZone.on('drop', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          $(this).removeClass('dragover');
-          var files = e.originalEvent.dataTransfer.files;
-          handleFiles(files);
-        });
-        $fileInput.on('change', function (e) {
-          var files = e.target.files;
-          handleFiles(files);
-        });
-        if ($fileInput.attr('data-gallery') !== undefined) {
-          var imageUrls = $fileInput.attr('data-gallery').split(',');
-          setFilesFromUrls($fileInput[0], imageUrls).then(function (r) {
-            $fileInput.trigger('change');
-          });
-        }
-        function handleFiles(files) {
-          var validExtensions = $fileInput.attr('accept').split(',');
-          var maxSizeAttr = $fileInput.attr('data-max-size') || '5';
-          var maxSize = Number(maxSizeAttr) * 1024 * 1024;
-          for (var i = 0; i < files.length; i++) {
-            if (filesArray.length >= maxFiles) {
-              alert("You can upload a maximum of ".concat(maxFiles, " files."));
-              break;
-            }
-            var file = files[i];
-            if (!validExtensions.includes(file.type)) {
-              alert('Unsupported file type. Only ' + $fileInput.attr('accept') + ' are allowed.');
-              continue;
-            }
-            if (file.size > maxSize) {
-              alert('File size exceeds ' + maxSizeAttr + 'MB.');
-              continue;
-            }
-            filesArray.push(file);
-            previewFile(file);
-          }
+      $dropZone.on('dragleave', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).removeClass('dragover');
+      });
+      $dropZone.on('drop', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        $(this).removeClass('dragover');
+        var files = e.originalEvent.dataTransfer.files;
+        handleFiles(files);
+      });
+      $fileInput.on('change', function (e) {
+        var files = e.target.files;
+        handleFiles(files);
+      });
+      if ($fileInput.attr('data-gallery') !== undefined) {
+        var imageUrls = $fileInput.attr('data-gallery').split(',');
+        setFilesFromUrls($fileInput[0], imageUrls).then(function (r) {
           updateFileInput();
+          toggleElements();
+          _this.$doc.find('.loading-button').removeClass('loading-button').removeClass('not-active');
+        });
+      }
+      function handleFiles(files) {
+        var validExtensions = $fileInput.attr('accept').split(',');
+        var maxSizeAttr = $fileInput.attr('data-max-size') || '5';
+        var maxSize = Number(maxSizeAttr) * 1024 * 1024;
+        for (var i = 0; i < files.length; i++) {
+          if (filesArray.length >= maxFiles) {
+            alert("You can upload a maximum of ".concat(maxFiles, " files."));
+            break;
+          }
+          var file = files[i];
+          var name = file.name || '';
+          if (names.includes(name)) {
+            alert('It seems that a file with this name: "' + name + '" has already been added by you!');
+            continue;
+          }
+          if (!validExtensions.includes(file.type)) {
+            alert('Unsupported file type. Only ' + $fileInput.attr('accept') + ' are allowed.');
+            continue;
+          }
+          if (file.size > maxSize) {
+            alert('File size exceeds ' + maxSizeAttr + 'MB.');
+            continue;
+          }
+          names.push(name);
+          filesArray.push(file);
+          previewFile(file);
         }
-        function previewFile(file) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            var $img = $('<img>', {
-              src: e.target.result,
-              alt: ''
-            });
-            var $span = $('<span>').append($img);
-            var $removeBtn = $('<button>', {
-              text: '×',
-              "class": 'remove-btn'
-            });
-            $span.append($removeBtn);
-            $results.append($span);
-            $removeBtn.on('click', function () {
-              var index = $results.find('span').index($span);
-              filesArray.splice(index, 1);
-              $span.remove();
-              updateFileInput();
-            });
-          };
-          reader.readAsDataURL(file);
-        }
-        function updateFileInput() {
-          var dataTransfer = new DataTransfer();
+        updateFileInput();
+      }
+      function previewFile(file) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          var $img = $('<img>', {
+            src: e.target.result,
+            alt: ''
+          });
+          var $span = $('<span>').append($img);
+          var $removeBtn = $('<button>', {
+            text: '×',
+            "class": 'remove-btn'
+          });
+          $span.append($removeBtn);
+          $results.append($span);
+          $removeBtn.on('click', function () {
+            var index = $results.find('span').index($span);
+            filesArray.splice(index, 1);
+            $span.remove();
+            updateFileInput();
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+      function updateFileInput() {
+        var dataTransfer = new DataTransfer();
+        if (filesArray.length > 0) {
           filesArray.forEach(function (file) {
             dataTransfer.items.add(file);
           });
-          $fileInput[0].files = dataTransfer.files;
-          if (dataTransfer.files.length === 0) {
-            $p.show();
-            $r.hide();
-          } else {
-            $p.hide();
-            $r.show();
-          }
+        } else {
+          names = [];
         }
-        function setFilesFromUrls(_x, _x2) {
-          return _setFilesFromUrls.apply(this, arguments);
+        $fileInput[0].files = dataTransfer.files;
+        toggleElements();
+      }
+      function toggleElements() {
+        if (filesArray.length === 0) {
+          $p.show();
+          $r.hide();
+        } else {
+          $p.hide();
+          $r.show();
         }
-        function _setFilesFromUrls() {
-          _setFilesFromUrls = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(inputElement, imageUrls) {
-            var dataTransfer, _iterator, _step, url, file;
-            return _regeneratorRuntime().wrap(function _callee$(_context) {
-              while (1) switch (_context.prev = _context.next) {
-                case 0:
-                  dataTransfer = new DataTransfer();
-                  _iterator = _createForOfIteratorHelper(imageUrls);
-                  _context.prev = 2;
-                  _iterator.s();
-                case 4:
-                  if ((_step = _iterator.n()).done) {
-                    _context.next = 13;
-                    break;
-                  }
-                  url = _step.value;
-                  _context.next = 8;
-                  return urlToFile(url);
-                case 8:
-                  file = _context.sent;
-                  dataTransfer.items.add(file);
-                  filesArray.push(file);
-                case 11:
-                  _context.next = 4;
+      }
+      function setFilesFromUrls(_x, _x2) {
+        return _setFilesFromUrls.apply(this, arguments);
+      }
+      function _setFilesFromUrls() {
+        _setFilesFromUrls = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(inputElement, imageUrls) {
+          var _iterator, _step, url, file;
+          return _regeneratorRuntime().wrap(function _callee$(_context) {
+            while (1) switch (_context.prev = _context.next) {
+              case 0:
+                _iterator = _createForOfIteratorHelper(imageUrls);
+                _context.prev = 1;
+                _iterator.s();
+              case 3:
+                if ((_step = _iterator.n()).done) {
+                  _context.next = 12;
                   break;
-                case 13:
-                  _context.next = 18;
-                  break;
-                case 15:
-                  _context.prev = 15;
-                  _context.t0 = _context["catch"](2);
-                  _iterator.e(_context.t0);
-                case 18:
-                  _context.prev = 18;
-                  _iterator.f();
-                  return _context.finish(18);
-                case 21:
-                  inputElement.files = dataTransfer.files;
-                case 22:
-                case "end":
-                  return _context.stop();
-              }
-            }, _callee, null, [[2, 15, 18, 21]]);
-          }));
-          return _setFilesFromUrls.apply(this, arguments);
-        }
-        function urlToFile(_x3) {
-          return _urlToFile.apply(this, arguments);
-        }
-        function _urlToFile() {
-          _urlToFile = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(url) {
-            var response, blob;
-            return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-              while (1) switch (_context2.prev = _context2.next) {
-                case 0:
-                  _context2.next = 2;
-                  return fetch(url);
-                case 2:
-                  response = _context2.sent;
-                  _context2.next = 5;
-                  return response.blob();
-                case 5:
-                  blob = _context2.sent;
-                  return _context2.abrupt("return", new File([blob], "image-".concat(Date.now(), ".jpg"), {
-                    type: blob.type
-                  }));
-                case 7:
-                case "end":
-                  return _context2.stop();
-              }
-            }, _callee2);
-          }));
-          return _urlToFile.apply(this, arguments);
-        }
-      });
+                }
+                url = _step.value;
+                _context.next = 7;
+                return urlToFile(url);
+              case 7:
+                file = _context.sent;
+                filesArray.push(file);
+                previewFile(file);
+              case 10:
+                _context.next = 3;
+                break;
+              case 12:
+                _context.next = 17;
+                break;
+              case 14:
+                _context.prev = 14;
+                _context.t0 = _context["catch"](1);
+                _iterator.e(_context.t0);
+              case 17:
+                _context.prev = 17;
+                _iterator.f();
+                return _context.finish(17);
+              case 20:
+              case "end":
+                return _context.stop();
+            }
+          }, _callee, null, [[1, 14, 17, 20]]);
+        }));
+        return _setFilesFromUrls.apply(this, arguments);
+      }
+      function urlToFile(_x3) {
+        return _urlToFile.apply(this, arguments);
+      }
+      function _urlToFile() {
+        _urlToFile = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(url) {
+          var response, blob;
+          return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+            while (1) switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return fetch(url);
+              case 2:
+                response = _context2.sent;
+                _context2.next = 5;
+                return response.blob();
+              case 5:
+                blob = _context2.sent;
+                return _context2.abrupt("return", new File([blob], "image-".concat(Date.now(), ".jpg"), {
+                  type: blob.type
+                }));
+              case 7:
+              case "end":
+                return _context2.stop();
+            }
+          }, _callee2);
+        }));
+        return _urlToFile.apply(this, arguments);
+      }
     }
   }, {
     key: "calendarInit",
@@ -6482,7 +6467,7 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "questionsListener",
     value: function questionsListener() {
-      var _this = this;
+      var _this2 = this;
       this.$doc.on('click', '.book-form-question-controls__back', function (e) {
         e.preventDefault();
         var $i = $(this);
@@ -6509,8 +6494,8 @@ var BookForm = /*#__PURE__*/function () {
         updateHeaderStatus(index + 1);
       });
       var updateHeaderStatus = function updateHeaderStatus(step) {
-        _this.$doc.find('.book-form-head__item').removeClass('finished').removeClass('active');
-        _this.$doc.find('.book-form-head__item').each(function (index) {
+        _this2.$doc.find('.book-form-head__item').removeClass('finished').removeClass('active');
+        _this2.$doc.find('.book-form-head__item').each(function (index) {
           //finished
           //active
           var $t = $(this);
@@ -6622,8 +6607,6 @@ var BookForm = /*#__PURE__*/function () {
       $d.on('change', '.service-select', function (e) {
         var $select = $(this);
         t.service = $select.val();
-        console.log($select.val());
-        console.log(this.service);
         var $form = $select.closest('.book-form');
         var $delete = $d.find('.book-form-row__delete');
         var $categories = $form.find('.category-select');
@@ -6668,12 +6651,10 @@ var BookForm = /*#__PURE__*/function () {
     value: function updateCalendarData() {
       var t = this;
       var date = t.date;
-      console.log(t.getFormatedDate());
     }
   }, {
     key: "setCurrentDate",
     value: function setCurrentDate() {
-      console.log(this.getFormatedDate());
       if (this.$timeList.length === 0) return;
       $('html, body').animate({
         scrollTop: this.$timeList.offset().top
@@ -6683,19 +6664,19 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "eventListener",
     value: function eventListener() {
-      var _this2 = this;
+      var _this3 = this;
       this.$doc.on('click', '.book-form__trigger', function (e) {
-        return _this2.handleClick(e);
+        return _this3.handleClick(e);
       });
       this.$doc.on('click', '.book-button-cancel', function (e) {
-        return _this2.cancelBook(e);
+        return _this3.cancelBook(e);
       });
       this.$doc.on('click', '.book-form__trigger-back', function (e) {
-        return _this2.getPrevStepHTML(e);
+        return _this3.getPrevStepHTML(e);
       });
       this.$doc.ready(function () {
-        _this2.setParams();
-        _this2.changeOtherStatus();
+        _this3.setParams();
+        _this3.changeOtherStatus();
       });
     }
   }, {
@@ -6707,6 +6688,9 @@ var BookForm = /*#__PURE__*/function () {
       var order = $button.attr('data-order-id');
       var session = $button.attr('data-session-id');
       if (order === undefined || session === undefined) return;
+      $button.addClass('not-active');
+      $button.addClass('loading-button');
+      $button.attr('tab-index', '-1');
       (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
       $.ajax({
         type: "POST",
@@ -6729,6 +6713,9 @@ var BookForm = /*#__PURE__*/function () {
       var order = $button.attr('data-order-id');
       var session = $button.attr('data-session-id');
       if (order === undefined || session === undefined) return;
+      $button.addClass('not-active');
+      $button.addClass('loading-button');
+      $button.attr('tab-index', '-1');
       (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
       $.ajax({
         type: "POST",
@@ -6773,6 +6760,7 @@ var BookForm = /*#__PURE__*/function () {
             });
             t.setParams();
             t.changeOtherStatus();
+            t.fileReader();
           }
           if (reload === 'true') {
             if (message) {
@@ -6812,7 +6800,7 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "getFreeTime",
     value: function getFreeTime() {
-      var _this3 = this;
+      var _this4 = this;
       var $calendar = this.$doc.find('#book-calendar-js');
       if ($calendar.length === 0) return;
       var order = $calendar.attr('data-order-id');
@@ -6842,7 +6830,7 @@ var BookForm = /*#__PURE__*/function () {
             var html = data.html || '';
             if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
             if (html) {
-              _this3.$doc.find('#book-time-list').html(html);
+              _this4.$doc.find('#book-time-list').html(html);
             }
             if (url) {
               window.location.href = url;
@@ -6906,6 +6894,7 @@ var FormHandler = /*#__PURE__*/function () {
     this.selector = selector;
     this.$document = $(document);
     this.forms = $(document).find(selector);
+    this.$sendengForm = $(document).find(selector);
     this.initialize();
     this.selectInit();
   }
@@ -6932,9 +6921,14 @@ var FormHandler = /*#__PURE__*/function () {
       event.preventDefault();
       var $form = $(event.target);
       var formId = $form.attr('id');
+      if ($form.hasClass('sending')) {
+        (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showMsg)('Error! Processing is underway!');
+        return;
+      }
       if (!this.validateForm($form)) return;
       var formData = new FormData(document.getElementById(formId));
-      this.showPreloader();
+      $form.addClass('sending');
+      this.$sendengForm = $form;
       this.sendRequest({
         type: $form.attr('method') || "POST",
         url: $form.attr('action') || adminAjax,
@@ -6960,6 +6954,7 @@ var FormHandler = /*#__PURE__*/function () {
           isValid = false;
           $input.addClass('error');
           $label.addClass('error');
+          (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.moveToElement)($label);
         } else {
           $input.removeClass('error');
           $label.removeClass('error');
@@ -6975,12 +6970,10 @@ var FormHandler = /*#__PURE__*/function () {
         if (test) {
           isValid = false;
           $label.addClass('error');
+          (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.moveToElement)($label);
         } else {
           $label.removeClass('error');
         }
-        console.log(test);
-        console.log(value);
-        console.log($label);
       });
 
       // Validate custom required inputs
@@ -6991,6 +6984,7 @@ var FormHandler = /*#__PURE__*/function () {
       if ($consent.length && !$consent.prop('checked')) {
         $consent.closest('.form-consent').addClass('error');
         isValid = false;
+        (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.moveToElement)($consent.closest('.form-consent'));
       } else {
         $consent.closest('.form-consent').removeClass('error');
       }
@@ -7022,9 +7016,18 @@ var FormHandler = /*#__PURE__*/function () {
     key: "sendRequest",
     value: function sendRequest(options) {
       var _this2 = this;
+      if (this.$document.find('body').hasClass('loading')) {
+        (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showMsg)('Error! Reload the page!');
+        return;
+      }
+      this.showPreloader();
+      this.$document.find('body').addClass('loading').addClass('sending-form');
       $.ajax(options).done(function (response) {
         if (response) {
           var isJson = _this2.isJsonString(response);
+          _this2.$document.find('body').removeClass('loading').removeClass('sending-form');
+          _this2.$document.find('.loading-button').removeClass('loading-button').removeClass('not-active');
+          _this2.$sendengForm.removeClass('sending');
           if (isJson) {
             var data = JSON.parse(response);
             var message = data.msg || '';
@@ -7355,6 +7358,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   isJsonString: () => (/* binding */ isJsonString),
 /* harmony export */   isMobile: () => (/* binding */ isMobile),
 /* harmony export */   isObjectEmpty: () => (/* binding */ isObjectEmpty),
+/* harmony export */   moveToElement: () => (/* binding */ moveToElement),
 /* harmony export */   randomIntFromInterval: () => (/* binding */ randomIntFromInterval),
 /* harmony export */   removeArrayElement: () => (/* binding */ removeArrayElement),
 /* harmony export */   setCookie: () => (/* binding */ setCookie),
@@ -7491,6 +7495,12 @@ function getQueryParams() {
     _iterator.f();
   }
   return params;
+}
+function moveToElement($el) {
+  if ($el.length === 0) return;
+  $('html, body').animate({
+    scrollTop: $el.offset().top
+  });
 }
 
 /***/ }),
@@ -7664,6 +7674,557 @@ var selectrickInit = function selectrickInit() {
   $select.selectric();
   $select.addClass('selectric-init');
 };
+
+/***/ }),
+
+/***/ "./node_modules/browser-sync/dist/default-config.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/browser-sync/dist/default-config.js ***!
+  \**********************************************************/
+/***/ ((module) => {
+
+/**
+ * @module BrowserSync.options
+ */
+module.exports = {
+    /**
+     * Browsersync includes a user-interface that is accessed via a separate port.
+     * The UI allows to controls all devices, push sync updates and much more.
+     * @property ui
+     * @type Object
+     * @param {Number} [port=3001]
+     * @since 2.0.0
+     * @default false
+     */
+    ui: {
+        port: 3001
+    },
+    /**
+     * Browsersync can watch your files as you work. Changes you make will either
+     * be injected into the page (CSS & images) or will cause all browsers to do
+     * a full-page refresh.
+     * @property files
+     * @type Array|String
+     * @default false
+     */
+    files: false,
+    /**
+     * Specify which file events to respond to.
+     * Available events: `add`, `change`, `unlink`, `addDir`, `unlinkDir`
+     * @property watchEvents
+     * @type Array
+     * @default ["change"]
+     * @since 2.18.8
+     */
+    watchEvents: ["change"],
+    /**
+     * Watch files automatically - this should be used as an
+     * alternative to the `files` option. When this option is used, some directories
+     * will be ignored automatically such as `node_modules` `bower_components` `.sass-cache`
+     * `.vscode` `.git` `.idea`
+     *
+     * @property watch
+     * @type Boolean
+     * @default false
+     * @since 2.23.0
+     */
+    watch: false,
+    /**
+     * Patterns for any watchers to ignore. Anything provided here
+     * will end up inside `watchOptions.ignored`
+     * @property ignore
+     * @type Array
+     * @default []
+     * @since 2.23.0
+     */
+    ignore: [],
+    /**
+     * Serve an index.html file for all non-asset routes. Useful
+     * when using client-routers
+     * @property single
+     * @type Boolean
+     * @default false
+     * @since 2.23.0
+     */
+    single: false,
+    /**
+     * File watching options that get passed along to [Chokidar](https://github.com/paulmillr/chokidar).
+     * Check their docs for available options
+     * @property watchOptions
+     * @type Object
+     * @default undefined
+     * @since 2.6.0
+     */
+    watchOptions: {
+        ignoreInitial: true
+        /*
+         persistent: true,
+
+         ignored: '*.txt',
+         followSymlinks: true,
+         cwd: '.',
+
+         usePolling: true,
+         alwaysStat: false,
+         depth: undefined,
+         interval: 100,
+
+         ignorePermissionErrors: false,
+         atomic: true
+         */
+    },
+    /**
+     * Use the built-in static server for basic HTML/JS/CSS websites.
+     * @property server
+     * @type Object|Boolean
+     * @default false
+     */
+    server: false,
+    /**
+     * Proxy an EXISTING vhost. Browsersync will wrap your vhost with a proxy URL to view your site.
+     * @property proxy
+     * @type String|Object|Boolean
+     * @param {String} [target]
+     * @param {Boolean} [ws] - Enable websocket proxying
+     * @param {Function|Array} [middleware]
+     * @param {Function} [reqHeaders]
+     * @param {Array} [proxyReq]
+     * @param {Array} [proxyRes]
+     * @default false
+     */
+    proxy: false,
+    /**
+     * @property port
+     * @type Number
+     * @default 3000
+     */
+    port: 3000,
+    /**
+     * @property middleware
+     * @type Function|Array
+     * @default false
+     */
+    middleware: false,
+    /**
+     * Add additional directories from which static
+     * files should be served. Should only be used in `proxy` or `snippet`
+     * mode.
+     * @property serveStatic
+     * @type Array
+     * @default []
+     * @since 2.8.0
+     */
+    serveStatic: [],
+    /**
+     * Options that are passed to the serve-static middleware
+     * when you use the string[] syntax: eg: `serveStatic: ['./app']`. Please see
+     * [serve-static](https://github.com/expressjs/serve-static) for details
+     *
+     * @property serveStaticOptions
+     * @type Object
+     * @since 2.17.0
+     */
+    /**
+     * Enable https for localhost development. **Note** - this is not needed for proxy
+     * option as it will be inferred from your target url.
+     * @property https
+     * @type Boolean
+     * @default undefined
+     * @since 1.3.0
+     */
+    /**
+     * Override http module to allow using 3rd party server modules (such as http2)
+     * *Note*: these modules are not included in the Browsersync package - you need
+     * to 'npm install' any that you'd like to use.
+     * @property httpModule
+     * @type string
+     * @default undefined
+     * @since 2.18.0
+     */
+    /**
+     * Current working directory
+     * @property cwd
+     * @type String
+     * @since 2.23.0
+     */
+    /**
+     * Register callbacks via a regular option - this can be used
+     * to get access the Browsersync instance in situations where you
+     * cannot provide a callback via the normal API (for example, in a Gruntfile)
+     *
+     * **Note**: Only the `ready` callback is currently supported here.
+     *
+     * @property callbacks
+     * @type Object
+     * @param {Function} ready
+     */
+    /**
+     * Clicks, Scrolls & Form inputs on any device will be mirrored to all others.
+     * @property ghostMode
+     * @param {Boolean} [clicks=true]
+     * @param {Boolean} [scroll=true]
+     * @param {Boolean} [location=true]
+     * @param {Boolean} [forms=true]
+     * @param {Boolean} [forms.submit=true]
+     * @param {Boolean} [forms.inputs=true]
+     * @param {Boolean} [forms.toggles=true]
+     * @type Object
+     */
+    ghostMode: {
+        clicks: true,
+        scroll: true,
+        location: true,
+        forms: {
+            submit: true,
+            inputs: true,
+            toggles: true
+        }
+    },
+    /**
+     * Can be either "info", "debug", "warn", or "silent"
+     * @property logLevel
+     * @type String
+     * @default info
+     */
+    logLevel: "info",
+    /**
+     * Change the console logging prefix. Useful if you're creating your
+     * own project based on Browsersync
+     * @property logPrefix
+     * @type String
+     * @default Browsersync
+     * @since 1.5.1
+     */
+    logPrefix: "Browsersync",
+    /**
+     * @property logConnections
+     * @type Boolean
+     * @default false
+     */
+    logConnections: false,
+    /**
+     * @property logFileChanges
+     * @type Boolean
+     * @default true
+     */
+    logFileChanges: true,
+    /**
+     * Log the snippet to the console when you're in snippet mode (no proxy/server)
+     * @property logSnippet
+     * @type: Boolean
+     * @default true
+     * @since 1.5.2
+     */
+    logSnippet: true,
+    /**
+     * You can prevent Browsersync from injecting the connection snippet
+     * by passing `snippet: false`.
+     * @property snippet
+     * @type Boolean
+     * @default undefined
+     */
+    /**
+     * You can control how the snippet is injected
+     * onto each page via a custom regex + function.
+     * You can also provide patterns for certain urls
+     * that should be ignored from the snippet injection.
+     * @property snippetOptions
+     * @since 2.0.0
+     * @param {Boolean} [async] - should the script tags have the async attribute?
+     * @param {Array} [blacklist]
+     * @param {Array} [whitelist]
+     * @param {RegExp} [rule.match=/$/]
+     * @param {Function} [rule.fn=Function]
+     * @type Object
+     */
+    snippetOptions: {
+        async: true,
+        whitelist: [],
+        blacklist: [],
+        rule: {
+            match: /<body[^>]*>/i,
+            fn: function (snippet, match) {
+                return match + snippet;
+            }
+        }
+    },
+    /**
+     * Add additional HTML rewriting rules.
+     * @property rewriteRules
+     * @since 2.4.0
+     * @type Array
+     * @default false
+     */
+    rewriteRules: [],
+    /**
+     * @property tunnel
+     * @type String|Boolean
+     * @default null
+     */
+    /**
+     * Decide which URL to open automatically when Browsersync starts. Defaults to "local" if none set.
+     * Can be `true`, `local`, `external`, `ui`, `ui-external`, `tunnel` or `false`
+     * @property open
+     * @type Boolean|String
+     * @default true
+     */
+    open: "local",
+    /**
+     * @property browser
+     * @type String|Array
+     * @default default
+     */
+    browser: "default",
+    /**
+     * Add HTTP access control (CORS) headers to assets served by Browsersync.
+     * @property cors
+     * @type boolean
+     * @default false
+     * @since 2.16.0
+     */
+    cors: false,
+    hostnameSuffix: false,
+    /**
+     * Reload each browser when Browsersync is restarted.
+     * @property reloadOnRestart
+     * @type Boolean
+     * @default false
+     */
+    reloadOnRestart: false,
+    /**
+     * The small pop-over notifications in the browser are not always needed/wanted.
+     * @property notify
+     * @type Boolean
+     * @default true
+     */
+    notify: true,
+    /**
+     * @property scrollProportionally
+     * @type Boolean
+     * @default true
+     */
+    scrollProportionally: true,
+    /**
+     * @property scrollThrottle
+     * @type Number
+     * @default 0
+     */
+    scrollThrottle: 0,
+    /**
+     * Decide which technique should be used to restore
+     * scroll position following a reload.
+     * Can be `window.name` or `cookie`
+     * @property scrollRestoreTechnique
+     * @type String
+     * @default 'window.name'
+     */
+    scrollRestoreTechnique: "window.name",
+    /**
+     * Sync the scroll position of any element
+     * on the page. Add any amount of CSS selectors
+     * @property scrollElements
+     * @type Array
+     * @default []
+     * @since 2.9.0
+     */
+    scrollElements: [],
+    /**
+     * Sync the scroll position of any element
+     * on the page - where any scrolled element
+     * will cause all others to match scroll position.
+     * This is helpful when a breakpoint alters which element
+     * is actually scrolling
+     * @property scrollElementMapping
+     * @type Array
+     * @default []
+     * @since 2.9.0
+     */
+    scrollElementMapping: [],
+    /**
+     * Time, in milliseconds, to wait before
+     * instructing the browser to reload/inject following a
+     * file change event
+     * @property reloadDelay
+     * @type Number
+     * @default 0
+     */
+    reloadDelay: 0,
+    /**
+     * Wait for a specified window of event-silence before
+     * sending any reload events.
+     * @property reloadDebounce
+     * @type Number
+     * @default 0
+     * @since 2.6.0
+     */
+    reloadDebounce: 500,
+    /**
+     * Emit only the first event during sequential time windows
+     * of a specified duration.
+     * @property reloadThrottle
+     * @type Number
+     * @default 0
+     * @since 2.13.0
+     */
+    reloadThrottle: 0,
+    /**
+     * User provided plugins
+     * @property plugins
+     * @type Array
+     * @default []
+     * @since 2.6.0
+     */
+    plugins: [],
+    /**
+     * @property injectChanges
+     * @type Boolean
+     * @default true
+     */
+    injectChanges: true,
+    /**
+     * @property startPath
+     * @type String|Null
+     * @default null
+     */
+    startPath: null,
+    /**
+     * Whether to minify client script, or not.
+     * @property minify
+     * @type Boolean
+     * @default true
+     */
+    minify: true,
+    /**
+     * @property host
+     * @type String
+     * @default null
+     */
+    host: null,
+    /**
+     * Specify a host to listen on. Use this if you want to
+     * prevent binding to all interfaces.
+     *
+     * Note: When you specify this option, it overrides the 'host' option
+     * @property listen
+     * @type String
+     * @default undefined
+     */
+    /**
+     * Support environments where dynamic hostnames are not required
+     * (ie: electron)
+     * @property localOnly
+     * @type Boolean
+     * @default false
+     * @since 2.14.0
+     */
+    localOnly: false,
+    /**
+     * @property codeSync
+     * @type Boolean
+     * @default true
+     */
+    codeSync: true,
+    /**
+     * @property timestamps
+     * @type Boolean
+     * @default true
+     */
+    timestamps: true,
+    clientEvents: [
+        "scroll",
+        "scroll:element",
+        "input:text",
+        "input:toggles",
+        "form:submit",
+        "form:reset",
+        "click"
+    ],
+    /**
+     * Alter the script path for complete control over where the Browsersync
+     * Javascript is served from. Whatever you return from this function
+     * will be used as the script path.
+     * @property scriptPath
+     * @default undefined
+     * @since 1.5.0
+     * @type Function
+     */
+    /**
+     * Configure the Socket.IO path and namespace & domain to avoid collisions.
+     * @property socket
+     * @param {String} [path="/browser-sync/socket.io"]
+     * @param {String} [clientPath="/browser-sync"]
+     * @param {String|Function} [namespace="/browser-sync"]
+     * @param {String|Function} [domain=undefined]
+     * @param {String|Function} [port=undefined]
+     * @param {Object} [clients.heartbeatTimeout=5000]
+     * @since 1.6.2
+     * @type Object
+     */
+    socket: {
+        socketIoOptions: {
+            log: false
+        },
+        socketIoClientConfig: {
+            reconnectionAttempts: 50
+        },
+        path: "/browser-sync/socket.io",
+        clientPath: "/browser-sync",
+        namespace: "/browser-sync",
+        clients: {
+            heartbeatTimeout: 5000
+        }
+    },
+    /**
+     * Configure the script domain
+     * @property script
+     * @param {String|Function} [domain=undefined]
+     * @since 2.14.0
+     * @type Object
+     */
+    tagNames: {
+        less: "link",
+        scss: "link",
+        css: "link",
+        jpg: "img",
+        jpeg: "img",
+        png: "img",
+        svg: "img",
+        gif: "img",
+        js: "script"
+    },
+    injectFileTypes: ["css", "png", "jpg", "jpeg", "svg", "gif", "webp", "map"],
+    injectNotification: false,
+    excludedFileTypes: [
+        "js",
+        "css",
+        "pdf",
+        "map",
+        "svg",
+        "ico",
+        "woff",
+        "json",
+        "eot",
+        "ttf",
+        "png",
+        "jpg",
+        "jpeg",
+        "webp",
+        "gif",
+        "mp4",
+        "mp3",
+        "3gp",
+        "ogg",
+        "ogv",
+        "webm",
+        "m4a",
+        "flv",
+        "wmv",
+        "avi",
+        "swf",
+        "scss"
+    ]
+};
+//# sourceMappingURL=default-config.js.map
 
 /***/ }),
 

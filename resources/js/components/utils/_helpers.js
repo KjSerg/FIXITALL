@@ -138,3 +138,9 @@ export function getQueryParams() {
     return params;
 }
 
+export function moveToElement($el) {
+    if ($el.length === 0) return;
+    $('html, body').animate({
+        scrollTop: $el.offset().top
+    });
+}
