@@ -23,6 +23,7 @@
     height: 2rem;
     flex-grow: 0;
     flex-shrink: 0;
+    pointer-events: none;
   }
   &:hover{
     background: #020A1B;

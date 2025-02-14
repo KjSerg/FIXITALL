@@ -694,8 +694,12 @@ export default class BookForm {
     handleClick(e) {
         e.preventDefault();
         const $button = $(e.target);
+        console.log(e.target)
+        console.log($button)
         const formId = $button.attr('href');
+        console.log(formId)
         const $form = this.$doc.find(formId);
+        console.log($form)
         $form.trigger('submit');
     }
 

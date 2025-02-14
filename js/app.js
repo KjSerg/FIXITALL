@@ -6889,8 +6889,12 @@ var BookForm = /*#__PURE__*/function () {
     value: function handleClick(e) {
       e.preventDefault();
       var $button = $(e.target);
+      console.log(e.target);
+      console.log($button);
       var formId = $button.attr('href');
+      console.log(formId);
       var $form = this.$doc.find(formId);
+      console.log($form);
       $form.trigger('submit');
     }
   }, {
