@@ -6164,7 +6164,7 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "fileReader",
     value: function fileReader() {
-      var _this = this;
+      var _this2 = this;
       var t = this;
       var $fileInput = $(document).find('.book-form-file');
       if ($fileInput.length === 0) return;
@@ -6203,7 +6203,7 @@ var BookForm = /*#__PURE__*/function () {
         setFilesFromUrls($fileInput[0], imageUrls).then(function (r) {
           updateFileInput();
           toggleElements();
-          _this.$doc.find('.loading-button').removeClass('loading-button').removeClass('not-active');
+          _this2.$doc.find('.loading-button').removeClass('loading-button').removeClass('not-active');
         });
       }
       function handleFiles(files) {
@@ -6368,6 +6368,8 @@ var BookForm = /*#__PURE__*/function () {
         var year = currentDate.getFullYear();
         var month = currentDate.getMonth();
         var today = new Date();
+        var _month = month + 1;
+        _month = _month < 10 ? '0' + _month : _month;
         monthYear.textContent = "".concat(months[month], " ").concat(year);
         calendarDays.innerHTML = "";
         var daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -6405,6 +6407,7 @@ var BookForm = /*#__PURE__*/function () {
         for (var day = 1; day <= daysInMonth; day++) {
           _loop();
         }
+        t.getActiveDaysInMonth(year, _month);
       }
       prevMonthBtn.addEventListener("click", function () {
         currentDate.setMonth(currentDate.getMonth() - 1);
@@ -6419,6 +6422,24 @@ var BookForm = /*#__PURE__*/function () {
         t.updateCalendarData();
       });
       updateCalendar();
+    }
+  }, {
+    key: "getActiveDaysInMonth",
+    value: function getActiveDaysInMonth(year, month) {
+      (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+      var _this = this;
+      $.ajax({
+        type: "POST",
+        url: adminAjax,
+        data: {
+          action: 'get_days_in_month',
+          year: year,
+          month: month,
+          order_id: _this.$doc.find('#order_id').val()
+        }
+      }).done(function (response) {
+        _this.response(response);
+      });
     }
   }, {
     key: "bookTimeSelect",
@@ -6467,7 +6488,7 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "questionsListener",
     value: function questionsListener() {
-      var _this2 = this;
+      var _this3 = this;
       this.$doc.on('click', '.book-form-question-controls__back', function (e) {
         e.preventDefault();
         var $i = $(this);
@@ -6494,8 +6515,8 @@ var BookForm = /*#__PURE__*/function () {
         updateHeaderStatus(index + 1);
       });
       var updateHeaderStatus = function updateHeaderStatus(step) {
-        _this2.$doc.find('.book-form-head__item').removeClass('finished').removeClass('active');
-        _this2.$doc.find('.book-form-head__item').each(function (index) {
+        _this3.$doc.find('.book-form-head__item').removeClass('finished').removeClass('active');
+        _this3.$doc.find('.book-form-head__item').each(function (index) {
           //finished
           //active
           var $t = $(this);
@@ -6664,19 +6685,19 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "eventListener",
     value: function eventListener() {
-      var _this3 = this;
+      var _this4 = this;
       this.$doc.on('click', '.book-form__trigger', function (e) {
-        return _this3.handleClick(e);
+        return _this4.handleClick(e);
       });
       this.$doc.on('click', '.book-button-cancel', function (e) {
-        return _this3.cancelBook(e);
+        return _this4.cancelBook(e);
       });
       this.$doc.on('click', '.book-form__trigger-back', function (e) {
-        return _this3.getPrevStepHTML(e);
+        return _this4.getPrevStepHTML(e);
       });
       this.$doc.ready(function () {
-        _this3.setParams();
-        _this3.changeOtherStatus();
+        _this4.setParams();
+        _this4.changeOtherStatus();
       });
     }
   }, {
@@ -6737,6 +6758,7 @@ var BookForm = /*#__PURE__*/function () {
         var isJson = (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.isJsonString)(_response);
         if (isJson) {
           var data = JSON.parse(_response);
+          var days = data.days || [];
           var message = data.msg || '';
           var text = data.msg_text || '';
           var type = data.type || '';
@@ -6745,6 +6767,13 @@ var BookForm = /*#__PURE__*/function () {
           var html = data.html || '';
           var step_html = data.step_html || '';
           if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
+          if (days) {
+            var $days = t.$doc.find('#calendarDays').find('.day:not(.not-active)');
+            $days.addClass('not-active-day');
+            for (var day in days) {
+              t.$doc.find('#calendarDays .day[data-date="' + day + '"]').not('.not-active').removeClass('not-active-day');
+            }
+          }
           if (html) {
             this.$doc.find('#book-time-list').html(html);
           }
@@ -6800,7 +6829,7 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "getFreeTime",
     value: function getFreeTime() {
-      var _this4 = this;
+      var _this5 = this;
       var $calendar = this.$doc.find('#book-calendar-js');
       if ($calendar.length === 0) return;
       var order = $calendar.attr('data-order-id');
@@ -6830,7 +6859,7 @@ var BookForm = /*#__PURE__*/function () {
             var html = data.html || '';
             if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
             if (html) {
-              _this4.$doc.find('#book-time-list').html(html);
+              _this5.$doc.find('#book-time-list').html(html);
             }
             if (url) {
               window.location.href = url;

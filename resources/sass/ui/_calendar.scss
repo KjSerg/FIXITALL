@@ -95,6 +95,10 @@
     &.not-active{
       opacity: 0.4;
     }
+    &.not-active-day{
+      opacity: 0.5;
+      pointer-events: none;
+    }
   }
 
 

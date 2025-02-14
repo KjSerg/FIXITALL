@@ -191,7 +191,8 @@ export default class BookForm {
             const year = currentDate.getFullYear();
             const month = currentDate.getMonth();
             const today = new Date();
-
+            let _month = month + 1;
+            _month = _month < 10 ? '0' + _month : _month;
             monthYear.textContent = `${months[month]} ${year}`;
             calendarDays.innerHTML = "";
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -234,6 +235,7 @@ export default class BookForm {
                     t.setCurrentDate();
                 });
             }
+            t.getActiveDaysInMonth(year, _month);
         }
 
         prevMonthBtn.addEventListener("click", () => {
@@ -252,6 +254,23 @@ export default class BookForm {
 
         updateCalendar();
 
+    }
+
+    getActiveDaysInMonth(year, month) {
+        showPreloader();
+        const _this = this;
+        $.ajax({
+            type: "POST",
+            url: adminAjax,
+            data: {
+                action: 'get_days_in_month',
+                year: year,
+                month: month,
+                order_id: _this.$doc.find('#order_id').val(),
+            }
+        }).done((response) => {
+            _this.response(response);
+        });
     }
 
     bookTimeSelect() {
@@ -550,6 +569,7 @@ export default class BookForm {
             const isJson = isJsonString(response);
             if (isJson) {
                 const data = JSON.parse(response);
+                const days = data.days || [];
                 const message = data.msg || '';
                 const text = data.msg_text || '';
                 const type = data.type || '';
@@ -558,6 +578,13 @@ export default class BookForm {
                 const html = data.html || '';
                 const step_html = data.step_html || '';
                 if (message) showMsg(message);
+                if (days) {
+                    const $days = t.$doc.find('#calendarDays').find('.day:not(.not-active)');
+                    $days.addClass('not-active-day');
+                    for (let day in days) {
+                        t.$doc.find('#calendarDays .day[data-date="'+day+'"]').not('.not-active').removeClass('not-active-day');
+                    }
+                }
                 if (html) {
                     this.$doc.find('#book-time-list').html(html);
                 }
