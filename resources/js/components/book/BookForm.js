@@ -204,7 +204,8 @@ export default class BookForm {
                 calendarDays.appendChild(emptyDiv);
             }
             for (let day = 1; day <= daysInMonth; day++) {
-                const dayDiv = document.createElement("div");
+                const dayDiv = document.createElement("a");
+                const id = year + month + day + '-day';
                 dayDiv.classList.add("day");
                 dayDiv.textContent = day;
                 if (
@@ -226,14 +227,8 @@ export default class BookForm {
                 const dataFormatedDate = year + '-' + (month + 1) + '-' + day;
                 dayDiv.setAttribute('data-date', dataFormatedDate);
                 dayDiv.setAttribute('data-not-formated-date', dataDate);
-                dayDiv.addEventListener("click", (e) => {
-                    document.querySelectorAll('.day').forEach(function (el) {
-                        el.classList.remove('active');
-                    })
-                    dayDiv.classList.add("active");
-                    t.date = new Date(dataFormatedDate);
-                    t.setCurrentDate();
-                });
+                dayDiv.setAttribute('href', '/?date='+dataFormatedDate);
+
             }
             t.getActiveDaysInMonth(year, _month);
         }
@@ -498,20 +493,96 @@ export default class BookForm {
     }
 
     setCurrentDate() {
-        if (this.$timeList.length === 0) return;
         $('html, body').animate({
             scrollTop: this.$timeList.offset().top
         });
-        this.getFreeTime();
     }
 
     eventListener() {
+        const t = this;
         this.$doc.on('click', '.book-form__trigger', (e) => this.handleClick(e));
         this.$doc.on('click', '.book-button-cancel', (e) => this.cancelBook(e));
         this.$doc.on('click', '.book-form__trigger-back', (e) => this.getPrevStepHTML(e));
         this.$doc.ready(() => {
             this.setParams();
             this.changeOtherStatus();
+        });
+        this.$doc.on("click", '#calendarDays .day', function (e) {
+            e.preventDefault();
+            document.querySelectorAll('.day').forEach(function (el) {
+                el.classList.remove('active');
+            });
+            const $t = $(this);
+            const date = $t.attr('data-date');
+            $t.addClass("active");
+            const $calendar = t.$doc.find('#book-calendar-js');
+            if ($calendar.length === 0) return;
+            const order = $calendar.attr('data-order-id');
+            const session = $calendar.attr('data-session-id');
+            t.resetOrderData(); 
+            // t.$doc.find('#book-time-list').append(
+            //     '<pre>' +
+            //     date +
+            //     order +
+            //     session +
+            //     '</pre>'
+            // );
+            if (order === undefined || session === undefined) return;
+            showPreloader();
+            $.ajax({
+                type: "POST",
+                url: adminAjax,
+                data: {
+                    action: 'get_free_time',
+                    date: date,
+                    order: order,
+                    session: session,
+                }
+            }).done((response) => {
+                // t.$doc.find('#book-time-list').append(
+                //     '<pre>' +
+                //     response +
+                //     '</pre>'
+                // );
+                if (response) {
+                    const isJson = isJsonString(response);
+
+                    if (isJson) {
+                        const data = JSON.parse(response);
+                        const message = data.msg || '';
+                        const text = data.msg_text || '';
+                        const type = data.type || '';
+                        const url = data.url;
+                        const reload = data.reload || '';
+                        const html = data.html || '';
+                        if (message) showMsg(message);
+                        if (html) {
+                            t.$doc.find('#book-time-list').html(html);
+                        }
+                        if (url) {
+                            window.location.href = url;
+                            return;
+                        }
+                        if (reload === 'true') {
+                            if (message) {
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 2000);
+                                return;
+                            }
+                            window.location.reload();
+                            return;
+                        }
+                    } else {
+                        showMsg(response);
+                    }
+
+                }
+                hidePreloader();
+            });
+            $('html, body').animate({
+                scrollTop: t.$timeList.offset().top
+            });
         });
     }
 
@@ -582,7 +653,7 @@ export default class BookForm {
                     const $days = t.$doc.find('#calendarDays').find('.day:not(.not-active)');
                     $days.addClass('not-active-day');
                     for (let day in days) {
-                        t.$doc.find('#calendarDays .day[data-date="'+day+'"]').not('.not-active').removeClass('not-active-day');
+                        t.$doc.find('#calendarDays .day[data-date="' + day + '"]').not('.not-active').removeClass('not-active-day');
                     }
                 }
                 if (html) {
@@ -643,6 +714,13 @@ export default class BookForm {
         const order = $calendar.attr('data-order-id');
         const session = $calendar.attr('data-session-id');
         this.resetOrderData();
+        this.$doc.find('#book-time-list').append(
+            '<pre>' +
+            this.getFormatedDate() +
+            order +
+            session +
+            '</pre>'
+        );
         if (order === undefined || session === undefined) return;
         showPreloader();
         $.ajax({
@@ -655,8 +733,14 @@ export default class BookForm {
                 session: session,
             }
         }).done((response) => {
+            this.$doc.find('#book-time-list').append(
+                '<pre>' +
+                response +
+                '</pre>'
+            );
             if (response) {
                 const isJson = isJsonString(response);
+
                 if (isJson) {
                     const data = JSON.parse(response);
                     const message = data.msg || '';
@@ -667,7 +751,7 @@ export default class BookForm {
                     const html = data.html || '';
                     if (message) showMsg(message);
                     if (html) {
-                        this.$doc.find('#book-time-list').html(html);
+                        // this.$doc.find('#book-time-list').html(html);
                     }
                     if (url) {
                         window.location.href = url;

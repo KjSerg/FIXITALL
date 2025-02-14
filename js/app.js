@@ -6033,43 +6033,55 @@ var GoogleMap = /*#__PURE__*/function () {
           });
           var marker = new google.maps.Marker({
             position: location,
-            map: map
+            map: map,
+            draggable: true
           });
           $selector.data("google-map", map);
           $selector.data("google-marker", marker);
-          google.maps.event.addListener(map, 'dragend', function () {
-            var newCenter = map.getCenter();
-            var lat = newCenter.lat();
-            var lng = newCenter.lng();
-            var id = $selector.attr('id');
-            var $field = _this.$doc.find('input[data-related="#' + id + '"]');
-            marker.setPosition(newCenter);
-            $('#lat').val(lat);
-            $('#lng').val(lng);
-            if ($field.length === 0) return;
-            $field.attr('data-lat', lat);
-            $field.attr('data-lng', lng);
-            $field.attr('data-selected', "".concat(lat, ";").concat(lng));
-            // $field.val(`${lat};${lng}`);
-            _this.updateCenterInfo(newCenter, $selector, $field);
+          marker.addListener("dragend", function () {
+            _this.updateCenterInfo(marker.getPosition(), $selector);
+          });
+
+          // Ставити маркер при кліку на карту
+          map.addListener("click", function (event) {
+            marker.setPosition(event.latLng);
+            _this.updateCenterInfo(event.latLng, $selector);
           });
         }
         $selector.addClass('init-map');
       }
     }
   }, {
+    key: "updateMarkerInfo",
+    value: function updateMarkerInfo(position) {
+      var lat = position.lat();
+      var lng = position.lng();
+      document.getElementById("coords").innerText = "".concat(lat.toFixed(6), ", ").concat(lng.toFixed(6));
+      geocoder.geocode({
+        location: position
+      }, function (results, status) {
+        if (status === "OK" && results[0]) {
+          document.getElementById("address").innerText = results[0].formatted_address;
+        } else {
+          document.getElementById("address").innerText = "Адреса не знайдена";
+        }
+      });
+    }
+  }, {
     key: "updateCenterInfo",
-    value: function updateCenterInfo(location, $selector, $field) {
+    value: function updateCenterInfo(location, $selector) {
+      var id = $selector.attr('id');
+      var $field = this.$doc.find('input[data-related="#' + id + '"]');
+      $('#lat').val(location.lat());
+      $('#lng').val(location.lng());
+      $field.attr('data-lat', location.lat());
+      $field.attr('data-lng', location.lng());
       var geocoder = new google.maps.Geocoder();
       geocoder.geocode({
         location: location
       }, function (results, status) {
         if (status === 'OK' && results[0]) {
           var address = results[0].formatted_address;
-          console.log('Центр карти:', location.lat(), location.lng());
-          console.log('Адреса центру:', address);
-
-          // Збереження даних у змінну або data-атрибут
           window.mapCenterData = {
             lat: location.lat(),
             lng: location.lng(),
@@ -6380,8 +6392,9 @@ var BookForm = /*#__PURE__*/function () {
           emptyDiv.classList.add("empty");
           calendarDays.appendChild(emptyDiv);
         }
-        var _loop = function _loop() {
-          var dayDiv = document.createElement("div");
+        for (var day = 1; day <= daysInMonth; day++) {
+          var dayDiv = document.createElement("a");
+          var id = year + month + day + '-day';
           dayDiv.classList.add("day");
           dayDiv.textContent = day;
           if (today.getFullYear() === year && today.getMonth() === month && today.getDate() === day) {
@@ -6395,17 +6408,7 @@ var BookForm = /*#__PURE__*/function () {
           var dataFormatedDate = year + '-' + (month + 1) + '-' + day;
           dayDiv.setAttribute('data-date', dataFormatedDate);
           dayDiv.setAttribute('data-not-formated-date', dataDate);
-          dayDiv.addEventListener("click", function (e) {
-            document.querySelectorAll('.day').forEach(function (el) {
-              el.classList.remove('active');
-            });
-            dayDiv.classList.add("active");
-            t.date = new Date(dataFormatedDate);
-            t.setCurrentDate();
-          });
-        };
-        for (var day = 1; day <= daysInMonth; day++) {
-          _loop();
+          dayDiv.setAttribute('href', '/?date=' + dataFormatedDate);
         }
         t.getActiveDaysInMonth(year, _month);
       }
@@ -6676,16 +6679,15 @@ var BookForm = /*#__PURE__*/function () {
   }, {
     key: "setCurrentDate",
     value: function setCurrentDate() {
-      if (this.$timeList.length === 0) return;
       $('html, body').animate({
         scrollTop: this.$timeList.offset().top
       });
-      this.getFreeTime();
     }
   }, {
     key: "eventListener",
     value: function eventListener() {
       var _this4 = this;
+      var t = this;
       this.$doc.on('click', '.book-form__trigger', function (e) {
         return _this4.handleClick(e);
       });
@@ -6698,6 +6700,81 @@ var BookForm = /*#__PURE__*/function () {
       this.$doc.ready(function () {
         _this4.setParams();
         _this4.changeOtherStatus();
+      });
+      this.$doc.on("click", '#calendarDays .day', function (e) {
+        e.preventDefault();
+        document.querySelectorAll('.day').forEach(function (el) {
+          el.classList.remove('active');
+        });
+        var $t = $(this);
+        var date = $t.attr('data-date');
+        $t.addClass("active");
+        var $calendar = t.$doc.find('#book-calendar-js');
+        if ($calendar.length === 0) return;
+        var order = $calendar.attr('data-order-id');
+        var session = $calendar.attr('data-session-id');
+        t.resetOrderData();
+        // t.$doc.find('#book-time-list').append(
+        //     '<pre>' +
+        //     date +
+        //     order +
+        //     session +
+        //     '</pre>'
+        // );
+        if (order === undefined || session === undefined) return;
+        (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+        $.ajax({
+          type: "POST",
+          url: adminAjax,
+          data: {
+            action: 'get_free_time',
+            date: date,
+            order: order,
+            session: session
+          }
+        }).done(function (response) {
+          // t.$doc.find('#book-time-list').append(
+          //     '<pre>' +
+          //     response +
+          //     '</pre>'
+          // );
+          if (response) {
+            var isJson = (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.isJsonString)(response);
+            if (isJson) {
+              var data = JSON.parse(response);
+              var message = data.msg || '';
+              var text = data.msg_text || '';
+              var type = data.type || '';
+              var url = data.url;
+              var reload = data.reload || '';
+              var html = data.html || '';
+              if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
+              if (html) {
+                t.$doc.find('#book-time-list').html(html);
+              }
+              if (url) {
+                window.location.href = url;
+                return;
+              }
+              if (reload === 'true') {
+                if (message) {
+                  setTimeout(function () {
+                    window.location.reload();
+                  }, 2000);
+                  return;
+                }
+                window.location.reload();
+                return;
+              }
+            } else {
+              (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(response);
+            }
+          }
+          (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
+        });
+        $('html, body').animate({
+          scrollTop: t.$timeList.offset().top
+        });
       });
     }
   }, {
@@ -6835,6 +6912,7 @@ var BookForm = /*#__PURE__*/function () {
       var order = $calendar.attr('data-order-id');
       var session = $calendar.attr('data-session-id');
       this.resetOrderData();
+      this.$doc.find('#book-time-list').append('<pre>' + this.getFormatedDate() + order + session + '</pre>');
       if (order === undefined || session === undefined) return;
       (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
       $.ajax({
@@ -6847,6 +6925,7 @@ var BookForm = /*#__PURE__*/function () {
           session: session
         }
       }).done(function (response) {
+        _this5.$doc.find('#book-time-list').append('<pre>' + response + '</pre>');
         if (response) {
           var isJson = (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.isJsonString)(response);
           if (isJson) {
@@ -6859,7 +6938,7 @@ var BookForm = /*#__PURE__*/function () {
             var html = data.html || '';
             if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
             if (html) {
-              _this5.$doc.find('#book-time-list').html(html);
+              // this.$doc.find('#book-time-list').html(html);
             }
             if (url) {
               window.location.href = url;
@@ -6950,10 +7029,6 @@ var FormHandler = /*#__PURE__*/function () {
       event.preventDefault();
       var $form = $(event.target);
       var formId = $form.attr('id');
-      if ($form.hasClass('sending')) {
-        (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showMsg)('Error! Processing is underway!');
-        return;
-      }
       if (!this.validateForm($form)) return;
       var formData = new FormData(document.getElementById(formId));
       $form.addClass('sending');
@@ -7079,6 +7154,7 @@ var FormHandler = /*#__PURE__*/function () {
               (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showNotices)();
             }
             if (url) {
+              (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
               window.location.href = url;
               return;
             }

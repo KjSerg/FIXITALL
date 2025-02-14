@@ -1,4 +1,4 @@
-import {isObjectEmpty, moveToElement} from "../utils/_helpers";
+import {isObjectEmpty, moveToElement, showPreloader} from "../utils/_helpers";
 import 'selectric';
 import {selectrickInit} from "../../plugins/_selectric-init";
 import BookForm from "../book/BookForm";
@@ -32,10 +32,7 @@ export default class FormHandler {
         const $form = $(event.target);
         const formId = $form.attr('id');
 
-        if($form.hasClass('sending')){
-            showMsg('Error! Processing is underway!');
-            return;
-        }
+
 
         if (!this.validateForm($form)) return;
 
@@ -167,6 +164,7 @@ export default class FormHandler {
                         showNotices();
                     }
                     if (url) {
+                        showPreloader();
                         window.location.href = url;
                         return;
                     }

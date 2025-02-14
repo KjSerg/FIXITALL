@@ -190,53 +190,64 @@ export class GoogleMap {
 
                 let marker = new google.maps.Marker({
                     position: location,
-                    map: map
+                    map: map,
+                    draggable: true
                 });
                 $selector.data("google-map", map);
                 $selector.data("google-marker", marker);
 
-                google.maps.event.addListener(map, 'dragend', () => {
-                    let newCenter = map.getCenter();
-                    let lat = newCenter.lat();
-                    let lng = newCenter.lng();
-                    let id = $selector.attr('id');
-                    let $field = this.$doc.find('input[data-related="#'+id+'"]')
-                    marker.setPosition(newCenter);
-                    $('#lat').val(lat);
-                    $('#lng').val(lng);
-                    if($field.length === 0) return;
-                    $field.attr('data-lat', lat);
-                    $field.attr('data-lng', lng);
-                    $field.attr('data-selected', `${lat};${lng}`);
-                    // $field.val(`${lat};${lng}`);
-                    this.updateCenterInfo(newCenter, $selector, $field);
+                marker.addListener("dragend", () => {
+                    this.updateCenterInfo(marker.getPosition(), $selector);
                 });
+
+                // Ставити маркер при кліку на карту
+                map.addListener("click", (event) => {
+                    marker.setPosition(event.latLng);
+                    this.updateCenterInfo(event.latLng, $selector);
+                });
+
             }
 
             $selector.addClass('init-map');
         }
     }
 
-    updateCenterInfo(location, $selector, $field) {
+    updateMarkerInfo(position) {
+        const lat = position.lat();
+        const lng = position.lng();
+
+        document.getElementById("coords").innerText = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+        geocoder.geocode({location: position}, (results, status) => {
+            if (status === "OK" && results[0]) {
+                document.getElementById("address").innerText = results[0].formatted_address;
+            } else {
+                document.getElementById("address").innerText = "Адреса не знайдена";
+            }
+        });
+    }
+
+    updateCenterInfo(location, $selector) {
+        let id = $selector.attr('id');
+        let $field = this.$doc.find('input[data-related="#' + id + '"]')
+        $('#lat').val(location.lat());
+        $('#lng').val(location.lng());
+        $field.attr('data-lat', location.lat());
+        $field.attr('data-lng', location.lng());
         let geocoder = new google.maps.Geocoder();
         geocoder.geocode({location: location}, (results, status) => {
             if (status === 'OK' && results[0]) {
                 let address = results[0].formatted_address;
-                console.log('Центр карти:', location.lat(), location.lng());
-                console.log('Адреса центру:', address);
-
-                // Збереження даних у змінну або data-атрибут
                 window.mapCenterData = {
                     lat: location.lat(),
                     lng: location.lng(),
                     address: address
                 };
-
                 $selector.attr('data-lat', location.lat());
                 $selector.attr('data-lng', location.lng());
                 $selector.attr('data-address', address);
                 $field.val(address);
-                $field.attr('data-selected',address);
+                $field.attr('data-selected', address);
             } else {
                 console.error('Не вдалося отримати адресу:', status);
             }
