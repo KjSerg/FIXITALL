@@ -2,7 +2,7 @@ import {hidePreloader, isJsonString, showPreloader} from "../utils/_helpers";
 import {selectrickInit} from "../../plugins/_selectric-init";
 import 'selectric';
 import {showMsg, showNotices} from "../../plugins/_fancybox-init";
-import {logConnections} from "browser-sync/dist/default-config";
+import {initTelMask} from "../forms/_number-input";
 
 export default class BookForm {
     constructor() {
@@ -329,7 +329,6 @@ export default class BookForm {
             const index = $wrap.index();
             const questionCount = $form.find('.book-form-question').length;
             if ((index + 1) >= questionCount) {
-                $form.closest('section').find('.book-form__trigger').trigger('click');
                 return;
             }
             const transformX = (index + 1) * 100;
@@ -494,7 +493,7 @@ export default class BookForm {
 
     setCurrentDate() {
         $('html, body').animate({
-            scrollTop: this.$timeList.offset().top
+            scrollTop: this.$doc.find('.book-section').offset().top
         });
     }
 
@@ -581,7 +580,7 @@ export default class BookForm {
                 hidePreloader();
             });
             $('html, body').animate({
-                scrollTop: t.$timeList.offset().top
+                scrollTop: $t.closest('section').offset().top
             });
         });
     }
@@ -648,6 +647,7 @@ export default class BookForm {
                 const reload = data.reload || '';
                 const html = data.html || '';
                 const step_html = data.step_html || '';
+
                 if (message) showMsg(message);
                 if (days) {
                     const $days = t.$doc.find('#calendarDays').find('.day:not(.not-active)');
@@ -683,6 +683,7 @@ export default class BookForm {
                     window.location.reload();
                     return;
                 }
+                initTelMask();
             } else {
                 showMsg(response);
             }

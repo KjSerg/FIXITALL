@@ -1,8 +1,13 @@
+import '../../plugins/jquery.mask.min';
+
+export const initTelMask = () => {
+    $(document).find('input[type="tel"]').mask('+19999999999', {placeholder: "+1 (999) 999 99-99"});
+}
+
 export const numberInput = () => {
-
     const $doc = $(document);
-
-    $doc.on('input', '.number-input', function () {
+    initTelMask();
+    $doc.on('input', '.number-input:not([type="tel"])', function () {
         const $i = $(this);
         let value = $i.val().replace(/[^0-9.-]/g, '');
         if ((value.match(/\./g) || []).length > 1) {
@@ -11,11 +16,10 @@ export const numberInput = () => {
         if (value.indexOf('-') > 0) {
             value = value.replace('-', '');
         }
-        if($i.attr('type') === 'tel') value = '+' + value;
-        if($i.attr('name') === 'quantity[]'){
+        if ($i.attr('name') === 'quantity[]') {
             let val = Number($i.val());
             val = isNaN(val) ? 1 : val;
-            if(val < 1){
+            if (val < 1) {
                 value = 1;
             }
         }

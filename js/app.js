@@ -6118,8 +6118,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! selectric */ "./node_modules/selectric/public/jquery.selectric.js");
 /* harmony import */ var selectric__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(selectric__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../plugins/_fancybox-init */ "./resources/js/plugins/_fancybox-init.js");
-/* harmony import */ var browser_sync_dist_default_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! browser-sync/dist/default-config */ "./node_modules/browser-sync/dist/default-config.js");
-/* harmony import */ var browser_sync_dist_default_config__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(browser_sync_dist_default_config__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _forms_number_input__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../forms/_number-input */ "./resources/js/components/forms/_number-input.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
@@ -6510,7 +6509,6 @@ var BookForm = /*#__PURE__*/function () {
         var index = $wrap.index();
         var questionCount = $form.find('.book-form-question').length;
         if (index + 1 >= questionCount) {
-          $form.closest('section').find('.book-form__trigger').trigger('click');
           return;
         }
         var transformX = (index + 1) * 100;
@@ -6680,7 +6678,7 @@ var BookForm = /*#__PURE__*/function () {
     key: "setCurrentDate",
     value: function setCurrentDate() {
       $('html, body').animate({
-        scrollTop: this.$timeList.offset().top
+        scrollTop: this.$doc.find('.book-section').offset().top
       });
     }
   }, {
@@ -6773,7 +6771,7 @@ var BookForm = /*#__PURE__*/function () {
           (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.hidePreloader)();
         });
         $('html, body').animate({
-          scrollTop: t.$timeList.offset().top
+          scrollTop: $t.closest('section').offset().top
         });
       });
     }
@@ -6878,6 +6876,7 @@ var BookForm = /*#__PURE__*/function () {
             window.location.reload();
             return;
           }
+          (0,_forms_number_input__WEBPACK_IMPORTED_MODULE_4__.initTelMask)();
         } else {
           (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(_response);
         }
@@ -6988,6 +6987,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _plugins_selectric_init__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../plugins/_selectric-init */ "./resources/js/plugins/_selectric-init.js");
 /* harmony import */ var _book_BookForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../book/BookForm */ "./resources/js/components/book/BookForm.js");
 /* harmony import */ var _plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../plugins/_fancybox-init */ "./resources/js/plugins/_fancybox-init.js");
+/* harmony import */ var _number_input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./_number-input */ "./resources/js/components/forms/_number-input.js");
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
@@ -6995,6 +6995,7 @@ function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = 
 function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -7139,6 +7140,7 @@ var FormHandler = /*#__PURE__*/function () {
           if (isJson) {
             var data = JSON.parse(response);
             var message = data.msg || '';
+            var session_id = data.session_id || '';
             var text = data.msg_text || '';
             var type = data.type || '';
             var url = data.url;
@@ -7156,11 +7158,18 @@ var FormHandler = /*#__PURE__*/function () {
                 scrollTop: _this2.$document.find('.book-render').offset().top
               });
               (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showNotices)();
+              (0,_number_input__WEBPACK_IMPORTED_MODULE_5__.initTelMask)();
             }
             if (url) {
               (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
               window.location.href = url;
               return;
+            }
+            if (session_id && publishableKey !== '0') {
+              var stripe = Stripe(publishableKey);
+              return stripe.redirectToCheckout({
+                sessionId: session_id
+              });
             }
             if (reload === 'true') {
               if (message) {
@@ -7205,7 +7214,7 @@ var FormHandler = /*#__PURE__*/function () {
       $.fancybox.open($modal);
       setTimeout(function () {
         return $.fancybox.close();
-      }, 3000);
+      }, 5000);
     }
   }, {
     key: "showPreloader",
@@ -7237,12 +7246,22 @@ function setDefaultImage(preview) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initTelMask: () => (/* binding */ initTelMask),
 /* harmony export */   numberInput: () => (/* binding */ numberInput)
 /* harmony export */ });
+/* harmony import */ var _plugins_jquery_mask_min__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../plugins/jquery.mask.min */ "./resources/js/plugins/jquery.mask.min.js");
+/* harmony import */ var _plugins_jquery_mask_min__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_plugins_jquery_mask_min__WEBPACK_IMPORTED_MODULE_0__);
 /* provided dependency */ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+var initTelMask = function initTelMask() {
+  $(document).find('input[type="tel"]').mask('+19999999999', {
+    placeholder: "+1 (999) 999 99-99"
+  });
+};
 var numberInput = function numberInput() {
   var $doc = $(document);
-  $doc.on('input', '.number-input', function () {
+  initTelMask();
+  $doc.on('input', '.number-input:not([type="tel"])', function () {
     var $i = $(this);
     var value = $i.val().replace(/[^0-9.-]/g, '');
     if ((value.match(/\./g) || []).length > 1) {
@@ -7251,7 +7270,6 @@ var numberInput = function numberInput() {
     if (value.indexOf('-') > 0) {
       value = value.replace('-', '');
     }
-    if ($i.attr('type') === 'tel') value = '+' + value;
     if ($i.attr('name') === 'quantity[]') {
       var val = Number($i.val());
       val = isNaN(val) ? 1 : val;
@@ -7786,554 +7804,391 @@ var selectrickInit = function selectrickInit() {
 
 /***/ }),
 
-/***/ "./node_modules/browser-sync/dist/default-config.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/browser-sync/dist/default-config.js ***!
-  \**********************************************************/
-/***/ ((module) => {
+/***/ "./resources/js/plugins/jquery.mask.min.js":
+/*!*************************************************!*\
+  !*** ./resources/js/plugins/jquery.mask.min.js ***!
+  \*************************************************/
+/***/ (function(module, exports, __webpack_require__) {
 
-/**
- * @module BrowserSync.options
- */
-module.exports = {
-    /**
-     * Browsersync includes a user-interface that is accessed via a separate port.
-     * The UI allows to controls all devices, push sync updates and much more.
-     * @property ui
-     * @type Object
-     * @param {Number} [port=3001]
-     * @since 2.0.0
-     * @default false
-     */
-    ui: {
-        port: 3001
-    },
-    /**
-     * Browsersync can watch your files as you work. Changes you make will either
-     * be injected into the page (CSS & images) or will cause all browsers to do
-     * a full-page refresh.
-     * @property files
-     * @type Array|String
-     * @default false
-     */
-    files: false,
-    /**
-     * Specify which file events to respond to.
-     * Available events: `add`, `change`, `unlink`, `addDir`, `unlinkDir`
-     * @property watchEvents
-     * @type Array
-     * @default ["change"]
-     * @since 2.18.8
-     */
-    watchEvents: ["change"],
-    /**
-     * Watch files automatically - this should be used as an
-     * alternative to the `files` option. When this option is used, some directories
-     * will be ignored automatically such as `node_modules` `bower_components` `.sass-cache`
-     * `.vscode` `.git` `.idea`
-     *
-     * @property watch
-     * @type Boolean
-     * @default false
-     * @since 2.23.0
-     */
-    watch: false,
-    /**
-     * Patterns for any watchers to ignore. Anything provided here
-     * will end up inside `watchOptions.ignored`
-     * @property ignore
-     * @type Array
-     * @default []
-     * @since 2.23.0
-     */
-    ignore: [],
-    /**
-     * Serve an index.html file for all non-asset routes. Useful
-     * when using client-routers
-     * @property single
-     * @type Boolean
-     * @default false
-     * @since 2.23.0
-     */
-    single: false,
-    /**
-     * File watching options that get passed along to [Chokidar](https://github.com/paulmillr/chokidar).
-     * Check their docs for available options
-     * @property watchOptions
-     * @type Object
-     * @default undefined
-     * @since 2.6.0
-     */
-    watchOptions: {
-        ignoreInitial: true
-        /*
-         persistent: true,
-
-         ignored: '*.txt',
-         followSymlinks: true,
-         cwd: '.',
-
-         usePolling: true,
-         alwaysStat: false,
-         depth: undefined,
-         interval: 100,
-
-         ignorePermissionErrors: false,
-         atomic: true
-         */
-    },
-    /**
-     * Use the built-in static server for basic HTML/JS/CSS websites.
-     * @property server
-     * @type Object|Boolean
-     * @default false
-     */
-    server: false,
-    /**
-     * Proxy an EXISTING vhost. Browsersync will wrap your vhost with a proxy URL to view your site.
-     * @property proxy
-     * @type String|Object|Boolean
-     * @param {String} [target]
-     * @param {Boolean} [ws] - Enable websocket proxying
-     * @param {Function|Array} [middleware]
-     * @param {Function} [reqHeaders]
-     * @param {Array} [proxyReq]
-     * @param {Array} [proxyRes]
-     * @default false
-     */
-    proxy: false,
-    /**
-     * @property port
-     * @type Number
-     * @default 3000
-     */
-    port: 3000,
-    /**
-     * @property middleware
-     * @type Function|Array
-     * @default false
-     */
-    middleware: false,
-    /**
-     * Add additional directories from which static
-     * files should be served. Should only be used in `proxy` or `snippet`
-     * mode.
-     * @property serveStatic
-     * @type Array
-     * @default []
-     * @since 2.8.0
-     */
-    serveStatic: [],
-    /**
-     * Options that are passed to the serve-static middleware
-     * when you use the string[] syntax: eg: `serveStatic: ['./app']`. Please see
-     * [serve-static](https://github.com/expressjs/serve-static) for details
-     *
-     * @property serveStaticOptions
-     * @type Object
-     * @since 2.17.0
-     */
-    /**
-     * Enable https for localhost development. **Note** - this is not needed for proxy
-     * option as it will be inferred from your target url.
-     * @property https
-     * @type Boolean
-     * @default undefined
-     * @since 1.3.0
-     */
-    /**
-     * Override http module to allow using 3rd party server modules (such as http2)
-     * *Note*: these modules are not included in the Browsersync package - you need
-     * to 'npm install' any that you'd like to use.
-     * @property httpModule
-     * @type string
-     * @default undefined
-     * @since 2.18.0
-     */
-    /**
-     * Current working directory
-     * @property cwd
-     * @type String
-     * @since 2.23.0
-     */
-    /**
-     * Register callbacks via a regular option - this can be used
-     * to get access the Browsersync instance in situations where you
-     * cannot provide a callback via the normal API (for example, in a Gruntfile)
-     *
-     * **Note**: Only the `ready` callback is currently supported here.
-     *
-     * @property callbacks
-     * @type Object
-     * @param {Function} ready
-     */
-    /**
-     * Clicks, Scrolls & Form inputs on any device will be mirrored to all others.
-     * @property ghostMode
-     * @param {Boolean} [clicks=true]
-     * @param {Boolean} [scroll=true]
-     * @param {Boolean} [location=true]
-     * @param {Boolean} [forms=true]
-     * @param {Boolean} [forms.submit=true]
-     * @param {Boolean} [forms.inputs=true]
-     * @param {Boolean} [forms.toggles=true]
-     * @type Object
-     */
-    ghostMode: {
-        clicks: true,
-        scroll: true,
-        location: true,
-        forms: {
-            submit: true,
-            inputs: true,
-            toggles: true
-        }
-    },
-    /**
-     * Can be either "info", "debug", "warn", or "silent"
-     * @property logLevel
-     * @type String
-     * @default info
-     */
-    logLevel: "info",
-    /**
-     * Change the console logging prefix. Useful if you're creating your
-     * own project based on Browsersync
-     * @property logPrefix
-     * @type String
-     * @default Browsersync
-     * @since 1.5.1
-     */
-    logPrefix: "Browsersync",
-    /**
-     * @property logConnections
-     * @type Boolean
-     * @default false
-     */
-    logConnections: false,
-    /**
-     * @property logFileChanges
-     * @type Boolean
-     * @default true
-     */
-    logFileChanges: true,
-    /**
-     * Log the snippet to the console when you're in snippet mode (no proxy/server)
-     * @property logSnippet
-     * @type: Boolean
-     * @default true
-     * @since 1.5.2
-     */
-    logSnippet: true,
-    /**
-     * You can prevent Browsersync from injecting the connection snippet
-     * by passing `snippet: false`.
-     * @property snippet
-     * @type Boolean
-     * @default undefined
-     */
-    /**
-     * You can control how the snippet is injected
-     * onto each page via a custom regex + function.
-     * You can also provide patterns for certain urls
-     * that should be ignored from the snippet injection.
-     * @property snippetOptions
-     * @since 2.0.0
-     * @param {Boolean} [async] - should the script tags have the async attribute?
-     * @param {Array} [blacklist]
-     * @param {Array} [whitelist]
-     * @param {RegExp} [rule.match=/$/]
-     * @param {Function} [rule.fn=Function]
-     * @type Object
-     */
-    snippetOptions: {
-        async: true,
-        whitelist: [],
-        blacklist: [],
-        rule: {
-            match: /<body[^>]*>/i,
-            fn: function (snippet, match) {
-                return match + snippet;
-            }
-        }
-    },
-    /**
-     * Add additional HTML rewriting rules.
-     * @property rewriteRules
-     * @since 2.4.0
-     * @type Array
-     * @default false
-     */
-    rewriteRules: [],
-    /**
-     * @property tunnel
-     * @type String|Boolean
-     * @default null
-     */
-    /**
-     * Decide which URL to open automatically when Browsersync starts. Defaults to "local" if none set.
-     * Can be `true`, `local`, `external`, `ui`, `ui-external`, `tunnel` or `false`
-     * @property open
-     * @type Boolean|String
-     * @default true
-     */
-    open: "local",
-    /**
-     * @property browser
-     * @type String|Array
-     * @default default
-     */
-    browser: "default",
-    /**
-     * Add HTTP access control (CORS) headers to assets served by Browsersync.
-     * @property cors
-     * @type boolean
-     * @default false
-     * @since 2.16.0
-     */
-    cors: false,
-    hostnameSuffix: false,
-    /**
-     * Reload each browser when Browsersync is restarted.
-     * @property reloadOnRestart
-     * @type Boolean
-     * @default false
-     */
-    reloadOnRestart: false,
-    /**
-     * The small pop-over notifications in the browser are not always needed/wanted.
-     * @property notify
-     * @type Boolean
-     * @default true
-     */
-    notify: true,
-    /**
-     * @property scrollProportionally
-     * @type Boolean
-     * @default true
-     */
-    scrollProportionally: true,
-    /**
-     * @property scrollThrottle
-     * @type Number
-     * @default 0
-     */
-    scrollThrottle: 0,
-    /**
-     * Decide which technique should be used to restore
-     * scroll position following a reload.
-     * Can be `window.name` or `cookie`
-     * @property scrollRestoreTechnique
-     * @type String
-     * @default 'window.name'
-     */
-    scrollRestoreTechnique: "window.name",
-    /**
-     * Sync the scroll position of any element
-     * on the page. Add any amount of CSS selectors
-     * @property scrollElements
-     * @type Array
-     * @default []
-     * @since 2.9.0
-     */
-    scrollElements: [],
-    /**
-     * Sync the scroll position of any element
-     * on the page - where any scrolled element
-     * will cause all others to match scroll position.
-     * This is helpful when a breakpoint alters which element
-     * is actually scrolling
-     * @property scrollElementMapping
-     * @type Array
-     * @default []
-     * @since 2.9.0
-     */
-    scrollElementMapping: [],
-    /**
-     * Time, in milliseconds, to wait before
-     * instructing the browser to reload/inject following a
-     * file change event
-     * @property reloadDelay
-     * @type Number
-     * @default 0
-     */
-    reloadDelay: 0,
-    /**
-     * Wait for a specified window of event-silence before
-     * sending any reload events.
-     * @property reloadDebounce
-     * @type Number
-     * @default 0
-     * @since 2.6.0
-     */
-    reloadDebounce: 500,
-    /**
-     * Emit only the first event during sequential time windows
-     * of a specified duration.
-     * @property reloadThrottle
-     * @type Number
-     * @default 0
-     * @since 2.13.0
-     */
-    reloadThrottle: 0,
-    /**
-     * User provided plugins
-     * @property plugins
-     * @type Array
-     * @default []
-     * @since 2.6.0
-     */
-    plugins: [],
-    /**
-     * @property injectChanges
-     * @type Boolean
-     * @default true
-     */
-    injectChanges: true,
-    /**
-     * @property startPath
-     * @type String|Null
-     * @default null
-     */
-    startPath: null,
-    /**
-     * Whether to minify client script, or not.
-     * @property minify
-     * @type Boolean
-     * @default true
-     */
-    minify: true,
-    /**
-     * @property host
-     * @type String
-     * @default null
-     */
-    host: null,
-    /**
-     * Specify a host to listen on. Use this if you want to
-     * prevent binding to all interfaces.
-     *
-     * Note: When you specify this option, it overrides the 'host' option
-     * @property listen
-     * @type String
-     * @default undefined
-     */
-    /**
-     * Support environments where dynamic hostnames are not required
-     * (ie: electron)
-     * @property localOnly
-     * @type Boolean
-     * @default false
-     * @since 2.14.0
-     */
-    localOnly: false,
-    /**
-     * @property codeSync
-     * @type Boolean
-     * @default true
-     */
-    codeSync: true,
-    /**
-     * @property timestamps
-     * @type Boolean
-     * @default true
-     */
-    timestamps: true,
-    clientEvents: [
-        "scroll",
-        "scroll:element",
-        "input:text",
-        "input:toggles",
-        "form:submit",
-        "form:reset",
-        "click"
-    ],
-    /**
-     * Alter the script path for complete control over where the Browsersync
-     * Javascript is served from. Whatever you return from this function
-     * will be used as the script path.
-     * @property scriptPath
-     * @default undefined
-     * @since 1.5.0
-     * @type Function
-     */
-    /**
-     * Configure the Socket.IO path and namespace & domain to avoid collisions.
-     * @property socket
-     * @param {String} [path="/browser-sync/socket.io"]
-     * @param {String} [clientPath="/browser-sync"]
-     * @param {String|Function} [namespace="/browser-sync"]
-     * @param {String|Function} [domain=undefined]
-     * @param {String|Function} [port=undefined]
-     * @param {Object} [clients.heartbeatTimeout=5000]
-     * @since 1.6.2
-     * @type Object
-     */
-    socket: {
-        socketIoOptions: {
-            log: false
-        },
-        socketIoClientConfig: {
-            reconnectionAttempts: 50
-        },
-        path: "/browser-sync/socket.io",
-        clientPath: "/browser-sync",
-        namespace: "/browser-sync",
-        clients: {
-            heartbeatTimeout: 5000
-        }
-    },
-    /**
-     * Configure the script domain
-     * @property script
-     * @param {String|Function} [domain=undefined]
-     * @since 2.14.0
-     * @type Object
-     */
-    tagNames: {
-        less: "link",
-        scss: "link",
-        css: "link",
-        jpg: "img",
-        jpeg: "img",
-        png: "img",
-        svg: "img",
-        gif: "img",
-        js: "script"
-    },
-    injectFileTypes: ["css", "png", "jpg", "jpeg", "svg", "gif", "webp", "map"],
-    injectNotification: false,
-    excludedFileTypes: [
-        "js",
-        "css",
-        "pdf",
-        "map",
-        "svg",
-        "ico",
-        "woff",
-        "json",
-        "eot",
-        "ttf",
-        "png",
-        "jpg",
-        "jpeg",
-        "webp",
-        "gif",
-        "mp4",
-        "mp3",
-        "3gp",
-        "ogg",
-        "ogv",
-        "webm",
-        "m4a",
-        "flv",
-        "wmv",
-        "avi",
-        "swf",
-        "scss"
-    ]
+/* provided dependency */ var __webpack_provided_window_dot_jQuery = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+// jQuery Mask Plugin v1.14.16
+// github.com/igorescobar/jQuery-Mask-Plugin
+var $jscomp = $jscomp || {};
+$jscomp.scope = {};
+$jscomp.findInternal = function (a, n, f) {
+  a instanceof String && (a = String(a));
+  for (var p = a.length, k = 0; k < p; k++) {
+    var b = a[k];
+    if (n.call(f, b, k, a)) return {
+      i: k,
+      v: b
+    };
+  }
+  return {
+    i: -1,
+    v: void 0
+  };
 };
-//# sourceMappingURL=default-config.js.map
+$jscomp.ASSUME_ES5 = !1;
+$jscomp.ASSUME_NO_NATIVE_MAP = !1;
+$jscomp.ASSUME_NO_NATIVE_SET = !1;
+$jscomp.SIMPLE_FROUND_POLYFILL = !1;
+$jscomp.defineProperty = $jscomp.ASSUME_ES5 || "function" == typeof Object.defineProperties ? Object.defineProperty : function (a, n, f) {
+  a != Array.prototype && a != Object.prototype && (a[n] = f.value);
+};
+$jscomp.getGlobal = function (a) {
+  return "undefined" != typeof window && window === a ? a : "undefined" != typeof __webpack_require__.g && null != __webpack_require__.g ? __webpack_require__.g : a;
+};
+$jscomp.global = $jscomp.getGlobal(this);
+$jscomp.polyfill = function (a, n, f, p) {
+  if (n) {
+    f = $jscomp.global;
+    a = a.split(".");
+    for (p = 0; p < a.length - 1; p++) {
+      var k = a[p];
+      k in f || (f[k] = {});
+      f = f[k];
+    }
+    a = a[a.length - 1];
+    p = f[a];
+    n = n(p);
+    n != p && null != n && $jscomp.defineProperty(f, a, {
+      configurable: !0,
+      writable: !0,
+      value: n
+    });
+  }
+};
+$jscomp.polyfill("Array.prototype.find", function (a) {
+  return a ? a : function (a, f) {
+    return $jscomp.findInternal(this, a, f).v;
+  };
+}, "es6", "es3");
+(function (a, n, f) {
+   true ? !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")], __WEBPACK_AMD_DEFINE_FACTORY__ = (a),
+		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)) : 0;
+})(function (a) {
+  var n = function n(b, d, e) {
+    var c = {
+      invalid: [],
+      getCaret: function getCaret() {
+        try {
+          var a = 0,
+            r = b.get(0),
+            h = document.selection,
+            d = r.selectionStart;
+          if (h && -1 === navigator.appVersion.indexOf("MSIE 10")) {
+            var e = h.createRange();
+            e.moveStart("character", -c.val().length);
+            a = e.text.length;
+          } else if (d || "0" === d) a = d;
+          return a;
+        } catch (C) {}
+      },
+      setCaret: function setCaret(a) {
+        try {
+          if (b.is(":focus")) {
+            var c = b.get(0);
+            if (c.setSelectionRange) c.setSelectionRange(a, a);else {
+              var g = c.createTextRange();
+              g.collapse(!0);
+              g.moveEnd("character", a);
+              g.moveStart("character", a);
+              g.select();
+            }
+          }
+        } catch (B) {}
+      },
+      events: function events() {
+        b.on("keydown.mask", function (a) {
+          b.data("mask-keycode", a.keyCode || a.which);
+          b.data("mask-previus-value", b.val());
+          b.data("mask-previus-caret-pos", c.getCaret());
+          c.maskDigitPosMapOld = c.maskDigitPosMap;
+        }).on(a.jMaskGlobals.useInput ? "input.mask" : "keyup.mask", c.behaviour).on("paste.mask drop.mask", function () {
+          setTimeout(function () {
+            b.keydown().keyup();
+          }, 100);
+        }).on("change.mask", function () {
+          b.data("changed", !0);
+        }).on("blur.mask", function () {
+          f === c.val() || b.data("changed") || b.trigger("change");
+          b.data("changed", !1);
+        }).on("blur.mask", function () {
+          f = c.val();
+        }).on("focus.mask", function (b) {
+          !0 === e.selectOnFocus && a(b.target).select();
+        }).on("focusout.mask", function () {
+          e.clearIfNotMatch && !k.test(c.val()) && c.val("");
+        });
+      },
+      getRegexMask: function getRegexMask() {
+        for (var a = [], b, c, e, t, f = 0; f < d.length; f++) (b = l.translation[d.charAt(f)]) ? (c = b.pattern.toString().replace(/.{1}$|^.{1}/g, ""), e = b.optional, (b = b.recursive) ? (a.push(d.charAt(f)), t = {
+          digit: d.charAt(f),
+          pattern: c
+        }) : a.push(e || b ? c + "?" : c)) : a.push(d.charAt(f).replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"));
+        a = a.join("");
+        t && (a = a.replace(new RegExp("(" + t.digit + "(.*" + t.digit + ")?)"), "($1)?").replace(new RegExp(t.digit, "g"), t.pattern));
+        return new RegExp(a);
+      },
+      destroyEvents: function destroyEvents() {
+        b.off("input keydown keyup paste drop blur focusout ".split(" ").join(".mask "));
+      },
+      val: function val(a) {
+        var c = b.is("input") ? "val" : "text";
+        if (0 < arguments.length) {
+          if (b[c]() !== a) b[c](a);
+          c = b;
+        } else c = b[c]();
+        return c;
+      },
+      calculateCaretPosition: function calculateCaretPosition(a) {
+        var d = c.getMasked(),
+          h = c.getCaret();
+        if (a !== d) {
+          var e = b.data("mask-previus-caret-pos") || 0;
+          d = d.length;
+          var g = a.length,
+            f = a = 0,
+            l = 0,
+            k = 0,
+            m;
+          for (m = h; m < d && c.maskDigitPosMap[m]; m++) f++;
+          for (m = h - 1; 0 <= m && c.maskDigitPosMap[m]; m--) a++;
+          for (m = h - 1; 0 <= m; m--) c.maskDigitPosMap[m] && l++;
+          for (m = e - 1; 0 <= m; m--) c.maskDigitPosMapOld[m] && k++;
+          h > g ? h = 10 * d : e >= h && e !== g ? c.maskDigitPosMapOld[h] || (e = h, h = h - (k - l) - a, c.maskDigitPosMap[h] && (h = e)) : h > e && (h = h + (l - k) + f);
+        }
+        return h;
+      },
+      behaviour: function behaviour(d) {
+        d = d || window.event;
+        c.invalid = [];
+        var e = b.data("mask-keycode");
+        if (-1 === a.inArray(e, l.byPassKeys)) {
+          e = c.getMasked();
+          var h = c.getCaret(),
+            g = b.data("mask-previus-value") || "";
+          setTimeout(function () {
+            c.setCaret(c.calculateCaretPosition(g));
+          }, a.jMaskGlobals.keyStrokeCompensation);
+          c.val(e);
+          c.setCaret(h);
+          return c.callbacks(d);
+        }
+      },
+      getMasked: function getMasked(a, b) {
+        var h = [],
+          f = void 0 === b ? c.val() : b + "",
+          g = 0,
+          k = d.length,
+          n = 0,
+          p = f.length,
+          m = 1,
+          r = "push",
+          u = -1,
+          w = 0;
+        b = [];
+        if (e.reverse) {
+          r = "unshift";
+          m = -1;
+          var x = 0;
+          g = k - 1;
+          n = p - 1;
+          var A = function A() {
+            return -1 < g && -1 < n;
+          };
+        } else x = k - 1, A = function A() {
+          return g < k && n < p;
+        };
+        for (var z; A();) {
+          var y = d.charAt(g),
+            v = f.charAt(n),
+            q = l.translation[y];
+          if (q) v.match(q.pattern) ? (h[r](v), q.recursive && (-1 === u ? u = g : g === x && g !== u && (g = u - m), x === u && (g -= m)), g += m) : v === z ? (w--, z = void 0) : q.optional ? (g += m, n -= m) : q.fallback ? (h[r](q.fallback), g += m, n -= m) : c.invalid.push({
+            p: n,
+            v: v,
+            e: q.pattern
+          }), n += m;else {
+            if (!a) h[r](y);
+            v === y ? (b.push(n), n += m) : (z = y, b.push(n + w), w++);
+            g += m;
+          }
+        }
+        a = d.charAt(x);
+        k !== p + 1 || l.translation[a] || h.push(a);
+        h = h.join("");
+        c.mapMaskdigitPositions(h, b, p);
+        return h;
+      },
+      mapMaskdigitPositions: function mapMaskdigitPositions(a, b, d) {
+        a = e.reverse ? a.length - d : 0;
+        c.maskDigitPosMap = {};
+        for (d = 0; d < b.length; d++) c.maskDigitPosMap[b[d] + a] = 1;
+      },
+      callbacks: function callbacks(a) {
+        var g = c.val(),
+          h = g !== f,
+          k = [g, a, b, e],
+          l = function l(a, b, c) {
+            "function" === typeof e[a] && b && e[a].apply(this, c);
+          };
+        l("onChange", !0 === h, k);
+        l("onKeyPress", !0 === h, k);
+        l("onComplete", g.length === d.length, k);
+        l("onInvalid", 0 < c.invalid.length, [g, a, b, c.invalid, e]);
+      }
+    };
+    b = a(b);
+    var l = this,
+      f = c.val(),
+      k;
+    d = "function" === typeof d ? d(c.val(), void 0, b, e) : d;
+    l.mask = d;
+    l.options = e;
+    l.remove = function () {
+      var a = c.getCaret();
+      l.options.placeholder && b.removeAttr("placeholder");
+      b.data("mask-maxlength") && b.removeAttr("maxlength");
+      c.destroyEvents();
+      c.val(l.getCleanVal());
+      c.setCaret(a);
+      return b;
+    };
+    l.getCleanVal = function () {
+      return c.getMasked(!0);
+    };
+    l.getMaskedVal = function (a) {
+      return c.getMasked(!1, a);
+    };
+    l.init = function (g) {
+      g = g || !1;
+      e = e || {};
+      l.clearIfNotMatch = a.jMaskGlobals.clearIfNotMatch;
+      l.byPassKeys = a.jMaskGlobals.byPassKeys;
+      l.translation = a.extend({}, a.jMaskGlobals.translation, e.translation);
+      l = a.extend(!0, {}, l, e);
+      k = c.getRegexMask();
+      if (g) c.events(), c.val(c.getMasked());else {
+        e.placeholder && b.attr("placeholder", e.placeholder);
+        b.data("mask") && b.attr("autocomplete", "off");
+        g = 0;
+        for (var f = !0; g < d.length; g++) {
+          var h = l.translation[d.charAt(g)];
+          if (h && h.recursive) {
+            f = !1;
+            break;
+          }
+        }
+        f && b.attr("maxlength", d.length).data("mask-maxlength", !0);
+        c.destroyEvents();
+        c.events();
+        g = c.getCaret();
+        c.val(c.getMasked());
+        c.setCaret(g);
+      }
+    };
+    l.init(!b.is("input"));
+  };
+  a.maskWatchers = {};
+  var f = function f() {
+      var b = a(this),
+        d = {},
+        e = b.attr("data-mask");
+      b.attr("data-mask-reverse") && (d.reverse = !0);
+      b.attr("data-mask-clearifnotmatch") && (d.clearIfNotMatch = !0);
+      "true" === b.attr("data-mask-selectonfocus") && (d.selectOnFocus = !0);
+      if (p(b, e, d)) return b.data("mask", new n(this, e, d));
+    },
+    p = function p(b, d, e) {
+      e = e || {};
+      var c = a(b).data("mask"),
+        f = JSON.stringify;
+      b = a(b).val() || a(b).text();
+      try {
+        return "function" === typeof d && (d = d(b)), "object" !== _typeof(c) || f(c.options) !== f(e) || c.mask !== d;
+      } catch (w) {}
+    },
+    k = function k(a) {
+      var b = document.createElement("div");
+      a = "on" + a;
+      var e = a in b;
+      e || (b.setAttribute(a, "return;"), e = "function" === typeof b[a]);
+      return e;
+    };
+  a.fn.mask = function (b, d) {
+    d = d || {};
+    var e = this.selector,
+      c = a.jMaskGlobals,
+      f = c.watchInterval;
+    c = d.watchInputs || c.watchInputs;
+    var k = function k() {
+      if (p(this, b, d)) return a(this).data("mask", new n(this, b, d));
+    };
+    a(this).each(k);
+    e && "" !== e && c && (clearInterval(a.maskWatchers[e]), a.maskWatchers[e] = setInterval(function () {
+      a(document).find(e).each(k);
+    }, f));
+    return this;
+  };
+  a.fn.masked = function (a) {
+    return this.data("mask").getMaskedVal(a);
+  };
+  a.fn.unmask = function () {
+    clearInterval(a.maskWatchers[this.selector]);
+    delete a.maskWatchers[this.selector];
+    return this.each(function () {
+      var b = a(this).data("mask");
+      b && b.remove().removeData("mask");
+    });
+  };
+  a.fn.cleanVal = function () {
+    return this.data("mask").getCleanVal();
+  };
+  a.applyDataMask = function (b) {
+    b = b || a.jMaskGlobals.maskElements;
+    (b instanceof a ? b : a(b)).filter(a.jMaskGlobals.dataMaskAttr).each(f);
+  };
+  k = {
+    maskElements: "input,td,span,div",
+    dataMaskAttr: "*[data-mask]",
+    dataMask: !0,
+    watchInterval: 300,
+    watchInputs: !0,
+    keyStrokeCompensation: 10,
+    useInput: !/Chrome\/[2-4][0-9]|SamsungBrowser/.test(window.navigator.userAgent) && k("input"),
+    watchDataMask: !1,
+    byPassKeys: [9, 16, 17, 18, 36, 37, 38, 39, 40, 91],
+    translation: {
+      0: {
+        pattern: /\d/
+      },
+      9: {
+        pattern: /\d/,
+        optional: !0
+      },
+      "#": {
+        pattern: /\d/,
+        recursive: !0
+      },
+      A: {
+        pattern: /[a-zA-Z0-9]/
+      },
+      S: {
+        pattern: /[a-zA-Z]/
+      }
+    }
+  };
+  a.jMaskGlobals = a.jMaskGlobals || {};
+  k = a.jMaskGlobals = a.extend(!0, {}, k, a.jMaskGlobals);
+  k.dataMask && a.applyDataMask();
+  setInterval(function () {
+    a.jMaskGlobals.watchDataMask && a.applyDataMask();
+  }, k.watchInterval);
+}, __webpack_provided_window_dot_jQuery, window.Zepto);
 
 /***/ }),
 
@@ -23906,6 +23761,18 @@ module.exports = function (list, options) {
 /******/ 				}
 /******/ 			}
 /******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
 /******/ 	})();
 /******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */

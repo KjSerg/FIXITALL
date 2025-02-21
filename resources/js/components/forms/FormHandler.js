@@ -3,6 +3,7 @@ import 'selectric';
 import {selectrickInit} from "../../plugins/_selectric-init";
 import BookForm from "../book/BookForm";
 import {showMsg, showNotices} from "../../plugins/_fancybox-init";
+import {initTelMask} from "./_number-input";
 
 export default class FormHandler {
     constructor(selector) {
@@ -31,7 +32,6 @@ export default class FormHandler {
 
         const $form = $(event.target);
         const formId = $form.attr('id');
-
 
 
         if (!this.validateForm($form)) return;
@@ -130,7 +130,7 @@ export default class FormHandler {
     }
 
     sendRequest(options) {
-        if(this.$document.find('body').hasClass('loading')){
+        if (this.$document.find('body').hasClass('loading')) {
             showMsg('Error! Reload the page!');
             return;
         }
@@ -145,6 +145,7 @@ export default class FormHandler {
                 if (isJson) {
                     const data = JSON.parse(response);
                     const message = data.msg || '';
+                    const session_id = data.session_id || '';
                     const text = data.msg_text || '';
                     const type = data.type || '';
                     const url = data.url;
@@ -162,11 +163,16 @@ export default class FormHandler {
                             scrollTop: this.$document.find('.book-render').offset().top
                         });
                         showNotices();
+                        initTelMask();
                     }
                     if (url) {
                         showPreloader();
                         window.location.href = url;
                         return;
+                    }
+                    if (session_id && publishableKey !== '0') {
+                        const stripe = Stripe(publishableKey);
+                        return stripe.redirectToCheckout({sessionId: session_id});
                     }
                     if (reload === 'true') {
                         if (message) {
@@ -206,7 +212,7 @@ export default class FormHandler {
         $modal.find('.modal__title').html(message);
         $modal.find('.modal__text').html(text);
         $.fancybox.open($modal);
-        setTimeout(() => $.fancybox.close(), 3000);
+        setTimeout(() => $.fancybox.close(), 5000);
     }
 
     showPreloader() {
