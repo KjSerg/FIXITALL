@@ -101,6 +101,18 @@ export default class FormHandler {
             $consent.closest('.form-consent').removeClass('error');
         }
 
+        if ($form.find('.address-js').length > 0) {
+            if ($form.find('.address-js').val() !== $form.find('.address-js').attr('data-selected')) {
+                isValid = false;
+                $form.find('.address-js').closest('.form-label').addClass('error');
+                $form.find('.address-js').addClass('error');
+                moveToElement($form.find('.address-js').closest('.form-label'));
+            } else {
+                $form.find('.address-js').closest('.form-label').removeClass('error');
+                $form.find('.address-js').removeClass('error');
+            }
+        }
+
         return isValid;
     }
 

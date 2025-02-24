@@ -25,6 +25,8 @@
     "simplebar": "^6.3.0"
   },
   "dependencies": {
+    "inputmask": "^5.0.9",
+    "instead": "^1.0.3",
     "slick-carousel": "^1.8.1"
   }
 }

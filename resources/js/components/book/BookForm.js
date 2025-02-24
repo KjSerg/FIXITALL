@@ -328,12 +328,12 @@ export default class BookForm {
             const $head = $form.find('.book-form-head');
             const index = $wrap.index();
             const questionCount = $form.find('.book-form-question').length;
+            updateHeaderStatus((index + 1));
             if ((index + 1) >= questionCount) {
                 return;
             }
             const transformX = (index + 1) * 100;
             $form.find('.book-form-question').css('transform', 'translateX(-' + transformX + '%)');
-            updateHeaderStatus((index + 1));
         });
 
         const updateHeaderStatus = (step) => {

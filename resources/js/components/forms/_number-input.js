@@ -1,8 +1,25 @@
-import '../../plugins/jquery.mask.min';
+import Inputmask from "inputmask";
 
 export const initTelMask = () => {
-    $(document).find('input[type="tel"]').mask('+19999999999', {placeholder: "+1 (999) 999 99-99"});
-}
+    $('input[type="tel"]').each(function () {
+        Inputmask({
+            mask: "+1(999)9999999",
+            greedy: false,
+            placeholder: "_",
+            showMaskOnHover: true
+        }).mask(this);
+        const $t = $(this);
+        $t.on('focusout change', function () {
+            const $this = $(this);
+            let val = $this.val().trim();
+            val = val.replaceAll('_', '', val);
+            if (val.length < 14) {
+                $this.val('');
+            }
+        });
+    });
+};
+
 
 export const numberInput = () => {
     const $doc = $(document);
