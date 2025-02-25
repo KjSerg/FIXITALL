@@ -227,7 +227,7 @@ export default class BookForm {
                 const dataFormatedDate = year + '-' + (month + 1) + '-' + day;
                 dayDiv.setAttribute('data-date', dataFormatedDate);
                 dayDiv.setAttribute('data-not-formated-date', dataDate);
-                dayDiv.setAttribute('href', '/?date='+dataFormatedDate);
+                dayDiv.setAttribute('href', '/?date=' + dataFormatedDate);
 
             }
             t.getActiveDaysInMonth(year, _month);
@@ -403,6 +403,7 @@ export default class BookForm {
             const $select = $(this);
             const $row = $select.closest('.book-form-row');
             const $form = $select.closest('.book-form');
+            const $section = $select.closest('section');
             const $type = $row.find('.type-select');
             const val = $select.val();
             const $button = $d.find('.book-form__button');
@@ -415,8 +416,12 @@ export default class BookForm {
                 $type.closest('.form-label select').removeAttr('required');
                 $row.find('.form-quantity input').removeAttr('required');
                 $form.find('.book-form-address input').removeAttr('required');
+                $section.find('.book-section-head--regular').hide();
+                $section.find('.book-section-head--other').show();
                 return;
             }
+            $section.find('.book-section-head--regular').show();
+            $section.find('.book-section-head--other').hide();
             $type.closest('.form-label select').attr('required', 'required');
             $row.find('.form-quantity input').attr('required', 'required');
             $form.find('.book-form-address input').attr('required', 'required');
@@ -518,7 +523,7 @@ export default class BookForm {
             if ($calendar.length === 0) return;
             const order = $calendar.attr('data-order-id');
             const session = $calendar.attr('data-session-id');
-            t.resetOrderData(); 
+            t.resetOrderData();
             // t.$doc.find('#book-time-list').append(
             //     '<pre>' +
             //     date +

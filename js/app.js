@@ -6585,6 +6585,7 @@ var BookForm = /*#__PURE__*/function () {
         var $select = $(this);
         var $row = $select.closest('.book-form-row');
         var $form = $select.closest('.book-form');
+        var $section = $select.closest('section');
         var $type = $row.find('.type-select');
         var val = $select.val();
         var $button = $d.find('.book-form__button');
@@ -6597,8 +6598,12 @@ var BookForm = /*#__PURE__*/function () {
           $type.closest('.form-label select').removeAttr('required');
           $row.find('.form-quantity input').removeAttr('required');
           $form.find('.book-form-address input').removeAttr('required');
+          $section.find('.book-section-head--regular').hide();
+          $section.find('.book-section-head--other').show();
           return;
         }
+        $section.find('.book-section-head--regular').show();
+        $section.find('.book-section-head--other').hide();
         $type.closest('.form-label select').attr('required', 'required');
         $row.find('.form-quantity input').attr('required', 'required');
         $form.find('.book-form-address input').attr('required', 'required');

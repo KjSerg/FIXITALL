@@ -153,6 +153,18 @@
           }
         }
       }
+
+      &--other{
+        .book-section-head__step{
+
+          &:before {
+            display: none;
+          }
+          &:first-child:before{
+            display: block;
+          }
+        }
+      }
     }
   }
 
