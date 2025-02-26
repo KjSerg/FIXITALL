@@ -21,11 +21,17 @@ export const fancyboxInit = () => {
     });
 };
 
-export function showMsg(msg) {
-    $.fancybox.open(msg);
-    setTimeout(function () {
-        $.fancybox.close();
-    }, 1500);
+export function showMsg(msg, type = '', title = 'Importantly') {
+    const selector = '#dialog' + (type ? '-' + type : '');
+    const $modal = $(document).find(selector);
+    if ($modal.length === 0) {
+        alert(msg);
+        return;
+    }
+    $modal.find('.modal__title').html(title);
+    $modal.find('.modal__text').html(msg);
+    $.fancybox.open($modal);
+
 }
 
 export function showNotices(index = 0) {

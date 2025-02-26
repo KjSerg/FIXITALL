@@ -143,7 +143,7 @@ export default class FormHandler {
 
     sendRequest(options) {
         if (this.$document.find('body').hasClass('loading')) {
-            showMsg('Error! Reload the page!');
+            showMsg(errorString);
             return;
         }
         this.showPreloader();
@@ -224,7 +224,6 @@ export default class FormHandler {
         $modal.find('.modal__title').html(message);
         $modal.find('.modal__text').html(text);
         $.fancybox.open($modal);
-        setTimeout(() => $.fancybox.close(), 5000);
     }
 
     showPreloader() {

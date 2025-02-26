@@ -7142,7 +7142,7 @@ var FormHandler = /*#__PURE__*/function () {
     value: function sendRequest(options) {
       var _this2 = this;
       if (this.$document.find('body').hasClass('loading')) {
-        (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showMsg)('Error! Reload the page!');
+        (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showMsg)(errorString);
         return;
       }
       this.showPreloader();
@@ -7228,9 +7228,6 @@ var FormHandler = /*#__PURE__*/function () {
       $modal.find('.modal__title').html(message);
       $modal.find('.modal__text').html(text);
       $.fancybox.open($modal);
-      setTimeout(function () {
-        return $.fancybox.close();
-      }, 5000);
     }
   }, {
     key: "showPreloader",
@@ -7789,10 +7786,17 @@ var fancyboxInit = function fancyboxInit() {
   });
 };
 function showMsg(msg) {
-  jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.open(msg);
-  setTimeout(function () {
-    jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.close();
-  }, 1500);
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Importantly';
+  var selector = '#dialog' + (type ? '-' + type : '');
+  var $modal = jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).find(selector);
+  if ($modal.length === 0) {
+    alert(msg);
+    return;
+  }
+  $modal.find('.modal__title').html(title);
+  $modal.find('.modal__text').html(msg);
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.open($modal);
 }
 function showNotices() {
   var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
