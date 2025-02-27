@@ -556,17 +556,21 @@ export default class BookForm {
                         const message = data.msg || '';
                         const text = data.msg_text || '';
                         const type = data.type || '';
-                        const url = data.url;
+                        const url = data.url || '';
                         const reload = data.reload || '';
                         const html = data.html || '';
-                        if (message) showMsg(message);
+                        if (message) {
+                            showMsg(text, '', message || 'Importantly', url);
+                        }else {
+                            if (url) {
+                                window.location.href = url;
+                                return;
+                            }
+                        }
                         if (html) {
                             t.$doc.find('#book-time-list').html(html);
                         }
-                        if (url) {
-                            window.location.href = url;
-                            return;
-                        }
+
                         if (reload === 'true') {
                             if (message) {
                                 setTimeout(function () {
@@ -648,12 +652,19 @@ export default class BookForm {
                 const message = data.msg || '';
                 const text = data.msg_text || '';
                 const type = data.type || '';
-                const url = data.url;
+                const url = data.url || '';
                 const reload = data.reload || '';
                 const html = data.html || '';
                 const step_html = data.step_html || '';
 
-                if (message) showMsg(message);
+                if (message) {
+                    showMsg(text, '', message || 'Importantly', url);
+                }else {
+                    if (url) {
+                        window.location.href = url;
+                        return;
+                    }
+                }
                 if (days) {
                     const $days = t.$doc.find('#calendarDays').find('.day:not(.not-active)');
                     $days.addClass('not-active-day');
@@ -664,10 +675,7 @@ export default class BookForm {
                 if (html) {
                     this.$doc.find('#book-time-list').html(html);
                 }
-                if (url) {
-                    window.location.href = url;
-                    return;
-                }
+
                 if (step_html) {
                     this.$doc.find('.book-render').html(step_html);
                     selectrickInit();
@@ -756,16 +764,19 @@ export default class BookForm {
                     const message = data.msg || '';
                     const text = data.msg_text || '';
                     const type = data.type || '';
-                    const url = data.url;
+                    const url = data.url || '';
                     const reload = data.reload || '';
                     const html = data.html || '';
-                    if (message) showMsg(message);
+                    if (message) {
+                        showMsg(text, '', message || 'Importantly', url);
+                    }else {
+                        if (url) {
+                            window.location.href = url;
+                            return;
+                        }
+                    }
                     if (html) {
                         // this.$doc.find('#book-time-list').html(html);
-                    }
-                    if (url) {
-                        window.location.href = url;
-                        return;
                     }
                     if (reload === 'true') {
                         if (message) {

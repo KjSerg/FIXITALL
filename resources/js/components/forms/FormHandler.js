@@ -160,10 +160,18 @@ export default class FormHandler {
                     const session_id = data.session_id || '';
                     const text = data.msg_text || '';
                     const type = data.type || '';
-                    const url = data.url;
+                    const url = data.url || '';
                     const reload = data.reload || '';
                     const html = data.step_html || '';
-                    if (message) this.showMessage(message, type, text);
+                    if (message) {
+                        this.showMessage(message, type, text, url);
+                    }else {
+                        if (url) {
+                            showPreloader();
+                            window.location.href = url;
+                            return;
+                        }
+                    }
                     if (html) {
                         this.$document.find('.book-render').html(html);
                         selectrickInit();
@@ -177,11 +185,7 @@ export default class FormHandler {
                         showNotices();
                         initTelMask();
                     }
-                    if (url) {
-                        showPreloader();
-                        window.location.href = url;
-                        return;
-                    }
+
                     if (session_id && publishableKey !== '0') {
                         const stripe = Stripe(publishableKey);
                         return stripe.redirectToCheckout({sessionId: session_id});
@@ -190,7 +194,7 @@ export default class FormHandler {
                         if (message) {
                             setTimeout(function () {
                                 window.location.reload();
-                            }, 2000);
+                            }, 10000);
                             return;
                         }
                         window.location.reload();
@@ -214,17 +218,30 @@ export default class FormHandler {
         }
     }
 
-    showMessage(message, type = '', text = '') {
+    showMessage(message, type = '', text = '', url = '') {
         const selector = '#dialog' + (type ? '-' + type : '');
         const $modal = $(document).find(selector);
+
         if ($modal.length === 0) {
             alert(message);
+            if (url) {
+                window.location.href = url;
+            }
             return;
         }
+
         $modal.find('.modal__title').html(message);
         $modal.find('.modal__text').html(text);
-        $.fancybox.open($modal);
+
+        $.fancybox.open($modal, {
+            afterClose: function() { // Виконати після закриття модального вікна
+                if (url) {
+                    window.location.href = url;
+                }
+            }
+        });
     }
+
 
     showPreloader() {
         $('.preloader').addClass('active');

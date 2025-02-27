@@ -21,16 +21,25 @@ export const fancyboxInit = () => {
     });
 };
 
-export function showMsg(msg, type = '', title = 'Importantly') {
+export function showMsg(msg, type = '', title = 'Importantly', url = '') {
     const selector = '#dialog' + (type ? '-' + type : '');
     const $modal = $(document).find(selector);
     if ($modal.length === 0) {
         alert(msg);
+        if (url) {
+            window.location.href = url;
+        }
         return;
     }
     $modal.find('.modal__title').html(title);
     $modal.find('.modal__text').html(msg);
-    $.fancybox.open($modal);
+    $.fancybox.open($modal, {
+        afterClose: function() {
+            if (url) {
+                window.location.href = url;
+            }
+        }
+    });
 
 }
 

@@ -88,5 +88,22 @@ export default class Application {
             }
             window.location.href = href;
         });
+        this.$doc.on('click', '[data-link]', function (e) {
+            e.preventDefault();
+            const $t = $(this);
+            const href = $t.attr('data-link');
+            if (href === '#') return;
+            const hashValue = href.split('#')[1];
+            if (hashValue !== undefined) {
+                const $el = t.$doc.find('#' + hashValue);
+                if ($el.length > 0) {
+                    $('html, body').animate({
+                        scrollTop: $el.offset().top
+                    });
+                    return;
+                }
+            }
+            window.location.href = href;
+        });
     }
 }

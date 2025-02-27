@@ -5783,6 +5783,23 @@ var Application = /*#__PURE__*/function () {
         }
         window.location.href = href;
       });
+      this.$doc.on('click', '[data-link]', function (e) {
+        e.preventDefault();
+        var $t = $(this);
+        var href = $t.attr('data-link');
+        if (href === '#') return;
+        var hashValue = href.split('#')[1];
+        if (hashValue !== undefined) {
+          var $el = t.$doc.find('#' + hashValue);
+          if ($el.length > 0) {
+            $('html, body').animate({
+              scrollTop: $el.offset().top
+            });
+            return;
+          }
+        }
+        window.location.href = href;
+      });
     }
   }]);
 }();
@@ -6748,16 +6765,19 @@ var BookForm = /*#__PURE__*/function () {
               var message = data.msg || '';
               var text = data.msg_text || '';
               var type = data.type || '';
-              var url = data.url;
+              var url = data.url || '';
               var reload = data.reload || '';
               var html = data.html || '';
-              if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
+              if (message) {
+                (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(text, '', message || 'Importantly', url);
+              } else {
+                if (url) {
+                  window.location.href = url;
+                  return;
+                }
+              }
               if (html) {
                 t.$doc.find('#book-time-list').html(html);
-              }
-              if (url) {
-                window.location.href = url;
-                return;
               }
               if (reload === 'true') {
                 if (message) {
@@ -6842,11 +6862,18 @@ var BookForm = /*#__PURE__*/function () {
           var message = data.msg || '';
           var text = data.msg_text || '';
           var type = data.type || '';
-          var url = data.url;
+          var url = data.url || '';
           var reload = data.reload || '';
           var html = data.html || '';
           var step_html = data.step_html || '';
-          if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
+          if (message) {
+            (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(text, '', message || 'Importantly', url);
+          } else {
+            if (url) {
+              window.location.href = url;
+              return;
+            }
+          }
           if (days) {
             var $days = t.$doc.find('#calendarDays').find('.day:not(.not-active)');
             $days.addClass('not-active-day');
@@ -6856,10 +6883,6 @@ var BookForm = /*#__PURE__*/function () {
           }
           if (html) {
             this.$doc.find('#book-time-list').html(html);
-          }
-          if (url) {
-            window.location.href = url;
-            return;
           }
           if (step_html) {
             this.$doc.find('.book-render').html(step_html);
@@ -6941,16 +6964,19 @@ var BookForm = /*#__PURE__*/function () {
             var message = data.msg || '';
             var text = data.msg_text || '';
             var type = data.type || '';
-            var url = data.url;
+            var url = data.url || '';
             var reload = data.reload || '';
             var html = data.html || '';
-            if (message) (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(message);
+            if (message) {
+              (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_3__.showMsg)(text, '', message || 'Importantly', url);
+            } else {
+              if (url) {
+                window.location.href = url;
+                return;
+              }
+            }
             if (html) {
               // this.$doc.find('#book-time-list').html(html);
-            }
-            if (url) {
-              window.location.href = url;
-              return;
             }
             if (reload === 'true') {
               if (message) {
@@ -7159,10 +7185,18 @@ var FormHandler = /*#__PURE__*/function () {
             var session_id = data.session_id || '';
             var text = data.msg_text || '';
             var type = data.type || '';
-            var url = data.url;
+            var url = data.url || '';
             var reload = data.reload || '';
             var html = data.step_html || '';
-            if (message) _this2.showMessage(message, type, text);
+            if (message) {
+              _this2.showMessage(message, type, text, url);
+            } else {
+              if (url) {
+                (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
+                window.location.href = url;
+                return;
+              }
+            }
             if (html) {
               _this2.$document.find('.book-render').html(html);
               (0,_plugins_selectric_init__WEBPACK_IMPORTED_MODULE_2__.selectrickInit)();
@@ -7176,11 +7210,6 @@ var FormHandler = /*#__PURE__*/function () {
               (0,_plugins_fancybox_init__WEBPACK_IMPORTED_MODULE_4__.showNotices)();
               (0,_number_input__WEBPACK_IMPORTED_MODULE_5__.initTelMask)();
             }
-            if (url) {
-              (0,_utils_helpers__WEBPACK_IMPORTED_MODULE_0__.showPreloader)();
-              window.location.href = url;
-              return;
-            }
             if (session_id && publishableKey !== '0') {
               var stripe = Stripe(publishableKey);
               return stripe.redirectToCheckout({
@@ -7191,7 +7220,7 @@ var FormHandler = /*#__PURE__*/function () {
               if (message) {
                 setTimeout(function () {
                   window.location.reload();
-                }, 2000);
+                }, 10000);
                 return;
               }
               window.location.reload();
@@ -7219,15 +7248,26 @@ var FormHandler = /*#__PURE__*/function () {
     value: function showMessage(message) {
       var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
       var text = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+      var url = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
       var selector = '#dialog' + (type ? '-' + type : '');
       var $modal = $(document).find(selector);
       if ($modal.length === 0) {
         alert(message);
+        if (url) {
+          window.location.href = url;
+        }
         return;
       }
       $modal.find('.modal__title').html(message);
       $modal.find('.modal__text').html(text);
-      $.fancybox.open($modal);
+      $.fancybox.open($modal, {
+        afterClose: function afterClose() {
+          // Виконати після закриття модального вікна
+          if (url) {
+            window.location.href = url;
+          }
+        }
+      });
     }
   }, {
     key: "showPreloader",
@@ -7788,15 +7828,25 @@ var fancyboxInit = function fancyboxInit() {
 function showMsg(msg) {
   var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var title = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'Importantly';
+  var url = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : '';
   var selector = '#dialog' + (type ? '-' + type : '');
   var $modal = jquery__WEBPACK_IMPORTED_MODULE_0___default()(document).find(selector);
   if ($modal.length === 0) {
     alert(msg);
+    if (url) {
+      window.location.href = url;
+    }
     return;
   }
   $modal.find('.modal__title').html(title);
   $modal.find('.modal__text').html(msg);
-  jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.open($modal);
+  jquery__WEBPACK_IMPORTED_MODULE_0___default().fancybox.open($modal, {
+    afterClose: function afterClose() {
+      if (url) {
+        window.location.href = url;
+      }
+    }
+  });
 }
 function showNotices() {
   var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
