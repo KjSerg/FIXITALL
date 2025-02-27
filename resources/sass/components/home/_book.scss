@@ -284,7 +284,7 @@
       border: 1px solid #EEF0F3;
       background: #FFF;
       @media (max-width: 1024px) {
-        padding: 2.4rem;
+        padding: 1.4rem;
         margin-bottom: 2rem;
       }
       @media (max-width: 450px) {
@@ -313,7 +313,7 @@
       justify-content: center;
       align-items: center;
       border: 1px solid #D0D4DD;
-      color: rgba(#020A1B, 0.3);
+      color: rgba(#020a1b, 1);
       text-align: center;
       font-family: "Inter", serif;
       font-size: 1.7rem;
@@ -583,6 +583,9 @@
     @media (max-width: 1200px){
       gap: 2rem;
     }
+    @media (max-width: 1024px){
+      gap: 1rem;
+    }
     @media (max-width: 768px){
       flex-direction: column;
     }
@@ -684,6 +687,12 @@
           font-weight: 400;
           line-height: 165%;
           text-align: right;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          @media (max-width: 1024px){
+            width: 30%;
+          }
         }
         &__data{
           width: 80%;
@@ -692,6 +701,10 @@
           font-style: normal;
           font-weight: 400;
           line-height: 165%;
+
+          @media (max-width: 1024px){
+            width: 70%;
+          }
           strong{
             &:not(:last-child){
               margin-bottom: 1rem;

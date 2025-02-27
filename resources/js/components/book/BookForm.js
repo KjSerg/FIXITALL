@@ -671,6 +671,7 @@ export default class BookForm {
                     for (let day in days) {
                         t.$doc.find('#calendarDays .day[data-date="' + day + '"]').not('.not-active').removeClass('not-active-day');
                     }
+
                 }
                 if (html) {
                     this.$doc.find('#book-time-list').html(html);
