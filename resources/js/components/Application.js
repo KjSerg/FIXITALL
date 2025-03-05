@@ -63,9 +63,32 @@ export default class Application {
         const map = new GoogleMap();
         map.initAutocomplete();
         this.$doc.on('click', '.book-form-address__button', function (e) {
-            setTimeout(function () {
-                map.initMaps();
-            }, 300);
+            const $t = $(this);
+            const $map = $t.closest('section').find('.book-form-address-map');
+            if ('geolocation' in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        console.log('Широта:', position.coords.latitude);
+                        console.log('Довгота:', position.coords.longitude);
+                        $map.attr('data-lat', position.coords.latitude).attr('data-lng', position.coords.longitude);
+                        setTimeout(function () {
+                            map.initMaps();
+                        }, 300);
+                    },
+                    (error) => {
+                        console.error('Помилка отримання геопозиції:', error.message);
+                        setTimeout(function () {
+                            map.initMaps();
+                        }, 300);
+                    }
+                );
+            } else {
+                console.error('Геолокація не підтримується вашим браузером');
+                setTimeout(function () {
+                    map.initMaps();
+                }, 300);
+            }
+
         });
     }
 

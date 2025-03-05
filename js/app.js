@@ -5757,9 +5757,28 @@ var Application = /*#__PURE__*/function () {
       var map = new _Map__WEBPACK_IMPORTED_MODULE_7__.GoogleMap();
       map.initAutocomplete();
       this.$doc.on('click', '.book-form-address__button', function (e) {
-        setTimeout(function () {
-          map.initMaps();
-        }, 300);
+        var $t = $(this);
+        var $map = $t.closest('section').find('.book-form-address-map');
+        if ('geolocation' in navigator) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+            console.log('Широта:', position.coords.latitude);
+            console.log('Довгота:', position.coords.longitude);
+            $map.attr('data-lat', position.coords.latitude).attr('data-lng', position.coords.longitude);
+            setTimeout(function () {
+              map.initMaps();
+            }, 300);
+          }, function (error) {
+            console.error('Помилка отримання геопозиції:', error.message);
+            setTimeout(function () {
+              map.initMaps();
+            }, 300);
+          });
+        } else {
+          console.error('Геолокація не підтримується вашим браузером');
+          setTimeout(function () {
+            map.initMaps();
+          }, 300);
+        }
       });
     }
   }, {
