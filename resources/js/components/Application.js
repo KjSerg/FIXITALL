@@ -10,6 +10,7 @@ import BookForm from "./book/BookForm";
 import FormHandler from "./forms/FormHandler";
 import Slick from "../plugins/Slick";
 import {makeActiveStars} from "./forms/_rating-inputs";
+import changeQuestionsHead from "./book/_questions";
 
 export default class Application {
     constructor() {
@@ -49,6 +50,7 @@ export default class Application {
             selectrickInit();
             fancyboxInit();
             makeActiveStars();
+            changeQuestionsHead();
             this.showLoaderOnClick();
             this.googleMapInit();
             this.linkListener();

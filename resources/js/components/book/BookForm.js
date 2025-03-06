@@ -3,6 +3,7 @@ import {selectrickInit} from "../../plugins/_selectric-init";
 import 'selectric';
 import {showMsg, showNotices} from "../../plugins/_fancybox-init";
 import {initTelMask} from "../forms/_number-input";
+import changeQuestionsHead from "./_questions";
 
 export default class BookForm {
     constructor() {
@@ -697,6 +698,7 @@ export default class BookForm {
                     window.location.reload();
                     return;
                 }
+                changeQuestionsHead();
                 initTelMask();
             } else {
                 showMsg(response);
@@ -797,4 +799,5 @@ export default class BookForm {
             hidePreloader();
         });
     }
+
 }

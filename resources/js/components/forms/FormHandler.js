@@ -4,6 +4,7 @@ import {selectrickInit} from "../../plugins/_selectric-init";
 import BookForm from "../book/BookForm";
 import {showMsg, showNotices} from "../../plugins/_fancybox-init";
 import {initTelMask} from "./_number-input";
+import changeQuestionsHead from "../book/_questions";
 
 export default class FormHandler {
     constructor(selector) {
@@ -184,6 +185,7 @@ export default class FormHandler {
                         });
                         showNotices();
                         initTelMask();
+                        changeQuestionsHead();
                     }
 
                     if (session_id && publishableKey !== '0') {

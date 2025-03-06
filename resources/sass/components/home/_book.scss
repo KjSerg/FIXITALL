@@ -16,7 +16,7 @@
   }
 
   &__subtitle {
-    margin-bottom: 4rem;
+    margin-bottom: 4rem;color: #020a1b;
   }
 
   &-section {
@@ -503,6 +503,9 @@
           }
         }
       }
+      &.many-elements{
+        flex-wrap: wrap;
+      }
     }
 
     &-questions {
@@ -574,6 +577,8 @@
         }
       }
     }
+
+
   }
 
   &-container{
