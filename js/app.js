@@ -6080,11 +6080,19 @@ var GoogleMap = /*#__PURE__*/function () {
           marker.addListener("dragend", function () {
             _this.updateCenterInfo(marker.getPosition(), $selector);
           });
-
-          // Ставити маркер при кліку на карту
           map.addListener("click", function (event) {
             marker.setPosition(event.latLng);
             _this.updateCenterInfo(event.latLng, $selector);
+          });
+          document.addEventListener("fullscreenchange", function () {
+            if (!document.fullscreenElement && document.contains($selector[0])) {
+              console.log("Google Map закрила повноекранний режим!");
+              setTimeout(function () {
+                $('html, body').animate({
+                  scrollTop: $selector.offset().top
+                });
+              }, 100);
+            }
           });
         }
         $selector.addClass('init-map');

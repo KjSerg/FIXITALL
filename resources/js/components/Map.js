@@ -200,11 +200,23 @@ export class GoogleMap {
                     this.updateCenterInfo(marker.getPosition(), $selector);
                 });
 
-                // Ставити маркер при кліку на карту
                 map.addListener("click", (event) => {
                     marker.setPosition(event.latLng);
                     this.updateCenterInfo(event.latLng, $selector);
                 });
+
+                document.addEventListener("fullscreenchange", function () {
+                    if (!document.fullscreenElement && document.contains($selector[0])) {
+                        console.log("Google Map закрила повноекранний режим!");
+                        setTimeout(function (){
+                            $('html, body').animate({
+                                scrollTop: $selector.offset().top
+                            });
+                        }, 100);
+                    }
+                });
+
+
 
             }
 
