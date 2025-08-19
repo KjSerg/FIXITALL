@@ -1,0 +1,64 @@
+.text{
+
+  & > *:not(:last-child){
+    margin-bottom: 2.4rem;
+  }
+  li {
+    &:not(:last-child){
+      margin-bottom: 1.4rem;
+    }
+  }
+  img{
+    display: inline-block;
+
+  }
+  & > img:not(:last-child){
+    margin-bottom: 4rem;
+  }
+  ol{
+    li{
+      counter-increment: section;
+      &::before {
+        content: counter(section) ". ";
+        color: #062058;
+      }
+    }
+  }
+  ul {
+    li {
+      position: relative;
+      padding-left: 1.8rem;
+      &:before{
+        position: absolute;
+        content: '';
+        display: block;
+        top: 1.1rem;
+        left: 0;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #062058;
+      }
+    }
+  }
+  blockquote{
+    position: relative;
+    display: block;
+    padding: 3rem;
+    padding-left: 11rem;
+    border: 1px solid  #EEF0F3;
+    background: #FFF;
+    &:before{
+      position: absolute;
+      display: block;
+      content: '';
+      top: 3rem;
+      left: 3rem;
+      width: 5.8rem;
+      height: 5.6rem;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 0 0;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+.breadcrumbs {
+  display: flex;
+  padding-top: 4rem;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Inter", serif;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  color: #062058;
+  &-container + section{
+    padding-top: 3rem!important;
+  }
+  a {
+    color: rgba(#A7A6A8, 0.7);
+    font-family: "Inter", serif;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+
+    span {
+      display: inline-flex;
+      padding: 0 1.6rem;
+      color: #062058;
+      @media (max-width: 650px) {
+        padding: 0 0.6rem;
+      }
+      @media (max-width: 650px) {
+        padding: 0 4px;
+      }
+    }
+
+    &:hover {
+      color: rgba(#A7A6A8, 1);
+    }
+  }
+}

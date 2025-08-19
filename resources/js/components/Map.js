@@ -3,7 +3,6 @@ export class GoogleMap {
         this.$doc = $(document);
     }
 
-
     loadGoogleMapsScript() {
         return new Promise((resolve, reject) => {
             if (document.getElementById('google-maps-script')) {
@@ -154,23 +153,18 @@ export class GoogleMap {
         }
     }
 
-
     initMap($selector, args = {}) {
         if ($('#google-maps-script').length === 0) return;
-
         let lat = args.lat || $selector.attr('data-lat');
         let lng = args.lng || $selector.attr('data-lng');
         let zoom = args.zoom || $selector.attr('data-zoom');
-
         if (lat && lng) {
             lat = Number(lat);
             lng = Number(lng);
             zoom = zoom === undefined ? 10 : Number(zoom);
-
             let location = {lat, lng};
             let mapInstance = $selector.data("google-map");
             let markerInstance = $selector.data("google-marker");
-
             if (mapInstance) {
                 mapInstance.setCenter(location);
                 if (markerInstance) {
@@ -187,7 +181,6 @@ export class GoogleMap {
                     zoom: zoom,
                     center: location
                 });
-
                 let marker = new google.maps.Marker({
                     position: location,
                     map: map,
@@ -195,16 +188,13 @@ export class GoogleMap {
                 });
                 $selector.data("google-map", map);
                 $selector.data("google-marker", marker);
-
                 marker.addListener("dragend", () => {
                     this.updateCenterInfo(marker.getPosition(), $selector);
                 });
-
                 map.addListener("click", (event) => {
                     marker.setPosition(event.latLng);
                     this.updateCenterInfo(event.latLng, $selector);
                 });
-
                 document.addEventListener("fullscreenchange", function () {
                     if (!document.fullscreenElement && document.contains($selector[0])) {
                         console.log("Google Map закрила повноекранний режим!");
@@ -215,11 +205,7 @@ export class GoogleMap {
                         }, 100);
                     }
                 });
-
-
-
             }
-
             $selector.addClass('init-map');
         }
     }
@@ -227,9 +213,7 @@ export class GoogleMap {
     updateMarkerInfo(position) {
         const lat = position.lat();
         const lng = position.lng();
-
         document.getElementById("coords").innerText = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-
         geocoder.geocode({location: position}, (results, status) => {
             if (status === "OK" && results[0]) {
                 document.getElementById("address").innerText = results[0].formatted_address;
@@ -265,6 +249,5 @@ export class GoogleMap {
             }
         });
     }
-
 
 }

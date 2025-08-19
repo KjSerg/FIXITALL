@@ -1,0 +1,232 @@
+.archive {
+  &-catalog {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.4rem;
+    @media (max-width: 767px) {
+      justify-content: center;
+    }
+  }
+
+  &-content {
+    background: #F9FBFF;
+  }
+
+  &-form {
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    @media (max-width: 500px) {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    &__select {
+
+      &-label {
+        @media (max-width: 500px) {
+          margin-left: auto;
+        }
+        .selectric {
+          border: 1px solid #EEF0F3;
+
+          &-items li {
+            font-family: "Inter", serif;
+            font-size: 1.4rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1.8rem;
+          }
+
+          .label {
+            color: rgba(#020A1B, 0.7);
+
+            font-family: "Inter", serif;
+            font-size: 1.6rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 3.4rem;
+          }
+        }
+      }
+    }
+
+    &__label {
+      position: relative;
+      display: flex;
+      width: 100%;
+      max-width: 50.4rem;
+      height: 5.5rem;
+      @media (max-width: 500px) {
+        max-width: 100%;
+      }
+      &:hover {
+        .icon {
+          transform: translateY(-50%) scale(1.1);
+        }
+      }
+
+      .icon {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.4rem;
+        height: 2.4rem;
+        flex-shrink: 0;
+        flex-grow: 0;
+        left: 1.8rem;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: 0.4s ease-in-out;
+      }
+
+      input {
+        padding-left: 5.8rem;
+        width: 100%;
+        height: 100%;
+        border: 1px solid #EEF0F3;
+        background: #FFF;
+        font-family: "Inter", serif;
+        color: rgba(#020A1B, 0.7);
+        font-size: 1.6rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 2.8rem;
+
+        &::placeholder {
+          color: #A3A8B3;
+          font-family: "Inter", serif;
+          font-size: 1.7rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 165%;
+        }
+      }
+    }
+  }
+}
+
+
+
+.article-preview {
+  width: calc(33.3% - 1.6rem);
+  border: 1px solid #EEF0F3;
+  background: #FFF;
+
+  @media (max-width: 1024px) {
+    width: calc(50% - 1.2rem);
+  }
+  @media (max-width: 767px) {
+    width: 100%;
+    max-width: 50.4rem;
+  }
+
+  &-content {
+    padding: 2.4rem;
+    @media (max-width: 500px) {
+      padding: 1.6rem;
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;color: #020A1B;
+    font-size: 1.6rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 2.4rem;
+
+    .icon{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.4rem;
+      height: 2.4rem;
+      flex-grow: 0;
+      flex-shrink: 0;
+      img{
+        transition: 0.4s ease-in-out;
+      }
+
+    }
+    &:hover{
+      img{
+        transform: translateX(1rem);
+      }
+    }
+  }
+  &__text {
+    margin-bottom: 1.6rem;
+    color:  #A7A6A8;
+    font-size: 1.7rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 165%;
+
+  }
+  &__title {
+    display: block;
+    margin-bottom: 1.6rem;
+    color: #020A1B;
+    font-family: "Exo 2", serif;
+    font-size: 1.7rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 146%;
+    letter-spacing: 0.0085rem;
+    text-transform: uppercase;
+
+  }
+  &__image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 31rem;
+    @media (max-width: 500px) {
+      height: 25rem;
+    }
+    img {
+      transition: 0.4s ease-in-out;
+    }
+  }
+}
+
+.card {
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+}
+
+.card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-front {
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
