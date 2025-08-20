@@ -124,12 +124,18 @@
 
   &-content {
     padding: 2.4rem;
+    height: calc(100% - 31rem);
+    display: flex;
+    width: 100%;
+    flex-direction: column;
     @media (max-width: 500px) {
       padding: 1.6rem;
+      height: calc(100% - 25rem);
     }
   }
 
   &__link {
+    margin-top: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
