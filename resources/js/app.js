@@ -1,3 +1,3 @@
-import Application from "./components/Application";
 
-const app = new Application();
+import Application from "./components/Application";
+new Application();

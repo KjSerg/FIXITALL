@@ -5,12 +5,12 @@ import {numberInput} from "./forms/_number-input";
 import {showPassword} from "./forms/_show-password";
 import {fancyboxInit, showNotices} from "../plugins/_fancybox-init";
 import {selectrickInit} from "../plugins/_selectric-init";
-import {GoogleMap} from "./Map";
 import BookForm from "./book/BookForm";
 import FormHandler from "./forms/FormHandler";
 import Slick from "../plugins/Slick";
 import {makeActiveStars} from "./forms/_rating-inputs";
 import changeQuestionsHead from "./book/_questions";
+import {lazyLoad} from "./utils/lazy";
 
 export default class Application {
     constructor() {
@@ -52,47 +52,16 @@ export default class Application {
             makeActiveStars();
             changeQuestionsHead();
             this.showLoaderOnClick();
-            this.googleMapInit();
             this.linkListener();
             const book = new BookForm();
             book.init();
             const form = new FormHandler('.form-js');
             const slick = new Slick();
+            lazyLoad()
         });
     }
 
-    googleMapInit() {
-        const map = new GoogleMap();
-        map.initAutocomplete();
-        this.$doc.on('click', '.book-form-address__button', function (e) {
-            const $t = $(this);
-            const $map = $t.closest('section').find('.book-form-address-map');
-            if ('geolocation' in navigator) {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        console.log('Широта:', position.coords.latitude);
-                        console.log('Довгота:', position.coords.longitude);
-                        $map.attr('data-lat', position.coords.latitude).attr('data-lng', position.coords.longitude);
-                        setTimeout(function () {
-                            map.initMaps();
-                        }, 300);
-                    },
-                    (error) => {
-                        console.error('Помилка отримання геопозиції:', error.message);
-                        setTimeout(function () {
-                            map.initMaps();
-                        }, 300);
-                    }
-                );
-            } else {
-                console.error('Геолокація не підтримується вашим браузером');
-                setTimeout(function () {
-                    map.initMaps();
-                }, 300);
-            }
 
-        });
-    }
 
     linkListener() {
         const t = this;

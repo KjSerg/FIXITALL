@@ -1,7 +1,6 @@
 import {isObjectEmpty, moveToElement, showPreloader} from "../utils/_helpers";
 import 'selectric';
 import {selectrickInit} from "../../plugins/_selectric-init";
-import BookForm from "../book/BookForm";
 import {showMsg, showNotices} from "../../plugins/_fancybox-init";
 import {initTelMask} from "./_number-input";
 import changeQuestionsHead from "../book/_questions";
@@ -176,10 +175,7 @@ export default class FormHandler {
                     if (html) {
                         this.$document.find('.book-render').html(html);
                         selectrickInit();
-                        if (this.$document.find('#calendarDays')) {
-                            const book = new BookForm();
-                            book.calendarInit();
-                        }
+
                         $('html, body').animate({
                             scrollTop: this.$document.find('.book-render').offset().top
                         });
@@ -188,10 +184,7 @@ export default class FormHandler {
                         changeQuestionsHead();
                     }
 
-                    if (session_id && publishableKey !== '0') {
-                        const stripe = Stripe(publishableKey);
-                        return stripe.redirectToCheckout({sessionId: session_id});
-                    }
+
                     if (reload === 'true') {
                         if (message) {
                             setTimeout(function () {

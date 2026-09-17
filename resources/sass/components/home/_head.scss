@@ -199,6 +199,10 @@
   }
 }
 
+.head-section__image img {
+  object-position: top;
+}
+
 @keyframes marquee {
   0% {
     transform: translateX(0);

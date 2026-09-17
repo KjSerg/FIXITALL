@@ -65,8 +65,8 @@ svg {
 }
 
 .preloader {
+  display: none;
   position: fixed;
-  display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
@@ -84,6 +84,7 @@ svg {
 }
 
 .preloader.active {
+  display: flex;
   transform: translate(-50%, -50%);
   opacity: 1;
   z-index: 20;

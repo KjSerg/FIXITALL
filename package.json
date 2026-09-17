@@ -2,8 +2,17 @@
   "name": "fixitall",
   "version": "1.0.0",
   "main": "index.js",
+  "overrides": {
+    "webpack": "5.97.1"
+  },
+  "browserslist": [
+    "defaults"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "mix",
+    "build": "mix --production",
+    "watch": "mix watch",
+    "prod": "mix --production"
   },
   "keywords": [],
   "author": "",
